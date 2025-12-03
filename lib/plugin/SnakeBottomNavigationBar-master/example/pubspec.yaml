@@ -1,0 +1,41 @@
+name: flutter_snake_navigationbar_example
+description: Demonstrates how to use the flutter_snake_navigationbar plugin.
+version: 0.5.0
+publish_to: none
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_snake_navigationbar:
+    path: ../
+
+
+dev_dependencies:
+  flutter_lints: ^1.0.4
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - images/
+
+  fonts:
+    - family: SourceSerifPro
+      fonts:
+        - asset: fonts/SourceSerifPro-Bold.ttf
+
+    - family: Ubuntu
+      fonts:
+        - asset: fonts/Ubuntu-Regular.ttf
+        - asset: fonts/Ubuntu-Bold.ttf
+          weight: 700
+        - asset: fonts/Ubuntu-Light.ttf
+          weight: 200
+
+    - family: IconFont
+      fonts:
+        - asset: fonts/IconFont.ttf
