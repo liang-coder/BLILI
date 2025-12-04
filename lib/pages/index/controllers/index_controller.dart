@@ -1,5 +1,6 @@
 import 'package:blili/command/logger/logger.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:blili/pages/home/views/home_view.dart';
 import 'package:blili/pages/category/views/category_view.dart';
@@ -12,6 +13,7 @@ class IndexController extends GetxController {
 
   final count = 0.obs;
   final _SelectedIndex = 0.obs;
+  final _LeftNavigetionSize = 45.w;
 
   final List<Widget> _IndexNavigationPages = const [
     HomeView(),
@@ -49,6 +51,7 @@ class IndexController extends GetxController {
   set ChangeIndex(int value) => _SelectedIndex.value = value;
 
   RxInt get GetIndex => _SelectedIndex;
+  double get LeftNavigetionSize => _LeftNavigetionSize;
   List<Widget> get IndexNavigationPages => _IndexNavigationPages;
   List<IconData> get IndexNavigationIconData => _IndexNavigationIconData;
   List<FocusNode> get IndexNavigationFocusNode => _IndexNavigationFocusNode;
