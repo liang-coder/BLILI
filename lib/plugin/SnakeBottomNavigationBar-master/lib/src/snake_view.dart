@@ -25,7 +25,7 @@ class SnakeView extends StatefulWidget {
     this.animationDuration = const Duration(milliseconds: 200),
     this.delayTransition = const Duration(milliseconds: 50),
     this.snakeCurve = Curves.easeInOut,
-    this.indicatorWidth = 4,
+    this.indicatorWidth = 3,
     required this.width,
     required this.height,
   }) : super(key: key);
@@ -72,17 +72,17 @@ class _SnakeViewState extends State<SnakeView> {
       prevItemHeight = oneItemHeight;
     }
 
-    final viewPadding = theme.snakeShape.type == SnakeShapeType.circle ||
-            theme.snakeShape.centered!
-        ? () {
-            final maxSize = math.min(oneItemHeight!, widget.width);
-            return EdgeInsets.symmetric(
-                  vertical: (widget.width - maxSize) / 2,
-                  horizontal: (oneItemHeight! - maxSize) / 2,
-                ) +
-                theme.snakeShape.padding;
-          }()
-        : theme.snakeShape.padding;
+    // final viewPadding = theme.snakeShape.type == SnakeShapeType.circle ||
+    //         theme.snakeShape.centered!
+    //     ? () {
+    //         final maxSize = math.min(oneItemHeight!, widget.width);
+    //         return EdgeInsets.symmetric(
+    //               vertical: (widget.width - maxSize) / 2,
+    //               horizontal: (oneItemHeight! - maxSize) / 2,
+    //             ) +
+    //             theme.snakeShape.padding;
+    //       }()
+    //     : theme.snakeShape.padding;
 
     // final snakeViewWidth = widget.width - viewPadding.horizontal;
 

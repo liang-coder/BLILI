@@ -1,3 +1,4 @@
+import 'package:blili/command/icons/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +14,14 @@ class IndexView extends GetView<IndexController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
-        children: [_Leftnavigetionbar(), Expanded(child: LazyIndexedStack())],
+        children: [
+          _Leftnavigetionbar(),
+          Expanded(
+              child: Obx(() => LazyIndexedStack(
+                    index: controller.GetIndex.value,
+                    children: controller.IndexNavigationPages,
+                  )))
+        ],
       ),
     );
   }
@@ -25,36 +33,24 @@ class IndexView extends GetView<IndexController> {
             onPressed: () {
               appLogger.LoggerI('Page to Search');
             },
-            icon: Icon(Icons.search)),
+            icon: Icon(AppIcons.Search)),
         Obx(() => SnakeNavigationBar.color(
               snakeShape: SnakeShape.indicator,
-              // showSelectedLabels: false,
-              // showUnselectedLabels: false,
               currentIndex: controller.GetIndex.value,
               selectedItemColor: Colors.white,
               unselectedItemColor: Colors.grey,
+              snakeViewColor: Colors.red,
               width: 100.w,
-              items: [
-                SnakeNavigationBaritem(
-                  icoN: Icon(Icons.notifications),
+              items: List.generate(controller.IndexNavigationPages.length,
+                  (index) {
+                return SnakeNavigationBaritem(
+                  focusNode: controller.IndexNavigationFocusNode[index],
+                  icoN: Icon(controller.IndexNavigationIconData[index]),
                   onPressed: () {
-                    appLogger.LoggerI('Index 0 of LeftNavigationBar');
-                    controller.ChangeIndex = 0;
+                    controller.LeftNavigetion(index);
                   },
-                ),
-                SnakeNavigationBaritem(
-                  icoN: Icon(Icons.cake_sharp),
-                  onPressed: () {
-                    appLogger.LoggerI('Index 1 of LeftNavigationBar');
-                    controller.ChangeIndex = 1;
-                  },
-                ),
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.podcasts), label: 'microphone'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.search), label: 'search')
-              ],
+                );
+              }),
             ))
       ],
     );
