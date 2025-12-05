@@ -1,14 +1,14 @@
-// services/theme_service.dart
-import 'package:blili/command/theme/theme.dart';
+import 'package:blili/command/theme/themeData.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'theme.dart';
 
 class ThemeController extends GetxController {
-  final Rx<ThemeData> _theme = Apptheme.dark.obs;
+  final Rx<Apptheme> _theme = AppthemeData.dark.obs;
 
-  Rx<ThemeData> get theme => _theme;
+  Rx<Apptheme> get theme => _theme;
 
-  void switchTheme(ThemeData newTheme) {
+  void switchTheme(Apptheme newTheme) {
     _theme.value = newTheme;
   }
 }

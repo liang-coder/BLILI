@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class Apptheme {
-  static final dark = ThemeData.dark().copyWith(
-      scaffoldBackgroundColor: Color(0xff303030),
-      appBarTheme: AppBarTheme(backgroundColor: Color(0xff303030)),
-      iconButtonTheme: IconButtonThemeData(
-          style: ButtonStyle(
-        // iconColor: MaterialStateProperty.all(Color(0xff9fa1a1)),
-        minimumSize: MaterialStateProperty.all(Size(1, 1)),
-        padding: MaterialStateProperty.all(EdgeInsets.all(2.0)),
-      )));
+  final Color _selectedIConColor;
+  final Color _unselectedIConColor;
+  final ThemeData _themeData;
 
-  static final light = ThemeData.light();
-  
+  Apptheme(
+      {required Color selectedIConColor,
+      required Color unselectedIConColor,
+      required ThemeData themeData})
+      : _selectedIConColor = selectedIConColor,
+        _unselectedIConColor = unselectedIConColor,
+        _themeData = themeData;
+
+  Color get selectedIConColor => _selectedIConColor;
+  Color get unselectedIConColor => _unselectedIConColor;
+  ThemeData get themeData => _themeData;
 }
