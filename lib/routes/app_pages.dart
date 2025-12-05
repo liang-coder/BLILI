@@ -8,8 +8,14 @@ import '../pages/index/bindings/index_binding.dart';
 import '../pages/index/views/index_view.dart';
 import '../pages/live/bindings/live_binding.dart';
 import '../pages/live/views/live_view.dart';
+import '../pages/search/bindings/search_binding.dart';
+import '../pages/search/views/search_view.dart';
+import '../pages/setting/bindings/setting_binding.dart';
+import '../pages/setting/views/setting_view.dart';
 import '../pages/space/bindings/space_binding.dart';
 import '../pages/space/views/space_view.dart';
+import '../pages/user/bindings/user_binding.dart';
+import '../pages/user/views/user_view.dart';
 
 part 'app_routes.dart';
 
@@ -43,6 +49,21 @@ class AppPages {
       name: _Paths.LIVE,
       page: () => const LiveView(),
       binding: LiveBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEARCH,
+      page: () => const SearchView(),
+      binding: SearchBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTING,
+      page: () => const SettingView(),
+      binding: SettingBinding(),
+    ),
+    GetPage(
+      name: _Paths.USER,
+      page: () => const UserView(),
+      binding: UserBinding(),
     ),
   ];
 }

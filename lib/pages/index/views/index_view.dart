@@ -1,4 +1,5 @@
 import 'package:blili/command/icons/icons.dart';
+import 'package:blili/command/theme/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,10 +13,24 @@ class IndexView extends GetView<IndexController> {
   const IndexView({super.key});
   @override
   Widget build(BuildContext context) {
+    return GetBuilder<ThemeController>(
+        init: ThemeController(),
+        builder: (ThemeService) {
+          return Obx(() =>
+              Theme(data: ThemeService.theme.value, child: _Scaffold(context)));
+        });
+  }
+
+  Widget _Scaffold(BuildContext context) {
     return Scaffold(
       body: Row(
         children: [
-          _Leftnavigetionbar(),
+          _Leftnavigetionbar(context),
+          VerticalDivider(
+            width: 0.5,
+            thickness: 0.5,
+            color: Color(0xfe3d7d7),
+          ),
           Expanded(
               child: Obx(() => LazyIndexedStack(
                     index: controller.GetIndex.value,
@@ -26,7 +41,7 @@ class IndexView extends GetView<IndexController> {
     );
   }
 
-  Widget _Leftnavigetionbar() {
+  Widget _Leftnavigetionbar(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -36,14 +51,17 @@ class IndexView extends GetView<IndexController> {
                 iconSize: controller.LeftNavigetionSize,
                 onPressed: () {
                   appLogger.LoggerI('Page to Search');
+                  Get.toNamed('/search');
                 },
                 icon: Icon(AppIcons.Search)),
             Obx(() => SnakeNavigationBar.color(
+                  backgroundColor:
+                      context.themeService.theme.value.scaffoldBackgroundColor,
                   snakeShape: SnakeShape.indicator,
                   currentIndex: controller.GetIndex.value,
                   selectedItemColor: Colors.white,
-                  unselectedItemColor: Colors.grey,
-                  snakeViewColor: Colors.red,
+                  unselectedItemColor: Color(0xff9fa1a1),
+                  snakeViewColor: Colors.white,
                   width: 90.w,
                   items: List.generate(controller.IndexNavigationPages.length,
                       (index) {
@@ -62,7 +80,7 @@ class IndexView extends GetView<IndexController> {
         Column(
           children: [
             IconButton(
-                onPressed: () {},
+                onPressed: () => Get.toNamed('/user'),
                 icon: ClipOval(
                   child: Image.network(
                     'https://tse1-mm.cn.bing.net/th/id/OIP-C.g8mJgPIMzrokOwdfCmOQZgAAAA?w=196&h=196&c=7&r=0&o=7&cb=ucfimg2&dpr=1.5&pid=1.7&rm=3&ucfimg=1',
@@ -72,7 +90,10 @@ class IndexView extends GetView<IndexController> {
                 )),
             IconButton(
                 iconSize: controller.LeftNavigetionSize,
-                onPressed: () {},
+                onPressed: () {
+                  appLogger.LoggerI('Page to setting');
+                  Get.toNamed('/setting');
+                },
                 icon: Icon(AppIcons.Setting))
           ],
         )

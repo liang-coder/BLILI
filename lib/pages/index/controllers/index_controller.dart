@@ -19,7 +19,7 @@ class IndexController extends GetxController {
     HomeView(),
     CategoryView(),
     SpaceView(),
-    LiveView()
+    LiveView(),
   ];
 
   final List<IconData> _IndexNavigationIconData = const [
