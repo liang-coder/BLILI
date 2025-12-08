@@ -1,6 +1,6 @@
 import 'package:blili/command/icons/icons.dart';
 import 'package:blili/command/theme/themeController.dart';
-import 'package:blili/command/theme/themeData.dart';
+import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,14 +23,13 @@ class IndexView extends GetView<IndexController> {
           ),
           Expanded(
               child: Obx(() => LazyIndexedStack(
-                index: controller.GetIndex.value,
-                children: controller.IndexNavigationPages,
-              )))
+                    index: controller.GetIndex.value,
+                    children: controller.IndexNavigationPages,
+                  )))
         ],
       ),
     );
   }
-
 
   Widget _Leftnavigetionbar(BuildContext context) {
     return Column(
@@ -43,8 +42,7 @@ class IndexView extends GetView<IndexController> {
                 color: context.themeService.theme.value.unselectedIConColor,
                 onPressed: () {
                   appLogger.LoggerI('Page to Search');
-                  // Get.toNamed('/search');
-                  context.themeService.switchTheme(AppthemeData.light);
+                  Get.toNamed('/search');
                 },
                 icon: Icon(AppIcons.Search)),
             Obx(() => SnakeNavigationBar.color(
@@ -78,8 +76,8 @@ class IndexView extends GetView<IndexController> {
             IconButton(
                 onPressed: () => Get.toNamed('/user'),
                 icon: ClipOval(
-                  child: Image.network(
-                    'https://tse1-mm.cn.bing.net/th/id/OIP-C.g8mJgPIMzrokOwdfCmOQZgAAAA?w=196&h=196&c=7&r=0&o=7&cb=ucfimg2&dpr=1.5&pid=1.7&rm=3&ucfimg=1',
+                  child: NetImage(
+                    imageUrl: 'https://c-ssl.dtstatic.com/uploads/blog/202204/24/20220424154359_8f023.thumb.400_0.jpeg',
                     width: controller.LeftNavigetionSize,
                     height: controller.LeftNavigetionSize,
                   ),

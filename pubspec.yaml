@@ -39,6 +39,10 @@ dependencies:
     path: lib/plugin/SnakeBottomNavigationBar-master
   flutter_screenutil: ^5.9.3
   flutter_lazy_indexed_stack: ^0.0.6
+  flutter_animate: ^4.5.2
+  cached_network_image: ^3.4.1
+
+
 
 
 dev_dependencies:

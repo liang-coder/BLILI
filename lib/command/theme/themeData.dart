@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'theme.dart';
 
 class AppthemeData {
-  static final _dartTextTheme = TextStyle(color: Colors.white);
-  static final _lightTextTheme = TextStyle(color: Colors.black);
+  static final _dartTextTheme =
+      TextStyle(color: Colors.white, fontFamily: 'Sans-serif');
+  static final _lightTextTheme =
+      TextStyle(color: Colors.black, fontFamily: 'Sans-serif');
 
   static final dark = Apptheme(
       selectedIConColor: Colors.white,
@@ -14,6 +16,8 @@ class AppthemeData {
             color: Color(0x3fe3d7d7),
             thickness: 0.5,
           ),
+          progressIndicatorTheme:
+              ProgressIndicatorThemeData(color: Color(0x3fe3d7d7)),
           textTheme: TextTheme(
               titleMedium: _dartTextTheme,
               bodyMedium: _dartTextTheme,
@@ -38,6 +42,8 @@ class AppthemeData {
             color: Color(0x8b4e4d4d),
             thickness: 0.5,
           ),
+          progressIndicatorTheme:
+              ProgressIndicatorThemeData(color: Colors.black),
           textTheme: TextTheme(
               titleMedium: _lightTextTheme,
               bodyMedium: _lightTextTheme,

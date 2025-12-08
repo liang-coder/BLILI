@@ -287,7 +287,7 @@ class _SnakeNavigationBar extends StatelessWidget {
       padding: padding,
       duration: kThemeChangeDuration,
       child: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         children: [
           SafeArea(
             top: false,
@@ -311,13 +311,16 @@ class _SnakeNavigationBar extends StatelessWidget {
                           valueListenable: _height,
                           builder:
                               (BuildContext context, value, Widget? child) {
-                            return SnakeView(
-                              itemsCount: items!.length,
-                              width: width,
-                              height: value,
-                              widgetEdgePadding: padding.top + padding.bottom,
-                              notifier: notifier,
-                            );
+                            return theme.snakeShape.type == SnakeShapeType.none
+                                ? SizedBox()
+                                : SnakeView(
+                                    itemsCount: items!.length,
+                                    width: width,
+                                    height: value,
+                                    widgetEdgePadding:
+                                        padding.top + padding.bottom,
+                                    notifier: notifier,
+                                  );
                           }),
                       IntrinsicHeight(
                         key: _tilesKey,

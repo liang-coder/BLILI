@@ -193,6 +193,16 @@ class _SnakeNavigationBarExampleScreenState
           showUnselectedLabels = false;
         });
         break;
+      case 4:
+        setState(() {
+          snakeBarStyle = SnakeBarBehaviour.pinned;
+          snakeShape = SnakeShape.none;
+          padding = EdgeInsets.zero;
+          bottomBarShape = null;
+          showSelectedLabels = false;
+          showUnselectedLabels = false;
+        });
+        break;
     }
   }
 }

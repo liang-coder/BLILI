@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
-class SnakeNavigationBaritem extends BottomNavigationBarItem {
+class Leftnavigetionbutton extends BottomNavigationBarItem {
   final void Function() onPressed;
   final Icon icoN;
+  final String label;
   final FocusNode? focusNode;
   final double? IconSize;
+  final Color? LabelColor;
 
-  SnakeNavigationBaritem({
+  Leftnavigetionbutton({
     required this.onPressed,
     required this.icoN,
+    required this.label,
+    this.LabelColor = Colors.white,
     this.focusNode,
     this.IconSize,
     Widget? activeIcon,
@@ -18,7 +22,16 @@ class SnakeNavigationBaritem extends BottomNavigationBarItem {
           icon: IconButton(
             iconSize: IconSize,
             onPressed: onPressed,
-            icon:icoN,
+            icon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                icoN,
+                Text(
+                  label,
+                  style: TextStyle(color: LabelColor),
+                )
+              ],
+            ),
             focusNode: focusNode,
           ),
           activeIcon: activeIcon,
