@@ -8,6 +8,7 @@ class AppthemeData {
       TextStyle(color: Colors.black, fontFamily: 'Sans-serif');
 
   static final dark = Apptheme(
+      dialogBackgroundColor: Color(0xff4c4c4c),
       buttonfocusColor: Colors.red,
       selectedIConColor: Colors.white,
       unselectedIConColor: Color(0xff9fa1a1),
@@ -36,6 +37,7 @@ class AppthemeData {
           ))));
 
   static final light = Apptheme(
+      dialogBackgroundColor: Colors.white24,
       buttonfocusColor: Colors.black,
       selectedIConColor: Colors.black,
       unselectedIConColor: Color(0xff333535),
