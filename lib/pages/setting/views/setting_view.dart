@@ -43,7 +43,7 @@ class SettingView extends GetView<SettingController> {
 
   Widget _Leftnavigetionbar(BuildContext context) {
     return Obx(() => SnakeNavigationBar.color(
-          padding: EdgeInsets.only(left: 5.w, right: 5.w),
+          padding: EdgeInsets.only(left: 5.w),
           backgroundColor: context
               .themeService.theme.value.themeData.scaffoldBackgroundColor,
           snakeShape: SnakeShape.none,
@@ -54,12 +54,18 @@ class SettingView extends GetView<SettingController> {
           width: 170.w,
           items: List.generate(controller.LeftNavigationPages.length, (index) {
             return Leftnavigetionbutton(
+              focusColor: context.themeService.theme.value.buttonfocusColor,
               focusNode: controller.LeftNavigationFocusNode[index],
-              icoN: Icon(controller.LeftNavigationIconData[index]),
-              IconSize: 30.w,
+              icoN: Icon(
+                controller.LeftNavigationIconData[index],
+                size: 30.w,
+              ),
               LabelColor: index == controller.GetIndex.value
                   ? context.themeService.theme.value.selectedIConColor
                   : context.themeService.theme.value.unselectedIConColor,
+              selectedIColor: index == controller.GetIndex.value
+                  ? context.themeService.theme.value.buttonfocusColor
+                  : context.themeService.theme.value.themeData.scaffoldBackgroundColor,
               onPressed: () {
                 controller.LeftNavigetion(index);
               },

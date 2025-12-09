@@ -5,20 +5,23 @@ class SnakeNavigationBaritem extends BottomNavigationBarItem {
   final Icon icoN;
   final FocusNode? focusNode;
   final double? IconSize;
+  final Color? focusColor;
 
   SnakeNavigationBaritem({
     required this.onPressed,
     required this.icoN,
     this.focusNode,
     this.IconSize,
+    this.focusColor,
     Widget? activeIcon,
     Color? backgroundColor,
     String? tooltip,
   }) : super(
           icon: IconButton(
+            focusColor: focusColor,
             iconSize: IconSize,
             onPressed: onPressed,
-            icon:icoN,
+            icon: icoN,
             focusNode: focusNode,
           ),
           activeIcon: activeIcon,

@@ -102,12 +102,20 @@ class _SnakeViewState extends State<SnakeView> {
           clipBehavior: Clip.antiAlias,
           child: DecoratedBox(
             decoration: BoxDecoration(
+              borderRadius: _snakeItemBorderRadius(theme),
               gradient: SnakeBottomBarTheme.of(context)!.snakeGradient,
             ),
           ),
         ),
       ),
     );
+  }
+
+  BorderRadius? _snakeItemBorderRadius(SnakeBottomBarThemeData theme) {
+    if (theme.snakeShape.type == SnakeShapeType.rectangle) {
+      return theme.snakeBorderRadius;
+    }
+    return null;
   }
 
   double _snakeViewWeight(SnakeBottomBarThemeData theme) {

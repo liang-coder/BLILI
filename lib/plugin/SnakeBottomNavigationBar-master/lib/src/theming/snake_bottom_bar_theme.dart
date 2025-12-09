@@ -29,6 +29,7 @@ class SnakeBottomBarThemeData {
   final bool showSelectedLabels;
   final bool showUnselectedLabels;
   final SnakeShape snakeShape;
+  final BorderRadius? snakeBorderRadius;
   final SelectionStyle selectionStyle;
   final TextStyle? selectedLabelStyle;
   final TextStyle? unselectedLabelStyle;
@@ -44,5 +45,6 @@ class SnakeBottomBarThemeData {
     required this.selectionStyle,
     required this.selectedLabelStyle,
     required this.unselectedLabelStyle,
+    required this.snakeBorderRadius,
   });
 }

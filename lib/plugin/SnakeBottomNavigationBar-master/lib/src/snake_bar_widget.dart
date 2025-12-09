@@ -47,6 +47,7 @@ class SnakeNavigationBar extends StatelessWidget {
   ///
   /// Default is [SnakeShape.circle]
   final SnakeShape snakeShape;
+  final BorderRadius? snakeBorderRadius;
 
   /// Defines the layout and behavior of a [SnakeNavigationBar].
   ///
@@ -98,6 +99,7 @@ class SnakeNavigationBar extends StatelessWidget {
     this.selectedLabelStyle,
     this.unselectedLabelStyle,
     required this.width,
+    this.snakeBorderRadius,
   })  : showSelectedLabels =
             (snakeShape.type == SnakeShapeType.circle && showSelectedLabels)
                 ? false
@@ -121,6 +123,7 @@ class SnakeNavigationBar extends StatelessWidget {
     ValueChanged<int>? onTap,
     SnakeBarBehaviour behaviour = SnakeBarBehaviour.pinned,
     SnakeShape snakeShape = SnakeShape.circle,
+    BorderRadius? snakeBorderRadius,
     Color shadowColor = Colors.black,
     TextStyle? selectedLabelStyle,
     TextStyle? unselectedLabelStyle,
@@ -146,6 +149,7 @@ class SnakeNavigationBar extends StatelessWidget {
         shadowColor: shadowColor,
         selectedLabelStyle: selectedLabelStyle,
         unselectedLabelStyle: unselectedLabelStyle,
+        snakeBorderRadius: snakeBorderRadius,
         width: width ?? kBottomNavigationBarWidth,
       );
 
@@ -166,6 +170,7 @@ class SnakeNavigationBar extends StatelessWidget {
     ValueChanged<int>? onTap,
     SnakeBarBehaviour behaviour = SnakeBarBehaviour.pinned,
     SnakeShape snakeShape = SnakeShape.circle,
+    BorderRadius? snakeBorderRadius,
     Color shadowColor = Colors.black,
     TextStyle? selectedLabelStyle,
     TextStyle? unselectedLabelStyle,
@@ -192,6 +197,7 @@ class SnakeNavigationBar extends StatelessWidget {
         selectedLabelStyle: selectedLabelStyle,
         unselectedLabelStyle: unselectedLabelStyle,
         width: width ?? kBottomNavigationBarWidth,
+        snakeBorderRadius: snakeBorderRadius,
       );
 
   SnakeBottomBarThemeData _createTheme(BuildContext context) {
@@ -214,6 +220,7 @@ class SnakeNavigationBar extends StatelessWidget {
       selectionStyle: _selectionStyle,
       selectedLabelStyle: selectedLabelStyle,
       unselectedLabelStyle: unselectedLabelStyle,
+      snakeBorderRadius: snakeBorderRadius,
     );
   }
 

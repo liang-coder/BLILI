@@ -8,6 +8,7 @@ class AppthemeData {
       TextStyle(color: Colors.black, fontFamily: 'Sans-serif');
 
   static final dark = Apptheme(
+      buttonfocusColor: Colors.red,
       selectedIConColor: Colors.white,
       unselectedIConColor: Color(0xff9fa1a1),
       themeData: ThemeData.dark().copyWith(
@@ -28,12 +29,14 @@ class AppthemeData {
               iconTheme: IconThemeData(color: Colors.white)),
           iconButtonTheme: IconButtonThemeData(
               style: ButtonStyle(
+            overlayColor: MaterialStateProperty.all(Colors.red),
             // iconColor: MaterialStateProperty.all(Color(0xff9fa1a1)),
             minimumSize: MaterialStateProperty.all(Size(1, 1)),
             padding: MaterialStateProperty.all(EdgeInsets.all(2.0)),
           ))));
 
   static final light = Apptheme(
+      buttonfocusColor: Colors.black,
       selectedIConColor: Colors.black,
       unselectedIConColor: Color(0xff333535),
       themeData: ThemeData.dark().copyWith(
@@ -54,7 +57,7 @@ class AppthemeData {
               iconTheme: IconThemeData(color: Colors.black)),
           iconButtonTheme: IconButtonThemeData(
               style: ButtonStyle(
-            // iconColor: MaterialStateProperty.all(Color(0xff9fa1a1)),
+            overlayColor: MaterialStateProperty.all(Colors.black),
             minimumSize: MaterialStateProperty.all(Size(1, 1)),
             padding: MaterialStateProperty.all(EdgeInsets.all(2.0)),
           ))));

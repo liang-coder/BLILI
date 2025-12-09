@@ -39,12 +39,14 @@ class IndexView extends GetView<IndexController> {
           children: [
             IconButton(
                 iconSize: controller.LeftNavigetionSize,
-                color: context.themeService.theme.value.unselectedIConColor,
                 onPressed: () {
                   appLogger.LoggerI('Page to Search');
                   Get.toNamed('/search');
                 },
-                icon: Icon(AppIcons.Search)),
+                icon: Icon(
+                  AppIcons.Search,
+                  color: context.themeService.theme.value.unselectedIConColor,
+                )),
             Obx(() => SnakeNavigationBar.color(
                   backgroundColor: context.themeService.theme.value.themeData
                       .scaffoldBackgroundColor,
@@ -77,19 +79,22 @@ class IndexView extends GetView<IndexController> {
                 onPressed: () => Get.toNamed('/user'),
                 icon: ClipOval(
                   child: NetImage(
-                    imageUrl: 'https://c-ssl.dtstatic.com/uploads/blog/202204/24/20220424154359_8f023.thumb.400_0.jpeg',
+                    imageUrl:
+                        'https://c-ssl.dtstatic.com/uploads/blog/202204/24/20220424154359_8f023.thumb.400_0.jpeg',
                     width: controller.LeftNavigetionSize,
                     height: controller.LeftNavigetionSize,
                   ),
                 )),
             IconButton(
                 iconSize: controller.LeftNavigetionSize,
-                color: context.themeService.theme.value.unselectedIConColor,
                 onPressed: () {
                   appLogger.LoggerI('Page to setting');
                   Get.toNamed('/setting');
                 },
-                icon: Icon(AppIcons.Setting))
+                icon: Icon(
+                  AppIcons.Setting,
+                  color: context.themeService.theme.value.unselectedIConColor,
+                ))
           ],
         )
       ],
