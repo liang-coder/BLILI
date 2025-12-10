@@ -10,6 +10,7 @@ class ThemeController extends GetxController {
 
   void switchTheme(Apptheme newTheme) {
     _theme.value = newTheme;
+    Get.changeTheme(newTheme.themeData);
   }
 }
 

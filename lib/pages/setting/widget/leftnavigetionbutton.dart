@@ -1,3 +1,4 @@
+import 'package:blili/widget/BText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -32,9 +33,8 @@ class Leftnavigetionbutton extends BottomNavigationBarItem {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 icoN,
-                Text(
+                BText(
                   label,
-                  strutStyle: StrutStyle(forceStrutHeight: true),
                   style: TextStyle(color: LabelColor, fontSize: 26.sp),
                 )
               ],

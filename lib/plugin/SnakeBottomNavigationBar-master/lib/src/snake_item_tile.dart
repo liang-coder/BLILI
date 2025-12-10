@@ -77,12 +77,14 @@ class SnakeItemTile extends StatelessWidget {
             child: icon!,
           );
 
-    return isIndicatorStyle(theme)
-        ? Opacity(
-            opacity: isSelected! ? 1 : 0.6,
-            child: iconWidget,
-          )
-        : iconWidget;
+    return iconWidget;
+
+    // return isIndicatorStyle(theme)
+    //     ? Opacity(
+    //         opacity: isSelected! ? 1 : 0.6,
+    //         child: iconWidget,
+    //       )
+    //     : iconWidget;
   }
 
   Widget _getThemedTitle(SnakeBottomBarThemeData theme) {

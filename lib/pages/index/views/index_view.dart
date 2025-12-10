@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get/get.dart';
 import '../../../../pages/index/controllers/index_controller.dart';
-import 'package:blili/command/logger/logger.dart';
+import 'package:blili/command/utility/logger/logger.dart';
 import '../widget/SnakeNavigationBarItem.dart';
 
 class IndexView extends GetView<IndexController> {
@@ -37,7 +37,7 @@ class IndexView extends GetView<IndexController> {
       children: [
         Column(
           children: [
-            IconButton(
+            Obx(() => IconButton(
                 iconSize: controller.LeftNavigetionSize,
                 onPressed: () {
                   appLogger.LoggerI('Page to Search');
@@ -46,16 +46,12 @@ class IndexView extends GetView<IndexController> {
                 icon: Icon(
                   AppIcons.Search,
                   color: context.themeService.theme.value.unselectedIConColor,
-                )),
+                ))),
             Obx(() => SnakeNavigationBar.color(
                   backgroundColor: context.themeService.theme.value.themeData
                       .scaffoldBackgroundColor,
                   snakeShape: SnakeShape.indicator,
                   currentIndex: controller.GetIndex.value,
-                  selectedItemColor:
-                      context.themeService.theme.value.selectedIConColor,
-                  unselectedItemColor:
-                      context.themeService.theme.value.unselectedIConColor,
                   snakeViewColor:
                       context.themeService.theme.value.selectedIConColor,
                   width: 90.w,
@@ -63,7 +59,13 @@ class IndexView extends GetView<IndexController> {
                       (index) {
                     return SnakeNavigationBaritem(
                       focusNode: controller.IndexNavigationFocusNode[index],
-                      icoN: Icon(controller.IndexNavigationIconData[index]),
+                      icoN: Icon(
+                        controller.IndexNavigationIconData[index],
+                        color: index == controller.GetIndex.value
+                            ? context.themeService.theme.value.selectedIConColor
+                            : context
+                                .themeService.theme.value.unselectedIConColor,
+                      ),
                       IconSize: controller.LeftNavigetionSize,
                       onPressed: () {
                         controller.LeftNavigetion(index);
@@ -85,7 +87,7 @@ class IndexView extends GetView<IndexController> {
                     height: controller.LeftNavigetionSize,
                   ),
                 )),
-            IconButton(
+            Obx(() => IconButton(
                 iconSize: controller.LeftNavigetionSize,
                 onPressed: () {
                   appLogger.LoggerI('Page to setting');
@@ -94,7 +96,7 @@ class IndexView extends GetView<IndexController> {
                 icon: Icon(
                   AppIcons.Setting,
                   color: context.themeService.theme.value.unselectedIConColor,
-                ))
+                )))
           ],
         )
       ],

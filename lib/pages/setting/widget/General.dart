@@ -1,7 +1,8 @@
-import 'package:blili/command/logger/logger.dart';
+import 'package:blili/command/utility/logger/logger.dart';
 import 'package:blili/command/theme/theme.dart';
 import 'package:blili/command/theme/themeController.dart';
-import 'package:blili/command/dialog/Dialog.dart';
+import 'package:blili/command/utility/dialog/Dialog.dart';
+import 'package:blili/widget/BText.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'RightContainer.dart';
@@ -34,15 +35,20 @@ class General extends StatelessWidget {
       padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
       child: Column(
         children: [
-          Text('主题'),
+          Obx(() => BText(
+                '主题',
+                style: TextStyle(
+                    color: Get.context!.themeService.theme.value.themeData
+                        .textTheme.bodyMedium!.color),
+              )),
           SizedBox(
             height: 20.w,
           ),
-          Divider(
-            height: 2,
-            color: Get
-                .context!.themeService.theme.value.themeData.dividerTheme.color,
-          ),
+          Obx(() => Divider(
+                height: 2,
+                color: Get.context!.themeService.theme.value.themeData
+                    .dividerTheme.color,
+              )),
           Expanded(
               child: ListView.builder(
                   padding: EdgeInsets.only(left: 20.w, right: 20.w),
@@ -66,9 +72,12 @@ class General extends StatelessWidget {
         settingController.SetThemeValue = name;
         appLogger.LoggerI('theme switch $name');
       },
-      child: Text(
-        name,
-      ),
+      child: Obx(() => BText(
+            name,
+            style: TextStyle(
+                color: Get.context!.themeService.theme.value.themeData.textTheme
+                    .bodyMedium!.color),
+          )),
     );
   }
 }

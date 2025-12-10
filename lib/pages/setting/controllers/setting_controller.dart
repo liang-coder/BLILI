@@ -1,5 +1,5 @@
 import 'package:blili/command/icons/icons.dart';
-import 'package:blili/command/logger/logger.dart';
+import 'package:blili/command/utility/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widget/General.dart';

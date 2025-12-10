@@ -1,4 +1,4 @@
-import 'package:blili/command/logger/logger.dart';
+import 'package:blili/command/utility/logger/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

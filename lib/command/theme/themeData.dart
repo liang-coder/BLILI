@@ -3,7 +3,7 @@ import 'theme.dart';
 
 class AppthemeData {
   static final _dartTextTheme =
-      TextStyle(color: Colors.white, fontFamily: 'Sans-serif');
+      TextStyle(color: Colors.white, fontFamily: 'Sans-serif',);
   static final _lightTextTheme =
       TextStyle(color: Colors.black, fontFamily: 'Sans-serif');
 
@@ -31,7 +31,7 @@ class AppthemeData {
           iconButtonTheme: IconButtonThemeData(
               style: ButtonStyle(
             overlayColor: MaterialStateProperty.all(Colors.red),
-            // iconColor: MaterialStateProperty.all(Color(0xff9fa1a1)),
+            iconColor: MaterialStateProperty.all(Color(0xff9fa1a1)),
             minimumSize: MaterialStateProperty.all(Size(1, 1)),
             padding: MaterialStateProperty.all(EdgeInsets.all(2.0)),
           ))));
@@ -59,6 +59,7 @@ class AppthemeData {
               iconTheme: IconThemeData(color: Colors.black)),
           iconButtonTheme: IconButtonThemeData(
               style: ButtonStyle(
+            iconColor: MaterialStateProperty.all(Color(0xff333535)),
             overlayColor: MaterialStateProperty.all(Colors.black),
             minimumSize: MaterialStateProperty.all(Size(1, 1)),
             padding: MaterialStateProperty.all(EdgeInsets.all(2.0)),

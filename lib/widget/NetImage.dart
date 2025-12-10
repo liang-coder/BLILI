@@ -3,18 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:blili/command/theme/themeController.dart';
 
 class NetImage extends CachedNetworkImage {
-  final String imageUrl;
-  final double? width;
-  final double? height;
-  final Map<String, String>? httpHeaders;
-  final ProgressIndicatorBuilder? progressIndicatorBuilder;
-
   NetImage({
-    required this.imageUrl,
-    this.httpHeaders,
-    this.progressIndicatorBuilder,
-    this.width,
-    this.height,
+    required imageUrl,
+    httpHeaders,
+    progressIndicatorBuilder,
+    width,
+    height,
   }) : super(
             imageUrl: imageUrl,
             httpHeaders: httpHeaders,

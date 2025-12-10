@@ -48,9 +48,6 @@ class SettingView extends GetView<SettingController> {
               .themeService.theme.value.themeData.scaffoldBackgroundColor,
           snakeShape: SnakeShape.none,
           currentIndex: controller.GetIndex.value,
-          selectedItemColor: context.themeService.theme.value.selectedIConColor,
-          unselectedItemColor:
-              context.themeService.theme.value.unselectedIConColor,
           width: 170.w,
           items: List.generate(controller.LeftNavigationPages.length, (index) {
             return Leftnavigetionbutton(
@@ -58,14 +55,15 @@ class SettingView extends GetView<SettingController> {
               focusNode: controller.LeftNavigationFocusNode[index],
               icoN: Icon(
                 controller.LeftNavigationIconData[index],
+                color: context.themeService.theme.value.selectedIConColor,
                 size: 30.w,
               ),
-              LabelColor: index == controller.GetIndex.value
-                  ? context.themeService.theme.value.selectedIConColor
-                  : context.themeService.theme.value.unselectedIConColor,
+              LabelColor: context.themeService.theme.value.themeData.textTheme
+                  .bodyMedium!.color,
               selectedIColor: index == controller.GetIndex.value
                   ? context.themeService.theme.value.buttonfocusColor
-                  : context.themeService.theme.value.themeData.scaffoldBackgroundColor,
+                  : context.themeService.theme.value.themeData
+                      .scaffoldBackgroundColor,
               onPressed: () {
                 controller.LeftNavigetion(index);
               },
