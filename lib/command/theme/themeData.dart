@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'theme.dart';
 
 class AppthemeData {
-  static final _dartTextTheme =
-      TextStyle(color: Colors.white, fontFamily: 'Sans-serif',);
+  static final _dartTextTheme = TextStyle(
+    color: Colors.white,
+    fontFamily: 'Sans-serif',
+  );
   static final _lightTextTheme =
       TextStyle(color: Colors.black, fontFamily: 'Sans-serif');
 
@@ -25,6 +27,14 @@ class AppthemeData {
               bodyMedium: _dartTextTheme,
               displayMedium: _dartTextTheme,
               headlineMedium: _dartTextTheme),
+          tabBarTheme: TabBarTheme(
+            labelColor: Colors.white,
+            overlayColor: MaterialStateProperty.all(Color(0xff9fa1a1)),
+            tabAlignment: TabAlignment.start,
+            indicator: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            // data:TabBarThemeData() ,
+          ),
           appBarTheme: AppBarTheme(
               backgroundColor: Color(0xff303030),
               iconTheme: IconThemeData(color: Colors.white)),
@@ -54,6 +64,14 @@ class AppthemeData {
               bodyMedium: _lightTextTheme,
               displayMedium: _lightTextTheme,
               headlineMedium: _lightTextTheme),
+          tabBarTheme: TabBarTheme(
+            labelColor: Colors.black,
+            overlayColor: MaterialStateProperty.all(Color(0xff9fa1a1)),
+            tabAlignment: TabAlignment.start,
+            indicator: BoxDecoration(
+                color: Colors.black, borderRadius: BorderRadius.circular(10)),
+            // data:TabBarThemeData() ,
+          ),
           appBarTheme: AppBarTheme(
               backgroundColor: Color(0xffeae7e7),
               iconTheme: IconThemeData(color: Colors.black)),

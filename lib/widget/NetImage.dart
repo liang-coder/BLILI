@@ -9,11 +9,13 @@ class NetImage extends CachedNetworkImage {
     progressIndicatorBuilder,
     width,
     height,
+    fit
   }) : super(
             imageUrl: imageUrl,
             httpHeaders: httpHeaders,
             width: width,
             height: height,
+            fit: fit,
             progressIndicatorBuilder: progressIndicatorBuilder,
             placeholder: (context, url) => Container(
                 color: context.themeService.theme.value.themeData
