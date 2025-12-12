@@ -1,3 +1,4 @@
+import 'package:blili/widget/VideoGridView.dart';
 import 'package:flutter/material.dart';
 
 class Hot extends StatefulWidget {
@@ -7,11 +8,11 @@ class Hot extends StatefulWidget {
   State<Hot> createState() => _HotState();
 }
 
-class _HotState extends State<Hot> with AutomaticKeepAliveClientMixin{
+class _HotState extends State<Hot> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return const Placeholder();
+    return Videogridview();
   }
 
   @override

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:blili/widget/ShortVideoCard.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:blili/widget/VideoGridView.dart';
 
 class Recommend extends StatefulWidget {
   const Recommend({super.key});
@@ -14,14 +13,7 @@ class _RecommendState extends State<Recommend>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return GridView.builder(
-      // padding: EdgeInsets.only(top: 20.w),
-      itemCount: 40,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-         crossAxisCount: 4,childAspectRatio: 1.2),
-        itemBuilder: (context, index) {
-          return Shortvideocard();
-        });
+    return Videogridview();
   }
 
   @override

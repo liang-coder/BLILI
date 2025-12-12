@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'NetImage.dart';
 
-class Shortvideocard extends StatelessWidget {
-  const Shortvideocard({super.key});
+class Tvcard extends StatelessWidget {
+  const Tvcard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,22 +15,19 @@ class Shortvideocard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          LayoutBuilder(builder: (context, constraints) {
-            return _StackImage(
-                width: constraints.maxWidth,
-                imageUrl: 'imageUrl',
-                PlaySum: '12万',
-                PlayTime: '02:45',
-                DmSum: '1203');
-          }),
+          _StackImage(
+              imageUrl: 'imageUrl',
+              PlaySum: '12万',
+              PlayTime: '02:45',
+              DmSum: '1203'),
           Text(
             '哈哈哈哈哈',
-            maxLines: 2,
+            maxLines: 1,
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
           ),
           SizedBox(
-            height: 8.w,
+            height: 4.w,
           ),
           Row(
             children: [
@@ -46,8 +44,7 @@ class Shortvideocard extends StatelessWidget {
   }
 
   Widget _StackImage(
-      {required double width,
-      required String imageUrl,
+      {required String imageUrl,
       required String PlaySum,
       required String PlayTime,
       required String DmSum}) {
@@ -59,28 +56,11 @@ class Shortvideocard extends StatelessWidget {
             imageUrl:
                 'https://c-ssl.duitang.com/uploads/blog/202301/07/20230107131341_8c680.jpg',
             fit: BoxFit.cover,
-            height: 240.w,
-            width: width,
+            height: 320.w,
+            width: double.infinity,
           ),
         ),
-        Positioned(
-            bottom: 10.w,
-            child: SizedBox(
-              width: width,
-              child: Padding(
-                padding: EdgeInsets.only(left: 2.w, right: 4.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      spacing: 4.w,
-                      children: [Text(PlaySum), Text(DmSum)],
-                    ),
-                    Text(PlayTime)
-                  ],
-                ),
-              ),
-            ))
+        // Positioned(right: 0, child: Image.asset('name'))
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:blili/widget/TvGridView.dart';
 import 'package:flutter/material.dart';
 
 class Tv extends StatefulWidget {
@@ -11,7 +12,7 @@ class _TvState extends State<Tv> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return const Placeholder();
+    return Tvgridview();
   }
 
   @override
