@@ -1,7 +1,7 @@
-import 'package:blili/command/utility/logger/logger.dart';
+import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/theme/theme.dart';
 import 'package:blili/command/theme/themeController.dart';
-import 'package:blili/command/utility/dialog/Dialog.dart';
+import 'package:blili/command/utils/dialog/Dialog.dart';
 import 'package:blili/widget/BText.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

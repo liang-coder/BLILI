@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get/get.dart';
 import '../../../../pages/index/controllers/index_controller.dart';
-import 'package:blili/command/utility/logger/logger.dart';
+import 'package:blili/command/utils/logger/logger.dart';
 import '../widget/SnakeNavigationBarItem.dart';
 
 class IndexView extends GetView<IndexController> {
