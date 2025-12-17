@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'dart:math';
 import 'dart:convert';
 
-class fp {
+class Fp {
   static const String _charSet = '0123456789abcdef';
 
   String getfp(

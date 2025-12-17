@@ -45,6 +45,8 @@ dependencies:
   uuid: ^4.5.2
   device_info_plus: ^11.3.0
   intl: ^0.20.2
+  encrypt: ^5.0.3
+
 
 
 

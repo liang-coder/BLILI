@@ -1,10 +1,22 @@
 import 'package:device_info_plus/device_info_plus.dart';
 
 class DeviceInfo {
-  late AndroidDeviceInfo _build;
+  static late AndroidDeviceInfo _build;
 
   Future<void> init() async {
     _build = await DeviceInfoPlugin().androidInfo;
+  }
+
+  static int sdkversion() {
+    return _build.version.sdkInt;
+  }
+
+  static String brand(){
+    return _build.brand;
+  }
+
+  static String id(){
+    return _build.id;
   }
 
   Map<String, dynamic> _readAndroid_buildData() {

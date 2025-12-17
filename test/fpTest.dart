@@ -5,7 +5,7 @@ void main() {
   final String PhoneModel = 'NOH-AN01';
   final String RadioVersion = '';
 
-  final fp _fp = fp();
+  final Fp _fp = Fp();
 
   // 打印结果
   print(
