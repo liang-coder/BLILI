@@ -1,8 +1,8 @@
 import 'package:blili/command/utils/fp/fp.dart';
 
 void main() {
-  final String buvid = 'XYEEE4CEB09B988C3E9F0FDE516E29F662126';
-  final String PhoneModel = 'NOH-AN01';
+  final String buvid = 'XY281A22F391BE12587C774044A105B90B777';
+  final String PhoneModel = 'NOH-AP10';
   final String RadioVersion = '';
 
   final Fp _fp = Fp();

@@ -2,14 +2,15 @@ import 'package:dio/dio.dart';
 import 'BInterceptorsWrapper.dart';
 
 class DioClient {
-  static final _dio = Dio()
+
+  static final _dio = Dio(BaseOptions(baseUrl: 'https://app.bilibili.com'))
     ..interceptors.add(BInterceptorsWrapper.interceptorsWrapper)
     ..interceptors.add(LogInterceptor(
-      request: true, // 打印请求头
-      requestHeader: true, // 打印请求头
-      requestBody: true, // 打印请求体（如 JSON、表单）
-      responseHeader: true, // 打印响应头
-      responseBody: true, // 打印响应体
+      request: true,
+      requestHeader: true,
+      requestBody: true,
+      responseHeader: true,
+      responseBody: true,
       error: true,
     ));
 
