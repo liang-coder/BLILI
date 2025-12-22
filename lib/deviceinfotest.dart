@@ -17,6 +17,10 @@ void Deviceinfotest() {
   print("Tags:         ${DeviceInfo.tag()}");
   print("Manufacturer: ${DeviceInfo.manufacturer()}");
   print("Device:       ${DeviceInfo.device()}");
-
-
+  print("Kernel Version: ${DeviceInfo.kernelversion()}");
+  print("==== [Device Fingerprint Info] ====");
+  print("==== [Device Apps Info] ====");
+  DeviceInfo.apps().then((value) {
+    print(value);
+  });
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
-
+import 'package:appcheck/appcheck.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:system_info2/system_info2.dart';
 
 class DeviceInfo {
   static late AndroidDeviceInfo _build;
@@ -67,6 +68,14 @@ class DeviceInfo {
 
   static String device(){
     return _build.device;
+  }
+
+  static String kernelversion(){
+    return SysInfo.kernelVersion;
+  }
+
+  static Future<List<AppInfo>?> apps()async{
+    return await AppCheck().getInstalledApps();
   }
 
   static int builddate({

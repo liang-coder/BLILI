@@ -32,7 +32,7 @@ class Property {
     this.roSerialno='',
     this.persistSysCountry='CN',
     this.roBootSerialno='',
-    this.gsmNetworkType='LTE',
+    this.gsmNetworkType='unknown',
     this.netEth0Gw='',
     this.netDns1='192.168.1.1',
     this.sysUsbState='none',
