@@ -21,6 +21,6 @@ void Deviceinfotest() {
   print("==== [Device Fingerprint Info] ====");
   print("==== [Device Apps Info] ====");
   DeviceInfo.apps().then((value) {
-    print(value);
+    print("Apps:    $value");
   });
 }

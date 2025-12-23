@@ -1,7 +1,9 @@
 import 'dart:math';
-import 'package:appcheck/appcheck.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:device_installed_apps/app_info.dart';
 import 'package:system_info2/system_info2.dart';
+import 'package:device_installed_apps/device_installed_apps.dart';
+import '../date/Date.dart';
 
 class DeviceInfo {
   static late AndroidDeviceInfo _build;
@@ -34,7 +36,7 @@ class DeviceInfo {
     return _build.model;
   }
 
-  static String product(){
+  static String product() {
     return _build.product;
   }
 
@@ -50,49 +52,59 @@ class DeviceInfo {
     return _build.supportedAbis;
   }
 
-  static List systemFeatures(){
+  static List systemFeatures() {
     return _build.systemFeatures;
   }
 
-  static String serialNumber(){
+  static String serialNumber() {
     return _build.serialNumber;
   }
 
-  static String tag(){
+  static String tag() {
     return _build.tags;
   }
 
-  static String manufacturer(){
+  static String manufacturer() {
     return _build.manufacturer;
   }
 
-  static String device(){
+  static String device() {
     return _build.device;
   }
 
-  static String kernelversion(){
+  static String kernelversion() {
     return SysInfo.kernelVersion;
   }
 
-  static Future<List<AppInfo>?> apps()async{
-    return await AppCheck().getInstalledApps();
+  static Future<List<String>> apps() async {
+    final permissions = [
+      'android.permission.NFC',
+      'android.permission.ACCESS_FINE_LOCATION'
+    ];
+
+    final List<AppInfo> sysapp = await DeviceInstalledApps.getSystemApps(
+        permissions: permissions, shouldHasAllPermissions: false);
+
+    final List<String> sysapp2 =
+        sysapp.map((e) => appinfoconver(appinfo: e, sysapp: '1')).toList();
+
+    final installapp = await DeviceInstalledApps.getApps(
+        permissions: permissions, shouldHasAllPermissions: false);
+
+    final List<String> installapp2 =
+        installapp.map((e) => appinfoconver(appinfo: e, sysapp: '0')).toList();
+
+    return sysapp2 + installapp2;
   }
 
-  static int builddate({
-    int startYear = 2020,
-    int endYear = 2025,
-  }) {
-    // 定义起始和结束时间（UTC）
-    final startDate = DateTime.utc(startYear, 1, 1);
-    final endDate = DateTime.utc(endYear, 12, 31, 23, 59, 59);
+  static String appinfoconver(
+      {required AppInfo appinfo, required String sysapp}) {
+    final int installtime = Date.RandomDate() * 1000;
+    return '$installtime,${appinfo.bundleId},$sysapp,${appinfo.versionName},${appinfo.versionCode},$installtime';
+  }
 
-    // 转换为 Unix 时间戳（秒）
-    final startSeconds = startDate.millisecondsSinceEpoch ~/ 1000;
-    final endSeconds = endDate.millisecondsSinceEpoch ~/ 1000;
-
-    // 生成随机时间戳（秒）
-    final random = Random();
-    return startSeconds + random.nextInt(endSeconds - startSeconds + 1);
+  static int builddate() {
+    return Date.RandomDate();
   }
 
   static String cpuhardware() {
@@ -112,36 +124,4 @@ class DeviceInfo {
     return "Qualcomm Technologies, Inc $chip";
   }
 
-  Map<String, dynamic> _readAndroid_buildData() {
-    return <String, dynamic>{
-      'version.securityPatch': _build.version.securityPatch,
-      'version.sdkInt': _build.version.sdkInt,
-      'version.release': _build.version.release,
-      'version.previewSdkInt': _build.version.previewSdkInt,
-      'version.incremental': _build.version.incremental,
-      'version.codename': _build.version.codename,
-      'version.baseOS': _build.version.baseOS,
-      'board': _build.board,
-      'bootloader': _build.bootloader,
-      'brand': _build.brand,
-      'device': _build.device,
-      'display': _build.display,
-      'fingerprint': _build.fingerprint,
-      'hardware': _build.hardware,
-      'host': _build.host,
-      'id': _build.id,
-      'manufacturer': _build.manufacturer,
-      'model': _build.model,
-      'product': _build.product,
-      'name': _build.name,
-      'supported32BitAbis': _build.supported32BitAbis,
-      'supported64BitAbis': _build.supported64BitAbis,
-      'supportedAbis': _build.supportedAbis,
-      'tags': _build.tags,
-      'type': _build.type,
-      'isPhysicalDevice': _build.isPhysicalDevice,
-      'systemFeatures': _build.systemFeatures,
-      'isLowRamDevice': _build.isLowRamDevice,
-    };
-  }
 }
