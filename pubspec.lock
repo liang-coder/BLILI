@@ -796,6 +796,14 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "3.3.0+3"
+  system_boot_time:
+    dependency: "direct main"
+    description:
+      name: system_boot_time
+      sha256: "4f90a5c1bd50e0375d4f77c30e1b5decd3ea7a131c5a4066cd53ed0dbd7101bc"
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.0.1"
   system_info2:
     dependency: "direct main"
     description:

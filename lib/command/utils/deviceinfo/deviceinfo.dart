@@ -4,6 +4,7 @@ import 'package:device_installed_apps/app_info.dart';
 import 'package:system_info2/system_info2.dart';
 import 'package:device_installed_apps/device_installed_apps.dart';
 import '../date/Date.dart';
+import 'package:system_boot_time/system_boot_time.dart';
 
 class DeviceInfo {
   static late AndroidDeviceInfo _build;
@@ -103,8 +104,13 @@ class DeviceInfo {
     return '$installtime,${appinfo.bundleId},$sysapp,${appinfo.versionName},${appinfo.versionCode},$installtime';
   }
 
-  static int builddate() {
+  static int osbuilddate() {
     return Date.RandomDate();
+  }
+
+  static Future<int> boottime()async{
+    final millsecond = (await SystemBootTime().second()) * 1000;
+    return millsecond;
   }
 
   static String cpuhardware() {
@@ -124,4 +130,18 @@ class DeviceInfo {
     return "Qualcomm Technologies, Inc $chip";
   }
 
+  static String DeviceAngle() {
+    final random = Random();
+
+    bool isLeft = random.nextBool();
+    double baseRoll = isLeft
+        ? -random.nextDouble() * 0.3 - 1.4
+        : random.nextDouble() * 0.3 + 1.4;
+
+    final double yaw = (random.nextDouble() * 2 - 1) * 1.0; // [-1.0, 1.0]
+    final double pitch = (random.nextDouble() * 2 - 1) * 0.5; // [-0.5, 0.5]
+
+    String f(double v) => v.toStringAsFixed(7);
+    return '${f(yaw)},${f(pitch)},${f(baseRoll)}';
+  }
 }

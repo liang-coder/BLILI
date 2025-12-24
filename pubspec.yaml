@@ -48,6 +48,7 @@ dependencies:
   encrypt: ^5.0.3
   system_info2: ^4.1.0
   device_installed_apps: ^1.0.1
+  system_boot_time: ^0.0.1
 
 
 

@@ -20,6 +20,12 @@ void Deviceinfotest() {
   print("Kernel Version: ${DeviceInfo.kernelversion()}");
   print("==== [Device Fingerprint Info] ====");
   print("==== [Device Apps Info] ====");
+  print("Build Date: ${DeviceInfo.osbuilddate()}");
+  DeviceInfo.boottime().then((value) {
+    print("Boot Time:    $value");
+  });
+  print("Device Angle: ${DeviceInfo.DeviceAngle()}");
+  print("==== [Device Apps Info] ====");
   DeviceInfo.apps().then((value) {
     print("Apps:    $value");
   });
