@@ -5,6 +5,8 @@ import 'package:system_info2/system_info2.dart';
 import 'package:device_installed_apps/device_installed_apps.dart';
 import '../date/Date.dart';
 import 'package:system_boot_time/system_boot_time.dart';
+import 'package:uuid/uuid.dart';
+import '../sharepreference/sharepreference.dart';
 
 class DeviceInfo {
   static late AndroidDeviceInfo _build;
@@ -128,6 +130,11 @@ class DeviceInfo {
     final random = Random();
     final chip = eightCoreChips[random.nextInt(eightCoreChips.length)];
     return "Qualcomm Technologies, Inc $chip";
+  }
+
+  static String Guid(){
+    final bool guid = Shareperference.checkKey('guid');
+    return '';
   }
 
   static String DeviceAngle() {

@@ -49,6 +49,9 @@ dependencies:
   system_info2: ^4.1.0
   device_installed_apps: ^1.0.1
   system_boot_time: ^0.0.1
+  shared_preferences: ^2.5.3
+  flutter_displaymode: ^0.7.0
+
 
 
 

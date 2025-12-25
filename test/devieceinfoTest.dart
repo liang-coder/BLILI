@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:blili/command/utils/deviceinfo/deviceinfo.dart';
+import 'package:blili/command/utils/device/deviceinfo.dart';
 
 void main() async {
   // 1. 必须确保 Flutter 引擎环境已初始化

@@ -1,3 +1,4 @@
+
 class MainInfo {
   final String? strBrightness; // "102"
   final String? appVersion; // "2.0.1"
@@ -243,7 +244,7 @@ class MainInfo {
     this.batteryVoltage = 3600,
     this.memory,
     this.mid,
-    this.emu,
+    this.emu = "011",
     this.drmid,
     this.isRoot = false,
     this.battery = 100,
@@ -271,17 +272,17 @@ class MainInfo {
     this.totalSpace,
     this.accessibilityService,
     this.osver,
-    this.chid,
+    this.chid = "bili",
     this.androidapp20,
-    this.biometrics,
+    this.biometrics = "touchid",
     this.lastDumpTs,
-    this.brightness,
-    this.gyroscopeSensor,
+    this.brightness = 102,
+    this.gyroscopeSensor = 1,
     this.t,
     this.kernelVersion,
     this.usbConnected = 1,
-    this.cpuFreq,
-    this.gpsSensor,
+    this.cpuFreq = 3265600,
+    this.gpsSensor = 1,
     this.dataActivityState = 0,
     this.axposed = false,
     this.batteryHealth = 2,

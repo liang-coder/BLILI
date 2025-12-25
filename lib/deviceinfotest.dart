@@ -1,4 +1,4 @@
-import 'command/utils/deviceinfo/deviceinfo.dart';
+import 'command/utils/device/deviceinfo.dart';
 
 void Deviceinfotest() {
   print("==== [Device Fingerprint Info] ====");
