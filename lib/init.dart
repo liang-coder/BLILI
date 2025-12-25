@@ -1,4 +1,4 @@
-import 'package:blili/command/utils/deviceinfo/deviceinfo.dart';
+import 'package:blili/command/utils/device/deviceinfo.dart';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 

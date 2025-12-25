@@ -10,6 +10,7 @@ import '../sharepreference/sharepreference.dart';
 
 class DeviceInfo {
   static late AndroidDeviceInfo _build;
+  static const int megaByte = 1024 * 1024;
 
   Future<void> init() async {
     _build = await DeviceInfoPlugin().androidInfo;
@@ -110,7 +111,7 @@ class DeviceInfo {
     return Date.RandomDate();
   }
 
-  static Future<int> boottime()async{
+  static Future<int> boottime() async {
     final millsecond = (await SystemBootTime().second()) * 1000;
     return millsecond;
   }
@@ -132,9 +133,35 @@ class DeviceInfo {
     return "Qualcomm Technologies, Inc $chip";
   }
 
-  static String Guid(){
+  static String Guid() {
     final bool guid = Shareperference.checkKey('guid');
-    return '';
+
+    if (guid) {
+      return Shareperference.getString('guid')!;
+    }
+
+    final uuid = Uuid();
+    final guid2 = uuid.v1();
+
+    Shareperference.setString('guid', guid2);
+
+    return guid2;
+  }
+
+  static int PhysicalMemory() {
+    return SysInfo.getTotalPhysicalMemory() ~/ megaByte;
+  }
+
+  static int TotalStorage() {
+    return SysInfo.getTotalStorage() ~/ megaByte;
+  }
+
+  static int FreeStorage() {
+    return SysInfo.getFreeStorage() ~/ megaByte;
+  }
+
+  static int FreePhysicalMemory() {
+    return SysInfo.getFreePhysicalMemory() ~/ megaByte;
   }
 
   static String DeviceAngle() {

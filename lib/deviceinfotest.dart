@@ -18,6 +18,11 @@ void Deviceinfotest() {
   print("Manufacturer: ${DeviceInfo.manufacturer()}");
   print("Device:       ${DeviceInfo.device()}");
   print("Kernel Version: ${DeviceInfo.kernelversion()}");
+  print("PhysicalMemory:   ${DeviceInfo.PhysicalMemory()}");
+  print("FreePhysicalMemory:   ${DeviceInfo.FreePhysicalMemory()}");
+  print("TotalStorage:   ${DeviceInfo.TotalStorage()}");
+  print("FreeStorage:   ${DeviceInfo.FreeStorage()}");
+
   print("==== [Device Fingerprint Info] ====");
   print("==== [Device Apps Info] ====");
   print("Build Date: ${DeviceInfo.osbuilddate()}");
