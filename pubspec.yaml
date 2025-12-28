@@ -51,6 +51,8 @@ dependencies:
   system_boot_time: ^0.0.1
   shared_preferences: ^2.5.3
   flutter_displaymode: ^0.7.0
+  android_id: ^0.5.1
+
 
 
 

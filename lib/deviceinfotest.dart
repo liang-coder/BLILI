@@ -11,6 +11,7 @@ void Deviceinfotest() {
   print("Release:      ${DeviceInfo.release()}");
   print("Build ID:     ${DeviceInfo.id()}");
   print("Display:      ${DeviceInfo.display()}");
+  print("processid:     ${DeviceInfo.processid()}");
   print("Fingerprint:  ${DeviceInfo.fingerprint()}");
   print("Supported ABIs: ${DeviceInfo.supportedAbis()}");
   print("Serial Number: ${DeviceInfo.serialNumber()}");
@@ -33,5 +34,11 @@ void Deviceinfotest() {
   print("==== [Device Apps Info] ====");
   DeviceInfo.apps().then((value) {
     print("Apps:    $value");
+  });
+  DeviceInfo.sysapps().then((value) {
+    print("sysapps:    $value");
+  });
+  DeviceInfo.androidid().then((value) {
+    print("androidid:    $value");
   });
 }

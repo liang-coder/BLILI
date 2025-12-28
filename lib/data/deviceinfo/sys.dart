@@ -24,14 +24,14 @@ class Sys {
     this.cpuAbiLibc,
     this.manufacturer,
     this.cpuHardware,
-    this.cpuProcessor,
+    this.cpuProcessor = 'AArch64 Processor rev 8 (aarch64)',
     this.cpuAbiLibc64,
     this.cpuAbi,
     this.serial = 'unknown',
     this.cpuFeatures = 'fp asimd evtstrm aes pmull sha1 sha2 crc32',
     this.fingerprint,
     this.cpuAbi2 = 'arm64-v8a',
-    this.device,
+    this.device = "unknown",
     this.hardware = 'qcom',
   });
 

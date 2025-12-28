@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:android_id/android_id.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:device_installed_apps/app_info.dart';
 import 'package:system_info2/system_info2.dart';
@@ -7,10 +8,12 @@ import '../date/Date.dart';
 import 'package:system_boot_time/system_boot_time.dart';
 import 'package:uuid/uuid.dart';
 import '../sharepreference/sharepreference.dart';
+import '../dataconverter/dataconverter.dart';
 
 class DeviceInfo {
   static late AndroidDeviceInfo _build;
-  static const int megaByte = 1024 * 1024;
+  static const _androidIdPlugin = AndroidId();
+  static const int _megaByte = 1024 * 1024;
 
   Future<void> init() async {
     _build = await DeviceInfoPlugin().androidInfo;
@@ -80,7 +83,15 @@ class DeviceInfo {
     return SysInfo.kernelVersion;
   }
 
-  static Future<List<String>> apps() async {
+  static String processid() {
+    return SysInfo.userId;
+  }
+
+  static Future<String?> androidid() async {
+    return await _androidIdPlugin.getId();
+  }
+
+  static Future<List<String>> sysapps() async {
     final permissions = [
       'android.permission.NFC',
       'android.permission.ACCESS_FINE_LOCATION'
@@ -89,26 +100,40 @@ class DeviceInfo {
     final List<AppInfo> sysapp = await DeviceInstalledApps.getSystemApps(
         permissions: permissions, shouldHasAllPermissions: false);
 
-    final List<String> sysapp2 =
-        sysapp.map((e) => appinfoconver(appinfo: e, sysapp: '1')).toList();
+    final List<String> sysapp2 = sysapp
+        .map((e) => DataConverter.appinfoconver(appinfo: e, sysapp: '1'))
+        .toList();
+
+    return sysapp2;
+  }
+
+  static Future<List<String>> apps() async {
+    final permissions = [
+      'android.permission.NFC',
+      'android.permission.ACCESS_FINE_LOCATION'
+    ];
 
     final installapp = await DeviceInstalledApps.getApps(
         permissions: permissions, shouldHasAllPermissions: false);
 
-    final List<String> installapp2 =
-        installapp.map((e) => appinfoconver(appinfo: e, sysapp: '0')).toList();
+    final List<String> installapp2 = installapp
+        .map((e) => DataConverter.appinfoconver(appinfo: e, sysapp: '0'))
+        .toList();
 
-    return sysapp2 + installapp2;
-  }
-
-  static String appinfoconver(
-      {required AppInfo appinfo, required String sysapp}) {
-    final int installtime = Date.RandomDate() * 1000;
-    return '$installtime,${appinfo.bundleId},$sysapp,${appinfo.versionName},${appinfo.versionCode},$installtime';
+    return installapp2;
   }
 
   static int osbuilddate() {
-    return Date.RandomDate();
+    final bool builddata = Shareperference.checkKey('osbuilddate');
+    if (builddata) {
+      return Shareperference.getInt('osbuilddate')!;
+    }
+
+    final int builddata2 = Date.RandomDate();
+
+    Shareperference.setInt('osbuilddate', builddata2);
+
+    return builddata2;
   }
 
   static Future<int> boottime() async {
@@ -149,19 +174,19 @@ class DeviceInfo {
   }
 
   static int PhysicalMemory() {
-    return SysInfo.getTotalPhysicalMemory() ~/ megaByte;
+    return SysInfo.getTotalPhysicalMemory() ~/ _megaByte;
   }
 
   static int TotalStorage() {
-    return SysInfo.getTotalStorage() ~/ megaByte;
+    return SysInfo.getTotalStorage() ~/ _megaByte;
   }
 
   static int FreeStorage() {
-    return SysInfo.getFreeStorage() ~/ megaByte;
+    return SysInfo.getFreeStorage() ~/ _megaByte;
   }
 
   static int FreePhysicalMemory() {
-    return SysInfo.getFreePhysicalMemory() ~/ megaByte;
+    return SysInfo.getFreePhysicalMemory() ~/ _megaByte;
   }
 
   static String DeviceAngle() {

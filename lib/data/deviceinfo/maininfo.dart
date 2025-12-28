@@ -1,4 +1,3 @@
-
 class MainInfo {
   final String? strBrightness; // "102"
   final String? appVersion; // "2.0.1"
@@ -243,7 +242,7 @@ class MainInfo {
     this.virtual = 0,
     this.batteryVoltage = 3600,
     this.memory,
-    this.mid,
+    this.mid = '',
     this.emu = "011",
     this.drmid,
     this.isRoot = false,
@@ -252,7 +251,7 @@ class MainInfo {
     this.uid,
     this.dataConnectState = 0,
     this.glimit,
-    this.adid = '',
+    this.adid,
     this.mem,
     this.countryIso = 'CN',
     this.root = 0,
@@ -275,7 +274,7 @@ class MainInfo {
     this.chid = "bili",
     this.androidapp20,
     this.biometrics = "touchid",
-    this.lastDumpTs,
+    this.lastDumpTs = 1766222678300,
     this.brightness = 102,
     this.gyroscopeSensor = 1,
     this.t,
