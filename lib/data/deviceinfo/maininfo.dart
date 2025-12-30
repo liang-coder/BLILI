@@ -7,14 +7,14 @@ class MainInfo {
   final String? screen; // "1600,900,320"
   final String? uiVersion; // "pq3a.190605.07291528 release-keys"
   final int? linearSpeedSensor; // 1
-  final List<dynamic>? virtualproc; // []
+  final List<String>? virtualproc; // []
   final List<SensorsInfo>? sensorsInfo;
-  final int? appVersionCode; // 2001100
+  final String? appVersionCode; // 2001100
   final String? batteryState; // "BATTERY_STATUS_CHARGING"
   final String? aaid;
   final String? model; // "HPB-AN00"
   final String? band;
-  final int? appId; // 5
+  final String? appId; // 5
   final String? brand; // "HUAWEI"
   final int? cpuCount; // 4
   final int? biometric; // 1
@@ -34,7 +34,7 @@ class MainInfo {
       sensor; // ["LSM330 Accelerometer,STMicroelectronics", ...]
   final String? gadid;
   final int? fstorage; // 33213308928
-  final int? virtual; // 0
+  final String? virtual; // 0
   final int? batteryVoltage; // 3600
   final int? memory; // 4138496000
   final String? mid;
@@ -64,7 +64,7 @@ class MainInfo {
   final int? systemvolume; // 5
   final int? freeMemory; // 3436494848
   final int? totalSpace; // 35139592192
-  final List<dynamic>? accessibilityService;
+  final List<String>? accessibilityService;
   final int? osver; // 9
   final String? chid; // "bili"
   final List<String>? androidapp20;
@@ -96,118 +96,129 @@ class MainInfo {
       SensorsInfo(
           name: "BMA280 Accelerometer",
           vendor: "Bosch Sensortec",
-          version: "1",
-          type: "1",
-          maxRange: "19.6133",
-          resolution: "0.0024",
-          power: "0.18",
-          minDelay: "10000"),
+          version: 1,
+          type: 1,
+          maxRange: 19.6133,
+          resolution: 0.0024,
+          power: 0.18,
+          minDelay: 10000),
       SensorsInfo(
-          name: "ICM-20600 Gyroscope",
-          vendor: "TDK InvenSense",
-          version: "2",
-          type: "4",
-          maxRange: "34.9066",
-          resolution: "0.0005",
-          power: "0.25",
-          minDelay: "5000"),
+        name: "ICM-20600 Gyroscope",
+        vendor: "TDK InvenSense",
+        version: 2,
+        type: 4,
+        maxRange: 34.9066,
+        resolution: 0.0005,
+        power: 0.25,
+        minDelay: 5000,
+      ),
       SensorsInfo(
-          name: "AK09918 Magnetometer",
-          vendor: "Asahi Kasei Microdevices",
-          version: "1",
-          type: "2",
-          maxRange: "4912.0",
-          resolution: "0.15",
-          power: "0.24",
-          minDelay: "20000"),
+        name: "AK09918 Magnetometer",
+        vendor: "Asahi Kasei Microdevices",
+        version: 1,
+        type: 2,
+        maxRange: 4912.0,
+        resolution: 0.15,
+        power: 0.24,
+        minDelay: 20000,
+      ),
       SensorsInfo(
-          name: "LTR-578ALS Light Sensor",
-          vendor: "Lite-On Technology",
-          version: "1",
-          type: "5",
-          maxRange: "65535.0",
-          resolution: "1.0",
-          power: "0.05",
-          minDelay: "100000"),
+        name: "LTR-578ALS Light Sensor",
+        vendor: "Lite-On Technology",
+        version: 1,
+        type: 5,
+        maxRange: 65535.0,
+        resolution: 1.0,
+        power: 0.05,
+        minDelay: 100000,
+      ),
       SensorsInfo(
-          name: "VCNL4040 Proximity Sensor",
-          vendor: "Vishay Intertechnology",
-          version: "1",
-          type: "8",
-          maxRange: "10.0",
-          resolution: "0.1",
-          power: "0.12",
-          minDelay: "50000"),
+        name: "VCNL4040 Proximity Sensor",
+        vendor: "Vishay Intertechnology",
+        version: 1,
+        type: 8,
+        maxRange: 10.0,
+        resolution: 0.1,
+        power: 0.12,
+        minDelay: 50000,
+      ),
       SensorsInfo(
-          name: "Linear Acceleration",
-          vendor: "Qualcomm Technologies Inc.",
-          version: "3",
-          type: "10",
-          maxRange: "19.6133",
-          resolution: "0.01",
-          power: "0.5",
-          minDelay: "5000"),
+        name: "Linear Acceleration",
+        vendor: "Qualcomm Technologies Inc.",
+        version: 3,
+        type: 10,
+        maxRange: 19.6133,
+        resolution: 0.01,
+        power: 0.5,
+        minDelay: 5000,
+      ),
       SensorsInfo(
-          name: "Gravity Sensor",
-          vendor: "AOSP",
-          version: "1",
-          type: "9",
-          maxRange: "19.6133",
-          resolution: "0.01",
-          power: "0.5",
-          minDelay: "5000"),
+        name: "Gravity Sensor",
+        vendor: "AOSP",
+        version: 1,
+        type: 9,
+        maxRange: 19.6133,
+        resolution: 0.01,
+        power: 0.5,
+        minDelay: 5000,
+      ),
       SensorsInfo(
-          name: "Rotation Vector Sensor",
-          vendor: "AOSP",
-          version: "2",
-          type: "11",
-          maxRange: "1.0",
-          resolution: "0.00001",
-          power: "0.6",
-          minDelay: "5000"),
+        name: "Rotation Vector Sensor",
+        vendor: "AOSP",
+        version: 2,
+        type: 11,
+        maxRange: 1.0,
+        resolution: 0.00001,
+        power: 0.6,
+        minDelay: 5000,
+      ),
       SensorsInfo(
-          name: "Game Rotation Vector",
-          vendor: "AOSP",
-          version: "1",
-          type: "15",
-          maxRange: "1.0",
-          resolution: "0.00001",
-          power: "0.55",
-          minDelay: "5000"),
+        name: "Game Rotation Vector",
+        vendor: "AOSP",
+        version: 1,
+        type: 15,
+        maxRange: 1.0,
+        resolution: 0.00001,
+        power: 0.55,
+        minDelay: 5000,
+      ),
       SensorsInfo(
-          name: "Geomagnetic Rotation Vector",
-          vendor: "AOSP",
-          version: "1",
-          type: "20",
-          maxRange: "1.0",
-          resolution: "0.00001",
-          power: "0.65",
-          minDelay: "10000"),
+        name: "Geomagnetic Rotation Vector",
+        vendor: "AOSP",
+        version: 1,
+        type: 20,
+        maxRange: 1.0,
+        resolution: 0.00001,
+        power: 0.65,
+        minDelay: 10000,
+      ),
       SensorsInfo(
-          name: "Orientation Sensor",
-          vendor: "Yamaha Corporation",
-          version: "1",
-          type: "3",
-          maxRange: "360.0",
-          resolution: "0.1",
-          power: "0.4",
-          minDelay: "20000"),
+        name: "Orientation Sensor",
+        vendor: "Yamaha Corporation",
+        version: 1,
+        type: 3,
+        maxRange: 360.0,
+        resolution: 0.1,
+        power: 0.4,
+        minDelay: 20000,
+      ),
       SensorsInfo(
-          name: "Barometer BMP280",
-          vendor: "Bosch Sensortec",
-          version: "1",
-          type: "6",
-          maxRange: "1100.0",
-          resolution: "0.012",
-          power: "0.07",
-          minDelay: "100000")
+        name: "Barometer BMP280",
+        vendor: "Bosch Sensortec",
+        version: 1,
+        type: 6,
+        maxRange: 1100.0,
+        resolution: 0.012,
+        power: 0.07,
+        minDelay: 100000,
+      )
     ],
-    this.appVersionCode = 2001100,
+    this.appVersionCode = '2001100',
     this.batteryState = "BATTERY_STATUS_CHARGING",
     this.aaid,
     this.model,
     this.band,
-    this.appId = 5,
+    this.appId = '5',
     this.brand,
     this.cpuCount = 8,
     this.biometric = 1,
@@ -220,7 +231,7 @@ class MainInfo {
     this.strBattery = "100",
     this.vaid,
     this.buildId = "PQ3A.190605.07291528 release-keys",
-    this.androidappcnt,
+    this.androidappcnt = 0,
     this.guid,
     this.files = '/data/user/0/tv.danmaku.bilibilihd/files',
     this.sensor = const [
@@ -239,7 +250,7 @@ class MainInfo {
     ],
     this.gadid,
     this.fstorage,
-    this.virtual = 0,
+    this.virtual = '0',
     this.batteryVoltage = 3600,
     this.memory,
     this.mid = '',
@@ -269,7 +280,7 @@ class MainInfo {
     this.systemvolume = 5,
     this.freeMemory,
     this.totalSpace,
-    this.accessibilityService,
+    this.accessibilityService = const [],
     this.osver,
     this.chid = "bili",
     this.androidapp20,
@@ -379,12 +390,12 @@ class MainInfo {
 class SensorsInfo {
   final String? name;
   final String? vendor;
-  final String? version;
-  final String? type;
-  final String? maxRange;
-  final String? resolution;
-  final String? power;
-  final String? minDelay;
+  final int? version;
+  final int? type;
+  final double? maxRange;
+  final double? resolution;
+  final double? power;
+  final int? minDelay;
 
   const SensorsInfo(
       {this.name,

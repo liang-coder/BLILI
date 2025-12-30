@@ -663,6 +663,22 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "1.5.2"
+  protobuf:
+    dependency: "direct main"
+    description:
+      name: protobuf
+      sha256: "579fe5557eae58e3adca2e999e38f02441d8aa908703854a9e0a0f47fa857731"
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "4.1.0"
+  protoc_plugin:
+    dependency: "direct dev"
+    description:
+      name: protoc_plugin
+      sha256: e7f67aa1c79301c673b510241734b3717cc678d0d4e6433910bccb243198d782
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "22.4.0"
   pub_semver:
     dependency: transitive
     description:

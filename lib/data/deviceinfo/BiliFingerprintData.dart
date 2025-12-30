@@ -24,9 +24,9 @@ class BiliFingerprintData {
   // 如果需要生成标准 JSON 字符串
   String toJsonString() {
     return jsonEncode({
-      "main": main,
-      "property": property,
-      "sys": sys,
+      "main": main.toMap(),
+      "property": property.toMap(),
+      "sys": sys.toMap(),
     });
   }
 }
