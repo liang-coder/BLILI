@@ -1,0 +1,84 @@
+import 'dart:math';
+import 'dart:typed_data';
+import '../encrypt/traceid.dart';
+import 'package:blili/command/utils/sharepreference/sharepreference.dart';
+import 'package:uuid/uuid.dart';
+import 'dart:convert';
+import '../logger/logger.dart';
+import '../encrypt/info.dart';
+import 'package:crypto/crypto.dart';
+import '../encrypt/fp.dart';
+
+class Id {
+  static String deviceInfoid({required String device}) {
+    return Info.encryptDeviceInfo(device);
+  }
+
+  static String buvid() {
+    final bool checkbuvid = Shareperference.checkKey('buvid');
+
+    if (checkbuvid) {
+      final String buvid = Shareperference.getString('buvid')!;
+      appLogger.LoggerI('buvid: $buvid');
+      return buvid;
+    }
+
+    final Uuid _uuid = Uuid();
+    final String id = _uuid.v4().replaceAll('-', '');
+    final String id_md5 = md5.convert(utf8.encode(id)).toString();
+    String id_e = '';
+    try {
+      id_e = '${id_md5[2]}${id_md5[12]}${id_md5[22]}';
+    } catch (e) {
+      id_e = '000';
+    }
+
+    final String buvid = 'XY${id_e}${id_md5}'.toUpperCase();
+    appLogger.LoggerI('buvid is $buvid');
+
+    Shareperference.setString('buvid', buvid);
+
+    appLogger.LoggerI('buvid: $buvid');
+
+    return buvid;
+  }
+
+  static String fp(
+      {required String buvid,
+      required String PhoneModel,
+      required String RadioVersion}) {
+    final bool checkfp = Shareperference.checkKey('fp');
+
+    if (checkfp) {
+      final String fp = Shareperference.getString('fp')!;
+      appLogger.LoggerI('fp: $fp');
+      return fp;
+    }
+
+    final Fp _fp = Fp();
+
+    final String fp = _fp.getfp(
+        buvid: buvid, PhoneModel: PhoneModel, RadioVersion: RadioVersion);
+
+    Shareperference.setString('fp', fp);
+
+    appLogger.LoggerI('fp: $fp');
+
+    return fp;
+  }
+
+  static String sessionid() {
+    final random = Random.secure();
+    final bytes = Uint8List(4);
+    for (var i = 0; i < 4; i++) {
+      bytes[i] = random.nextInt(256);
+    }
+    final sessionId =
+        bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+    return sessionId;
+  }
+
+  static String traceid() {
+    return TraceId.genTraceId();
+  }
+}

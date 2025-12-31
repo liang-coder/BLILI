@@ -1,6 +1,5 @@
-import 'package:blili/command/utils/buvid/buvid.dart';
+import 'package:blili/command/utils/device/id.dart';
 
-void main(){
-  buvid.getbuvid();
-
+void main() {
+  Id.buvid();
 }

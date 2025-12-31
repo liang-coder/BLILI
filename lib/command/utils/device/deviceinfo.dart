@@ -142,6 +142,12 @@ class DeviceInfo {
   }
 
   static String cpuhardware() {
+    final bool checkcpuhardware = Shareperference.checkKey('cpuhardware');
+
+    if (checkcpuhardware) {
+      return Shareperference.getString('cpuhardware')!;
+    }
+
     final List<String> eightCoreChips = [
       // Snapdragon 8 系列
       "MSM8998", "SM8150", "SM8250", "SM8350", "SM8450", "SM8550", "SM8650",
@@ -155,7 +161,10 @@ class DeviceInfo {
 
     final random = Random();
     final chip = eightCoreChips[random.nextInt(eightCoreChips.length)];
-    return "Qualcomm Technologies, Inc $chip";
+    final String chip2 = "Qualcomm Technologies, Inc $chip";
+    Shareperference.setString('cpuhardware', chip2);
+
+    return chip2;
   }
 
   static String Guid() {

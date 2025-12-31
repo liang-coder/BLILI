@@ -1,10 +1,10 @@
-import 'package:blili/command/http/singer.dart';
+import 'package:blili/command/utils/encrypt/basic.dart';
 
 void main() {
   final Singer singer = Singer();
 
   final Map<String, String> params = {
-    "ad_extra":"",
+    "ad_extra": "",
     "auto_refresh_state": "1",
     "autoplay_card": "2",
     "autoplay_timestamp": "1748270213",

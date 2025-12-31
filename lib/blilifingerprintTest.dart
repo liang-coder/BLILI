@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:ffi';
+import 'dart:typed_data';
 import 'package:blili/protos/dart/blilifingerprint/blilifingerprint.pb.dart';
 import 'package:blili/command/utils/date/Date.dart';
 import 'package:blili/command/utils/logger/logger.dart';
@@ -13,6 +14,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:blili/command/utils/device/deviceinfo.dart';
 import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:protobuf/protobuf.dart';
+import 'package:blili/command/utils/device/id.dart';
+import 'package:blili/command/utils/encrypt/blilifingerpritencrypt.dart';
 
 void BiliFingerprinttest() async {
   final int boottime = await DeviceInfo.boottime();
@@ -33,8 +36,7 @@ void BiliFingerprinttest() async {
 
   final MainInfo mainInfo = MainInfo(
       brand: DeviceInfo.brand(),
-      screen:
-          '${ScreenUtil().screenWidth},${ScreenUtil().screenHeight},320',
+      screen: '${ScreenUtil().screenWidth.toInt()},${ScreenUtil().screenHeight.toInt()},320',
       model: DeviceInfo.model(),
       guid: DeviceInfo.Guid(),
       freeMemory: DeviceInfo.FreePhysicalMemory(),
@@ -116,7 +118,7 @@ void BiliFingerprinttest() async {
   blilifingerprint.virtual = mainInfo.virtual!;
   blilifingerprint.batteryVoltage = mainInfo.batteryVoltage!;
   blilifingerprint.memory = Int64(mainInfo.memory!);
-  blilifingerprint.mid = mainInfo.mid!;
+  // blilifingerprint.mid = mainInfo.mid!;
   blilifingerprint.emu = mainInfo.emu!;
   blilifingerprint.isRoot = mainInfo.isRoot! ? 1 : 0;
   blilifingerprint.battery = mainInfo.battery!;
@@ -154,17 +156,24 @@ void BiliFingerprinttest() async {
   blilifingerprint.first = mainInfo.first!.toString();
   blilifingerprint.gyroscopeSensor = mainInfo.gyroscopeSensor!;
   blilifingerprint.uiVersion = mainInfo.uiVersion!;
+  blilifingerprint.buvidLocal =
+      Id.fp(buvid: Id.buvid(), PhoneModel: mainInfo.model!, RadioVersion: '');
 
-  property.toMap().forEach((k, v) =>
-      blilifingerprint.props.add(BiliFingerprint_Property(key: k, value: v.toString())));
-  sys.toMap().forEach((k, v) =>
-      blilifingerprint.sys.add(BiliFingerprint_Property(key: k, value: v.toString())));
+  DataConverter.convertPropertyToPb(property, blilifingerprint.props);
+  // property.toMap().forEach((k, v) =>
+  //     blilifingerprint.props.add(BiliFingerprint_Property(key: k, value: v.toString())));
+  sys.toMap().forEach((k, v) => blilifingerprint.sys
+      .add(BiliFingerprint_Property(key: k, value: v.toString())));
 
   // blilifingerprint.props
 
   // blilifingerprint.buvidLocal =
 
-  log(blilifingerprint.writeToBuffer().toString());
+  final Uint8List blilifingerprintbyte = blilifingerprint.writeToBuffer();
+
+  final Map result = await FingerprintEncrypt.encryptContent(blilifingerprintbyte);
+
+  log(result.toString());
 
   // final BiliFingerprintData biliFingerprintData =
   //     BiliFingerprintData(main: mainInfo, property: property, sys: sys);

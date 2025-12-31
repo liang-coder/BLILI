@@ -1,6 +1,7 @@
 import 'package:encrypt/encrypt.dart';
 
-class BDeviceInfoEncryptor {
+
+class Info{
   static String encryptDeviceInfo(String plainText) {
     const String _KEY = 'fgjhloasyervopst'; // 16 bytes
 
@@ -11,7 +12,7 @@ class BDeviceInfoEncryptor {
       // 2. 配置 AES 加密器
       // Java 的 PKCS5Padding 在 AES (16字节块) 中等同于 PKCS7
       final encrypter =
-          Encrypter(AES(key, mode: AESMode.ecb, padding: 'PKCS7'));
+      Encrypter(AES(key, mode: AESMode.ecb, padding: 'PKCS7'));
 
       // 3. 执行加密
       final encrypted = encrypter.encrypt(plainText);
@@ -24,4 +25,7 @@ class BDeviceInfoEncryptor {
       return "";
     }
   }
+
+
+
 }

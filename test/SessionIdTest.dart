@@ -1,7 +1,5 @@
-import 'package:blili/command/utils/sessionid/sessionid.dart';
+import 'package:blili/command/utils/device/id.dart';
 
 void main(){
-  final Sessionid sessionid = Sessionid();
-
-  print(sessionid.getid());
+  print(Id.sessionid());
 }
