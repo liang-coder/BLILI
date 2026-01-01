@@ -10,7 +10,8 @@ abstract class Routes {
   static const LIVE = _Paths.LIVE;
   static const SEARCH = _Paths.SEARCH;
   static const SETTING = _Paths.SETTING;
-  static const USER =  _Paths.USER;
+  static const USER = _Paths.USER;
+  static const SPLASH = _Paths.SPLASH;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const SEARCH = '/search';
   static const SETTING = '/setting';
   static const USER = '/user';
+  static const SPLASH = '/splash';
 }

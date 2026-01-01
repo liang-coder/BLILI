@@ -10,7 +10,7 @@ import 'blilifingerprintTest.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Init.init();
-  BiliFingerprinttest();
+  // BiliFingerprinttest();
 
 
   runApp(

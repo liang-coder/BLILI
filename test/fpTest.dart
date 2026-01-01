@@ -6,6 +6,5 @@ void main() {
   final String RadioVersion = '';
 
   // 打印结果
-  print(
-      'Calculated fp: ${Id.fp(buvid: buvid, PhoneModel: PhoneModel, RadioVersion: RadioVersion)}');
+  print('Calculated fp: ${Id.fp()}');
 }

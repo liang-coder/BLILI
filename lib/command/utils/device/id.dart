@@ -8,6 +8,7 @@ import '../logger/logger.dart';
 import '../encrypt/info.dart';
 import 'package:crypto/crypto.dart';
 import '../encrypt/fp.dart';
+import 'deviceinfo.dart';
 
 class Id {
   static String deviceInfoid({required String device}) {
@@ -43,10 +44,7 @@ class Id {
     return buvid;
   }
 
-  static String fp(
-      {required String buvid,
-      required String PhoneModel,
-      required String RadioVersion}) {
+  static String fp() {
     final bool checkfp = Shareperference.checkKey('fp');
 
     if (checkfp) {
@@ -58,7 +56,7 @@ class Id {
     final Fp _fp = Fp();
 
     final String fp = _fp.getfp(
-        buvid: buvid, PhoneModel: PhoneModel, RadioVersion: RadioVersion);
+        buvid: buvid(), PhoneModel: DeviceInfo.model(), RadioVersion: '');
 
     Shareperference.setString('fp', fp);
 

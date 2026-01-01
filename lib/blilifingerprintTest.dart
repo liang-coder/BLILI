@@ -1,11 +1,7 @@
 import 'dart:developer';
-import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:blili/protos/dart/blilifingerprint/blilifingerprint.pb.dart';
-import 'package:blili/command/utils/date/Date.dart';
-import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
-import 'package:blili/data/deviceinfo/BiliFingerprintData.dart';
 import 'package:blili/data/deviceinfo/maininfo.dart';
 import 'package:blili/data/deviceinfo/property.dart';
 import 'package:blili/data/deviceinfo/sys.dart';
@@ -13,7 +9,6 @@ import 'package:fixnum/src/int64.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:blili/command/utils/device/deviceinfo.dart';
 import 'package:blili/command/utils/dataconverter/dataconverter.dart';
-import 'package:protobuf/protobuf.dart';
 import 'package:blili/command/utils/device/id.dart';
 import 'package:blili/command/utils/encrypt/blilifingerpritencrypt.dart';
 
@@ -157,7 +152,7 @@ void BiliFingerprinttest() async {
   blilifingerprint.gyroscopeSensor = mainInfo.gyroscopeSensor!;
   blilifingerprint.uiVersion = mainInfo.uiVersion!;
   blilifingerprint.buvidLocal =
-      Id.fp(buvid: Id.buvid(), PhoneModel: mainInfo.model!, RadioVersion: '');
+      Id.fp();
 
   DataConverter.convertPropertyToPb(property, blilifingerprint.props);
   // property.toMap().forEach((k, v) =>

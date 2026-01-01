@@ -18,4 +18,13 @@ class Api {
         queryParameters: queryParameters, options: option,data: data);
     return result;
   }
+
+  static Future<Response> getticket(
+      {required Map<String, dynamic> queryParameters,
+        required Options option,required Map<String, dynamic> data}) async {
+    final result = await DioClient.dio.post('/bilibili.api.ticket.v1.Ticket/GetTicket',
+        queryParameters: queryParameters, options: option,data: data);
+    return result;
+  }
+
 }

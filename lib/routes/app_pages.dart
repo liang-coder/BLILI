@@ -14,6 +14,8 @@ import '../pages/setting/bindings/setting_binding.dart';
 import '../pages/setting/views/setting_view.dart';
 import '../pages/space/bindings/space_binding.dart';
 import '../pages/space/views/space_view.dart';
+import '../pages/splash/bindings/splash_binding.dart';
+import '../pages/splash/views/splash_view.dart';
 import '../pages/user/bindings/user_binding.dart';
 import '../pages/user/views/user_view.dart';
 
@@ -22,7 +24,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.INDEX;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -34,6 +36,7 @@ class AppPages {
       name: _Paths.INDEX,
       page: () => const IndexView(),
       binding: IndexBinding(),
+      transition: Transition.fadeIn
     ),
     GetPage(
       name: _Paths.CATEGORY,
@@ -64,6 +67,11 @@ class AppPages {
       name: _Paths.USER,
       page: () => const UserView(),
       binding: UserBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH,
+      page: () => const SplashView(),
+      binding: SplashBinding(),
     ),
   ];
 }
