@@ -65,6 +65,16 @@ class Id {
     return fp;
   }
 
+  static String fpremote(){
+    final bool checkfpremote = Shareperference.checkKey('fpremote');
+
+    if(checkfpremote){
+      return Shareperference.getString('fpremote')!;
+    }
+
+    return fp();
+  }
+
   static String sessionid() {
     final random = Random.secure();
     final bytes = Uint8List(4);

@@ -92,7 +92,7 @@ class BasicCrypt{
   }
 
 
-  static Uint8List _hexToBytes(String hex) {
+  static Uint8List hexToBytes(String hex) {
     hex = hex.toLowerCase();
     final len = hex.length ~/ 2;
     final result = Uint8List(len);
@@ -108,7 +108,7 @@ class BasicCrypt{
   /// aesKeyStr: 32 位大写 Hex 密钥字符串
   static String encryptContent(Uint8List bArr, String aesKeyStr) {
     // 1. 处理密钥：将 Hex 字符串转回原始字节 (对应 Java f(str))
-    final keyBytes = _hexToBytes(aesKeyStr);
+    final keyBytes = hexToBytes(aesKeyStr);
 
     // 2. 配置 AES 加密器 (对应 Java c(...) 内部逻辑)
     // 根据 B 站通常习惯，此处为 AES/ECB/PKCS7Padding
@@ -120,6 +120,24 @@ class BasicCrypt{
 
     // 4. 将加密后的结果转为大写 Hex 字符串 (对应 Java a(...))
     return bytesToHex(encrypted.bytes);
+  }
+
+
+  static List<int> getRawSignature(Uint8List data) {
+    final String key = "Ezlc3tgtl";
+    final builder = BytesBuilder();
+
+    builder.add(utf8.encode("x-exbadbasket"));
+    builder.add(utf8.encode(''));
+    builder.add(utf8.encode("x-fingerprint"));
+    builder.add(data);
+
+
+
+    var hmacSha256 = Hmac(sha256, utf8.encode(key));
+    var digest = hmacSha256.convert(builder.takeBytes());
+    // digest.bytes 就是那 32 个字节的二进制数据
+    return digest.bytes;
   }
 
 

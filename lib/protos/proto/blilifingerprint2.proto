@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message Fingerprin2 {
+    repeated FingerprintEntry entries = 1; // 包含 x-fingerprint 和 x-exbadbasket
+    string config_id = 2;                  // 对应 "ec01"
+    bytes signature = 3;                   // 最后的校验字节
+}
+
+message FingerprintEntry {
+    string key = 1;                        // 如 "x-fingerprint"
+    bytes payload = 2;
+}

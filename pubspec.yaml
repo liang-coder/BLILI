@@ -53,6 +53,10 @@ dependencies:
   flutter_displaymode: ^0.7.0
   android_id: ^0.5.1
   protobuf: ^4.1.0
+  archive: ^3.6.0
+  fluttertoast: ^8.2.12
+  logger: ^2.6.2
+
 
 
 
@@ -67,8 +71,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
-  logger: ^2.6.2
   build_runner: ^2.4.15 # json转model生成工具
   json_serializable: ^6.9.5 # JSON 序列化代码生成
   protoc_plugin: ^22.4.0  # 用于生成 Dart 代码（可选，也可用命令行）

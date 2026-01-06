@@ -1,7 +1,6 @@
-
-
+import 'dart:convert';
 void main(){
 
-  print([].toString());
+  print(base64Decode('EgphbmRyb2lkX2hkIMyReioEYmlsaTIlWFlEQjlGNURBRUY4OTNGODhCNTJERTY5OUQ0OTExRDc1NDQ3RToHYW5kcm9pZA=='));
 
 }

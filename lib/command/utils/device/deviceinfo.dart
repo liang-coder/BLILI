@@ -101,7 +101,7 @@ class DeviceInfo {
         permissions: permissions, shouldHasAllPermissions: false);
 
     final List<String> sysapp2 = sysapp
-        .map((e) => DataConverter.appinfoconver(appinfo: e, sysapp: '1'))
+        .map((e) => DataConverter.appinfoconvert(appinfo: e, sysapp: '1'))
         .toList();
 
     return sysapp2;
@@ -117,7 +117,7 @@ class DeviceInfo {
         permissions: permissions, shouldHasAllPermissions: false);
 
     final List<String> installapp2 = installapp
-        .map((e) => DataConverter.appinfoconver(appinfo: e, sysapp: '0'))
+        .map((e) => DataConverter.appinfoconvert(appinfo: e, sysapp: '0'))
         .toList();
 
     return installapp2;

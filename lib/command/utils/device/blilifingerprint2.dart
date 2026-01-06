@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 import 'package:blili/protos/dart/blilifingerprint/blilifingerprint.pb.dart';
+import 'package:blili/protos/dart/blilifingerprint2/blilifingerprint2.pb.dart';
 import 'package:blili/data/deviceinfo/maininfo.dart';
 import 'package:blili/data/deviceinfo/BiliFingerprintData.dart';
 import 'package:blili/data/deviceinfo/property.dart';
@@ -7,15 +10,16 @@ import 'package:blili/data/deviceinfo/sys.dart';
 import 'package:fixnum/src/int64.dart';
 import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:blili/command/utils/device/id.dart';
-import 'package:blili/command/utils/encrypt/blilifingerpritencrypt.dart';
+import 'package:blili/command/utils/encrypt/basic.dart';
 
-class BliliFingerprintData {
-  Future<Map> result() async {
+class BliliFingerprintData2 {
+  Future<Uint8List> result() async {
     final MainInfo mainInfo = BiliFingerprintData.main;
     final Property property = BiliFingerprintData.property;
     final Sys sys = BiliFingerprintData.sys;
 
     final BiliFingerprint blilifingerprint = BiliFingerprint();
+    final Fingerprin2 fingerprin2 = Fingerprin2();
     blilifingerprint.strBrightness = mainInfo.strBrightness!;
     blilifingerprint.appVersion = mainInfo.appVersion!;
     blilifingerprint.speedSensor = mainInfo.speedSensor!;
@@ -104,12 +108,23 @@ class BliliFingerprintData {
     sys.toMap().forEach((k, v) => blilifingerprint.sys
         .add(BiliFingerprint_Property(key: k, value: v.toString())));
 
-    final Uint8List blilifingerprintbyte = blilifingerprint.writeToBuffer();
+    final List<FingerprintEntry> entries = [
+      FingerprintEntry(
+          key: 'x-fingerprint', payload: blilifingerprint.writeToBuffer()),
+      FingerprintEntry(key: 'x-exbadbasket', payload: null)
+    ];
 
-    final Map result =
-        await FingerprintEncrypt.encryptContent(blilifingerprintbyte);
+    fingerprin2.entries.addAll(entries);
+    fingerprin2.configId = 'ec01';
 
-    return result;
+    final Uint8List sign = BasicCrypt.getRawSignature(blilifingerprint.writeToBuffer()) as Uint8List;
+    // print('sign: $sign');
+
+    fingerprin2.signature = sign as List<int>;
+
+    // log(fingerprin2.writeToJson().toString());
+
+    return fingerprin2.writeToBuffer();
 
     // log(result.toString());
   }

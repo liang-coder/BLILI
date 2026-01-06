@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'BInterceptorsWrapper.dart';
+import 'HttpWrapper.dart';
 
 class DioClient {
 
