@@ -1,3 +1,5 @@
+import 'package:blili/command/utils/appinfo/appinfo.dart';
+
 class MainInfo {
   final String? strBrightness; // "102"
   final String? appVersion; // "2.0.1"

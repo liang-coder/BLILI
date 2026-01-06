@@ -13,7 +13,7 @@ class Api {
 
   static Future<Response> fingerprint(
       {required Map<String, dynamic> queryParameters,
-      required Options option,
+      required Options? option,
       required Map<String, dynamic> data}) async {
     final result = await DioClient.dio.post('/x/resource/fingerprint',
         queryParameters: queryParameters, options: option, data: data);
@@ -78,9 +78,9 @@ class Api {
   }
 
   static Future<Response> getticket(
-      {required Map<String, dynamic> queryParameters,
-      required Options option,
-      required Map<String, dynamic> data}) async {
+      {Map<String, dynamic>? queryParameters,
+      required Options? option,
+      Object? data}) async {
     final result = await DioClient.dio.post(
         '/bilibili.api.ticket.v1.Ticket/GetTicket',
         queryParameters: queryParameters,

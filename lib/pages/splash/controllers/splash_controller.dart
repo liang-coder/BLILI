@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:blili/command/utils/device/id.dart';
@@ -47,7 +48,7 @@ class SplashController extends GetxController {
   Future<void> _fingerprint() async {
     final Map fingerprintdata = await BliliFingerprintData().result();
     final Map SignqueryParameters = Singer().sign(Params.params());
-    final Map<String,dynamic> header = {};
+    final Map<String, dynamic> header = {};
     header.addAll(bliliHeader.idHeader());
     header.addAll(bliliHeader.basicHeader(useragent: bliliHeader.useragent1));
     header.addAll(bliliHeader.xbiliHeader());
@@ -69,11 +70,15 @@ class SplashController extends GetxController {
     }
 
     final Uint8List fingerprintdata2 = await BliliFingerprintData2().result();
+    final Map<String, dynamic> header = {};
+    header.addAll(bliliHeader.basicHeader(useragent: bliliHeader.useragent2));
+    header.addAll(bliliHeader.xbiliHeader());
+    header.addAll(bliliHeader.biliBin());
+    header.addAll({'buvid': Id.buvid(), 'content-type': 'application/grpc'});
 
-    final Uint8List metadata = DeviceProtobuf().buildMetadataBin(buvid: Id.buvid());
-    print(metadata);
+    final httpresult = await Api.getticket(
+        option: Options(headers: header), data: fingerprintdata2);
 
-
-
+    print(httpresult);
   }
 }

@@ -14,8 +14,7 @@ class Singer {
   Map<String, dynamic> sign(Map<String, String> params) {
     // 1. 添加 appkey
     // 使用级联操作符 '..' 在拷贝上直接更新，更简洁
-    final tempParams = Map<String, String>.from(params)
-      ..['appkey'] = _appkey;
+    final tempParams = Map<String, String>.from(params)..['appkey'] = _appkey;
 
     // 2. 按照 key 重排参数
     // 获取 key 并排序
@@ -49,8 +48,7 @@ class Singer {
   }
 }
 
-
-class BasicCrypt{
+class BasicCrypt {
   static Uint8List generateRawKey() {
     final random = Random.secure();
     final keyBytes = Uint8List(16);
@@ -59,7 +57,6 @@ class BasicCrypt{
     }
     return keyBytes;
   }
-
 
   static String bytesToHex(Uint8List bArr) {
     if (bArr.isEmpty) return "";
@@ -76,12 +73,10 @@ class BasicCrypt{
     return buffer.toString().toUpperCase();
   }
 
-
   static String generateAesKeyString() {
     Uint8List raw = generateRawKey();
     return bytesToHex(raw);
   }
-
 
   static String encryptAesKeyByRSA(String aesKey, String pemPublicKey) {
     final parser = RSAKeyParser();
@@ -90,7 +85,6 @@ class BasicCrypt{
 
     return bytesToHex(Uint8List.fromList(encrypter.encrypt(aesKey).bytes));
   }
-
 
   static Uint8List hexToBytes(String hex) {
     hex = hex.toLowerCase();
@@ -122,23 +116,20 @@ class BasicCrypt{
     return bytesToHex(encrypted.bytes);
   }
 
-
-  static List<int> getRawSignature(Uint8List data) {
+  static List<int> getRawSignature(
+      Uint8List deviceInfo, Uint8List xFingerprint) {
     final String key = "Ezlc3tgtl";
     final builder = BytesBuilder();
 
+    builder.add(deviceInfo);
     builder.add(utf8.encode("x-exbadbasket"));
     builder.add(utf8.encode(''));
     builder.add(utf8.encode("x-fingerprint"));
-    builder.add(data);
-
-
+    builder.add(xFingerprint);
 
     var hmacSha256 = Hmac(sha256, utf8.encode(key));
-    var digest = hmacSha256.convert(builder.takeBytes());
+    var digest = hmacSha256.convert(builder.toBytes());
     // digest.bytes 就是那 32 个字节的二进制数据
     return digest.bytes;
   }
-
-
 }

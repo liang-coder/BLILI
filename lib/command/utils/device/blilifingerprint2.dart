@@ -7,6 +7,7 @@ import 'package:blili/data/deviceinfo/maininfo.dart';
 import 'package:blili/data/deviceinfo/BiliFingerprintData.dart';
 import 'package:blili/data/deviceinfo/property.dart';
 import 'package:blili/data/deviceinfo/sys.dart';
+import 'package:blili/protos/dart/device/device.dart';
 import 'package:fixnum/src/int64.dart';
 import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:blili/command/utils/device/id.dart';
@@ -111,13 +112,15 @@ class BliliFingerprintData2 {
     final List<FingerprintEntry> entries = [
       FingerprintEntry(
           key: 'x-fingerprint', payload: blilifingerprint.writeToBuffer()),
-      FingerprintEntry(key: 'x-exbadbasket', payload: null)
+      FingerprintEntry(key: 'x-exbadbasket', payload: utf8.encode(''))
     ];
 
     fingerprin2.entries.addAll(entries);
     fingerprin2.configId = 'ec01';
 
-    final Uint8List sign = BasicCrypt.getRawSignature(blilifingerprint.writeToBuffer()) as Uint8List;
+    final Uint8List sign = BasicCrypt.getRawSignature(
+            DeviceProtobuf().buildDeviceBin(), blilifingerprint.writeToBuffer())
+        as Uint8List;
     // print('sign: $sign');
 
     fingerprin2.signature = sign as List<int>;
