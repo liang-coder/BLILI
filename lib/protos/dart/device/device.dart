@@ -9,16 +9,16 @@ class DeviceProtobuf {
   final String platform = 'android';
   final CodedBufferWriter buffer = CodedBufferWriter();
 
-  void writeString(int fieldNumber, int fieldType, dynamic value) {
+  void writeObject(int fieldNumber, int fieldType, dynamic value) {
     buffer.writeField(fieldNumber, fieldType, value);
   }
 
   Uint8List buildMetadataBin({required String buvid}) {
-    writeString(2, PbFieldType.OS, appkey);
-    writeString(4, PbFieldType.OF6, Int64(buildcode));
-    writeString(5, PbFieldType.OS, channel);
-    writeString(6, PbFieldType.OS, buvid);
-    writeString(7, PbFieldType.OS, platform);
+    writeObject(2, PbFieldType.OS, appkey);
+    writeObject(4, PbFieldType.OF6, Int64(buildcode));
+    writeObject(5, PbFieldType.OS, channel);
+    writeObject(6, PbFieldType.OS, buvid);
+    writeObject(7, PbFieldType.OS, platform);
     return buffer.toBuffer();
   }
 }
