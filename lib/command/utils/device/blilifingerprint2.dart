@@ -123,7 +123,7 @@ class BliliFingerprintData2 {
         as Uint8List;
     // print('sign: $sign');
 
-    fingerprin2.signature = sign as List<int>;
+    fingerprin2.signature = sign;
 
     // log(fingerprin2.writeToJson().toString());
 

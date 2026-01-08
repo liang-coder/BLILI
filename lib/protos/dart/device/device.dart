@@ -7,7 +7,7 @@ import 'package:fixnum/src/int64.dart';
 import 'package:blili/command/utils/appinfo/appinfo.dart';
 
 class DeviceProtobuf {
-  final int buildcode = AppInfo.buildCode();
+  final int appVersionCode = AppInfo.bVersionCode();
   final String channel = 'bili';
   final String appkey = 'android_hd';
   final String platform = 'android';
@@ -19,7 +19,7 @@ class DeviceProtobuf {
 
   Uint8List buildMetadataBin() {
     writeObject(2, PbFieldType.OS, appkey);
-    writeObject(4, PbFieldType.OF6, Int64(buildcode));
+    writeObject(4, PbFieldType.O3, appVersionCode);
     writeObject(5, PbFieldType.OS, channel);
     writeObject(6, PbFieldType.OS, Id.buvid());
     writeObject(7, PbFieldType.OS, platform);
@@ -27,8 +27,8 @@ class DeviceProtobuf {
   }
 
   Uint8List buildDeviceBin() {
-    writeObject(1, PbFieldType.OF6, Int64(AppInfo.appId()));
-    writeObject(2, PbFieldType.OF6, Int64(buildcode));
+    writeObject(1, PbFieldType.O3, AppInfo.appId());
+    writeObject(2, PbFieldType.O3, appVersionCode);
     writeObject(3, PbFieldType.OS, Id.buvid());
     writeObject(4, PbFieldType.OS, appkey);
     writeObject(5, PbFieldType.OS, platform);
@@ -40,12 +40,12 @@ class DeviceProtobuf {
     writeObject(12, PbFieldType.OS, Id.fpremote());
     writeObject(13, PbFieldType.OS, AppInfo.bVersion());
     writeObject(14, PbFieldType.OS, Id.fpremote());
-    writeObject(15, PbFieldType.OF6, Int64(Shareperference.getInt('fst')!));
+    writeObject(15, PbFieldType.O6, Int64(Shareperference.getInt('fst')!));
     return buffer.toBuffer();
   }
 
   Uint8List buildNetworkBin() {
-    writeObject(1, PbFieldType.OF6, Int64(1));
+    writeObject(1, PbFieldType.O3, 1);
     writeObject(3, PbFieldType.OS, '46000');
     return buffer.toBuffer();
   }

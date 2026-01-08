@@ -1,12 +1,24 @@
+import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:blili/protos/dart/ticket/ticket.pb.dart';
 
 class Userserver extends GetxService {
-  Rxn<ticket> _ticket = Rxn<ticket>();
+  // Rxn<ticket> _ticket = Rxn<ticket>();
+  RxString _jwt = ''.obs;
 
-  set setticket(ticket e) => _ticket.value = e;
-  Rxn<ticket> get getticket => _ticket;
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    _initData();
+  }
+
+  RxString get jwt => _jwt;
+
+  void _initData() {
+    _jwt.value = Shareperference.getString('jwt')!;
+  }
 }
 
 extension UserContext on BuildContext {

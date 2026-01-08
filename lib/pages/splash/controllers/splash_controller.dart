@@ -1,19 +1,18 @@
-import 'dart:developer';
+import 'dart:convert';
 import 'dart:typed_data';
-
-import 'package:blili/command/utils/device/id.dart';
-import 'package:blili/command/utils/logger/logger.dart';
+import 'package:blili/command/utils/dataconverter/dataconverter.dart';
+import 'package:blili/command/utils/date/Date.dart';
+import 'package:blili/protos/dart/ticket/ticket.pb.dart';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
+import 'package:blili/service/UserServer.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:blili/command/utils/device/bilifingerprint.dart';
 import 'package:blili/command/http/api.dart';
 import 'package:blili/command/http/params.dart';
 import 'package:blili/command/utils/encrypt/basic.dart';
-import 'package:blili/command/http/header.dart';
 import 'package:blili/data/deviceinfo/init.dart';
 import 'package:blili/command/utils/device/blilifingerprint2.dart';
-import 'package:blili/protos/dart/device/device.dart';
 
 class SplashController extends GetxController {
   //TODO: Implement SplashController
@@ -47,15 +46,9 @@ class SplashController extends GetxController {
 
   Future<void> _fingerprint() async {
     final Map fingerprintdata = await BliliFingerprintData().result();
-    final Map SignqueryParameters = Singer().sign(Params.params());
-    final Map<String, dynamic> header = {};
-    header.addAll(bliliHeader.idHeader());
-    header.addAll(bliliHeader.basicHeader(useragent: bliliHeader.useragent1));
-    header.addAll(bliliHeader.xbiliHeader());
 
     final httpresult = await Api.fingerprint(
-        queryParameters: SignqueryParameters as Map<String, dynamic>,
-        option: Options(headers: header),
+        queryParameters: Singer().sign(Params.params()),
         data: {
           'key': fingerprintdata['rsa_key'],
           'content': fingerprintdata['aes_content']
@@ -64,21 +57,21 @@ class SplashController extends GetxController {
   }
 
   Future<void> _getticket() async {
-    final bool checkticket = Shareperference.checkKey('ticket');
-    if (checkticket) {
-      final String ticket = Shareperference.getString('ticket')!;
+    final bool checkjwt = (Get.context!.userserver.jwt.value != '');
+    if (checkjwt) {
+      List<String> parts = Get.context!.userserver.jwt.value.split('.');
+      final Map payload = jsonDecode(DataConverter.base64UrlDecode(parts[1]));
+      final int exp = payload['exp'];
+      if (exp > Date.UnixTimestamp()) return;
     }
 
-    final Uint8List fingerprintdata2 = await BliliFingerprintData2().result();
-    final Map<String, dynamic> header = {};
-    header.addAll(bliliHeader.basicHeader(useragent: bliliHeader.useragent2));
-    header.addAll(bliliHeader.xbiliHeader());
-    header.addAll(bliliHeader.biliBin());
-    header.addAll({'buvid': Id.buvid(), 'content-type': 'application/grpc'});
-
+    final Uint8List fingerprintbyte = await BliliFingerprintData2().result();
     final httpresult = await Api.getticket(
-        option: Options(headers: header), data: fingerprintdata2);
-
-    print(httpresult);
+        option: Options(responseType: ResponseType.bytes),
+        data: DataConverter.gzipCompress(Uint8List.fromList(fingerprintbyte)));
+    final Uint8List ticketbyte = httpresult.data;
+    final ticket t =
+        ticket.fromBuffer(DataConverter.byteGzipconvertbyte(ticketbyte)!);
+    Shareperference.setString('jwt', t.jwt);
   }
 }

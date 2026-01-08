@@ -1,8 +1,8 @@
 class Params {
 
-  static Map<String,String> params() {
+  static Map<String,dynamic> params() {
     final int timestampSeconds = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    final Map<String,String> params = {
+    final Map<String,dynamic> params = {
       "appkey": "dfca71928277209b",
       "build": "2001100",
       "c_locale": "zh_CN",
@@ -18,8 +18,8 @@ class Params {
     return params;
   }
 
-  static Map<String,String> add({required Map<String,String> Newparams}) {
-    final Map<String,String> params1 = params();
+  static Map<String,dynamic> add({required Map<String,dynamic> Newparams}) {
+    final Map<String,dynamic> params1 = params();
     params1.addAll(Newparams);
     return params1;
   }

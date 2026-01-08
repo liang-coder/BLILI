@@ -74,12 +74,7 @@ class DataConverter {
     return p;
   }
 
-  static List<int>? gzipconvertbyte(String hex) {
-    Uint8List fullBytes =
-        BasicCrypt.hexToBytes(hex.replaceAll(RegExp(r'\s+'), ''));
-
-    // 3. 关键点：从索引 5 开始截取（跳过 01 00 00 00 F3）
-    // 确保起始字节是 1F 8B
+  static List<int>? byteGzipconvertbyte(Uint8List fullBytes) {
     if (fullBytes[5] == 0x1F && fullBytes[6] == 0x8B) {
       List<int> gzipData = fullBytes.sublist(5);
 
@@ -88,5 +83,47 @@ class DataConverter {
 
       return decoded;
     }
+  }
+
+  static List<int>? hexGzipconvertbyte(String hex) {
+    Uint8List fullBytes =
+        BasicCrypt.hexToBytes(hex.replaceAll(RegExp(r'\s+'), ''));
+
+    return byteGzipconvertbyte(fullBytes);
+
+    // 3. 关键点：从索引 5 开始截取（跳过 01 00 00 00 F3）
+    // 确保起始字节是 1F 8B
+  }
+
+  static List<int> gzipCompress(Uint8List data) {
+    // 1. 压缩
+    List<int> compressed = GZipEncoder().encode(data)!;
+
+    // 2. 创建头 (1字节压缩标志 + 4字节长度)
+    final header = ByteData(5);
+    header.setUint8(0, 1); // 标志位：已压缩
+    header.setUint32(1, compressed.length); // 动态写入压缩后的真实长度
+
+    // 3. 拼接
+    final result = Uint8List(5 + compressed.length);
+    result.setAll(0, header.buffer.asUint8List());
+    result.setAll(5, compressed);
+
+    return result;
+  }
+
+
+  static String base64UrlDecode(String input) {
+    // 补齐 padding
+    String padded = input.replaceRange(input.length, input.length, '');
+    switch (padded.length % 4) {
+      case 2:
+        padded += '==';
+        break;
+      case 3:
+        padded += '=';
+        break;
+    }
+    return utf8.decode(base64Url.decode(padded));
   }
 }

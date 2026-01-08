@@ -6,10 +6,10 @@ import 'package:blili/command/utils/appinfo/appinfo.dart';
 
 class Init {
   static Future<void> init() async {
-    Serverinit().init();
     await Shareperference().init();
     await DeviceInfo().init();
     await AppInfo().init();
     await FlutterDisplayMode.setHighRefreshRate();
+    Serverinit().init();
   }
 }

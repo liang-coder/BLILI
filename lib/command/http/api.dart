@@ -13,7 +13,7 @@ class Api {
 
   static Future<Response> fingerprint(
       {required Map<String, dynamic> queryParameters,
-      required Options? option,
+      Options? option,
       required Map<String, dynamic> data}) async {
     final result = await DioClient.dio.post('/x/resource/fingerprint',
         queryParameters: queryParameters, options: option, data: data);

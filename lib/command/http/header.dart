@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
+import 'package:blili/service/UserServer.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import '../utils/device/id.dart';
@@ -26,9 +27,9 @@ class bliliHeader {
       'x-bili-gaia-vtoken': '',
     };
 
-    final bool checkticket = Shareperference.checkKey('ticket');
-    if (checkticket) {
-      xbiliHeader['x-bili-ticket'] = Shareperference.getString('ticket')!;
+    final bool checkjwt = (Get.context!.userserver.jwt.value != '');
+    if (checkjwt) {
+      xbiliHeader['x-bili-ticket'] = Get.context!.userserver.jwt.value;
     }
 
     return xbiliHeader;
@@ -45,13 +46,18 @@ class bliliHeader {
 
   static Map<String, String> biliBin() {
     return {
-      'x-bili-metadata-bin': base64Encode(DeviceProtobuf().buildMetadataBin()),
-      'x-bili-device-bin': base64Encode(DeviceProtobuf().buildDeviceBin()),
-      'x-bili-network-bin': base64Encode(DeviceProtobuf().buildNetworkBin()),
+      'x-bili-metadata-bin':
+          base64Encode(DeviceProtobuf().buildMetadataBin()).replaceAll('=', ''),
+      'x-bili-device-bin':
+          base64Encode(DeviceProtobuf().buildDeviceBin()).replaceAll('=', ''),
+      'x-bili-network-bin':
+          base64Encode(DeviceProtobuf().buildNetworkBin()).replaceAll('=', ''),
       'x-bili-restriction-bin': '',
-      'x-bili-locale-bin': base64Encode(DeviceProtobuf().buildLocaleBin()),
+      'x-bili-locale-bin':
+          base64Encode(DeviceProtobuf().buildLocaleBin()).replaceAll('=', ''),
       'x-bili-exps-bin': '',
-      'x-bili-fawkes-req-bin': base64Encode(DeviceProtobuf().buildFawkesBin()),
+      'x-bili-fawkes-req-bin':
+          base64Encode(DeviceProtobuf().buildFawkesBin()).replaceAll('=', ''),
     };
   }
 

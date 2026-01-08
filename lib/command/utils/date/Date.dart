@@ -17,4 +17,8 @@ class Date {
     final random = Random();
     return startSeconds + random.nextInt(endSeconds - startSeconds + 1);
   }
+
+  static int UnixTimestamp() {
+    return DateTime.now().millisecondsSinceEpoch ~/ 1000;
+  }
 }

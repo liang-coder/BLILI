@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
@@ -11,7 +12,7 @@ class Singer {
 
   /// 为请求参数进行 APP 签名
   /// 完全仿照 Python 的 appsign 函数逻辑
-  Map<String, dynamic> sign(Map<String, String> params) {
+  Map<String, dynamic> sign(Map<String, dynamic> params) {
     // 1. 添加 appkey
     // 使用级联操作符 '..' 在拷贝上直接更新，更简洁
     final tempParams = Map<String, String>.from(params)..['appkey'] = _appkey;
@@ -132,4 +133,7 @@ class BasicCrypt {
     // digest.bytes 就是那 32 个字节的二进制数据
     return digest.bytes;
   }
+
+
+
 }

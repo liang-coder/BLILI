@@ -19,7 +19,7 @@ class AppInfo {
     return 5;
   }
 
-  static int buildCode(){
+  static int bVersionCode(){
     return 2001100;
   }
 
