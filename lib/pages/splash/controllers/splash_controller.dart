@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:blili/command/utils/device/bilifingerprint.dart';
 import 'package:blili/command/http/api.dart';
 import 'package:blili/command/http/params.dart';
-import 'package:blili/command/utils/encrypt/basic.dart';
 import 'package:blili/data/deviceinfo/init.dart';
 import 'package:blili/command/utils/device/blilifingerprint2.dart';
 
@@ -48,7 +47,7 @@ class SplashController extends GetxController {
     final Map fingerprintdata = await BliliFingerprintData().result();
 
     final httpresult = await Api.fingerprint(
-        queryParameters: Singer().sign(Params.params()),
+        queryParameters: Params.params(),
         data: {
           'key': fingerprintdata['rsa_key'],
           'content': fingerprintdata['aes_content']

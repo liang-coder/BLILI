@@ -12,7 +12,7 @@ class _HotState extends State<Hot> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Videogridview();
+    return Videogridview(videoData: [],);
   }
 
   @override

@@ -3,9 +3,9 @@ import 'dio.dart';
 import 'package:dio/dio.dart';
 
 class Api {
-  static Future<Response> recommned(
+  static Future<Response> feedIndex(
       {required Map<String, dynamic> queryParameters,
-      required Options option}) async {
+       Options? option}) async {
     final result = await DioClient.dio.get('/x/v2/feed/index',
         queryParameters: queryParameters, options: option);
     return result;

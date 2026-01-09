@@ -1,28 +1,37 @@
 import 'package:blili/command/utils/device/id.dart';
+import 'package:blili/command/utils/encrypt/basic.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/toast/BliliToast.dart';
 import 'package:dio/dio.dart';
 import 'header.dart';
 
 class BInterceptorsWrapper {
-  static final _interceptorsWrapper = InterceptorsWrapper(
-    onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
-      return handler.next(_onRequest(options));
-    },
-    onResponse: (Response response, ResponseInterceptorHandler handler) {
-      return handler.next(_onResponse(response));
-    },
-    onError: (DioException error, ErrorInterceptorHandler handler) {
-      return handler.next(_onError(error));
-    },
-  );
+  late InterceptorsWrapper _interceptorsWrapper;
+  final Singer _singer = Singer();
 
-  static RequestOptions _onRequest(RequestOptions options) {
+  BInterceptorsWrapper() {
+    _interceptorsWrapper = InterceptorsWrapper(
+      onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+        return handler.next(_onRequest(options));
+      },
+      onResponse: (Response response, ResponseInterceptorHandler handler) {
+        return handler.next(_onResponse(response));
+      },
+      onError: (DioException error, ErrorInterceptorHandler handler) {
+        return handler.next(_onError(error));
+      },
+    );
+  }
+
+  InterceptorsWrapper get interceptorsWrapper => _interceptorsWrapper;
+
+  RequestOptions _onRequest(RequestOptions options) {
+    options.queryParameters = _singer.sign(options.queryParameters);
     _setHeader(options);
     return options;
   }
 
-  static Response _onResponse(Response response) {
+  Response _onResponse(Response response) {
     final ResponseType responsetype = response.requestOptions.responseType;
     final int status = response.statusCode!;
 
@@ -44,15 +53,13 @@ class BInterceptorsWrapper {
     return response;
   }
 
-  static DioException _onError(DioException error) {
+  DioException _onError(DioException error) {
     final String errorMessage = _onErrorMessage(error);
     if (errorMessage != '未知错误') BliliToast.show(errorMessage);
     return error;
   }
 
-  static InterceptorsWrapper get interceptorsWrapper => _interceptorsWrapper;
-
-  static void _setHeader(RequestOptions options) {
+  void _setHeader(RequestOptions options) {
     final Uri url = options.uri;
     final bool isGetTicket = url.path.contains('bilibili.api.ticket.v1.Ticket');
     if (isGetTicket) {
@@ -75,7 +82,7 @@ class BInterceptorsWrapper {
     }
   }
 
-  static String _onErrorMessage(DioException error) {
+  String _onErrorMessage(DioException error) {
     String message;
     switch (error.type) {
       // 1. 处理网络连接和超时

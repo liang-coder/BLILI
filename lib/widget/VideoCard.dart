@@ -1,33 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'NetImage.dart';
+import 'package:blili/modules/homePage/feedIndex.dart';
 
 class Videocard extends StatelessWidget {
-  const Videocard({super.key});
+  final CardType cardType;
+  final CardGoto cardGoto;
+  final CardGoto goto;
+  final String param;
+  final String cover;
+  final String title;
+  final String uri;
+  final Args args;
+  final PlayerArgs playerArgs;
+  final int idx;
+  final List<ThreePointV2> threePointV2;
+  final String trackId;
+  final String talkBack;
+  final String reportFlowData;
+  final String coverLeftText1;
+  final int coverLeftIcon1;
+  final String coverLeft1ContentDescription;
+  final String coverLeftText2;
+  final int coverLeftIcon2;
+  final String coverLeft2ContentDescription;
+  final String coverRightText;
+  final DescButton descButton;
+  final String desc;
+  final int canPlay;
+  final GotoIcon gotoIcon;
+  const Videocard(
+      {super.key,
+      required this.cardType,
+      required this.cardGoto,
+      required this.goto,
+      required this.param,
+      required this.cover,
+      required this.title,
+      required this.uri,
+      required this.args,
+      required this.playerArgs,
+      required this.idx,
+      required this.threePointV2,
+      required this.trackId,
+      required this.talkBack,
+      required this.reportFlowData,
+      required this.coverLeftText1,
+      required this.coverLeftIcon1,
+      required this.coverLeft1ContentDescription,
+      required this.coverLeftText2,
+      required this.coverLeftIcon2,
+      required this.coverLeft2ContentDescription,
+      required this.coverRightText,
+      required this.descButton,
+      required this.desc,
+      required this.canPlay,
+      required this.gotoIcon});
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => print('object'),
-      child: Column(
+      child: Padding(padding: EdgeInsets.only(top: 8.w,bottom: 8.w),child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           LayoutBuilder(builder: (context, constraints) {
             return _StackImage(
                 width: constraints.maxWidth,
-                imageUrl: 'imageUrl',
-                PlaySum: '12万',
-                PlayTime: '02:45',
-                DmSum: '1203');
+                imageUrl: cover,
+                PlaySum: coverLeftText1,
+                PlayTime: coverRightText,
+                DmSum: coverLeftText2);
           }),
-          Text(
-            '哈哈哈哈哈',
+          Expanded(child: Text(
+            title,
             maxLines: 2,
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
-          ),
+          )),
           SizedBox(
             height: 8.w,
           ),
@@ -37,11 +89,11 @@ class Videocard extends StatelessWidget {
                 Icons.add_chart_sharp,
                 size: 10.sp,
               ),
-              Text('奥索雅')
+              Text(args.upName)
             ],
           )
         ],
-      ),
+      ),),
     );
   }
 
@@ -57,7 +109,7 @@ class Videocard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
           child: NetImage(
             imageUrl:
-                'https://c-ssl.duitang.com/uploads/blog/202301/07/20230107131341_8c680.jpg',
+                imageUrl,
             fit: BoxFit.cover,
             height: 240.w,
             width: width,

@@ -43,6 +43,11 @@ class DeviceInfo {
     return _build.model;
   }
 
+  static String deviceType(){
+    //0:m   1:I  2:t
+    return '1';
+  }
+
   static String product() {
     return _build.product;
   }

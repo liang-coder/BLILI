@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:archive/archive.dart';
+import 'package:blili/command/http/params.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/data/deviceinfo/property.dart';
 import 'package:blili/protos/dart/blilifingerprint/blilifingerprint.pb.dart';
@@ -112,7 +113,6 @@ class DataConverter {
     return result;
   }
 
-
   static String base64UrlDecode(String input) {
     // 补齐 padding
     String padded = input.replaceRange(input.length, input.length, '');
@@ -125,5 +125,17 @@ class DataConverter {
         break;
     }
     return utf8.decode(base64Url.decode(padded));
+  }
+
+  static Map<String, dynamic> washParame(Map<String, dynamic> params) {
+    final Map<String, dynamic> Newparams = {};
+    final Map<String, dynamic> Newparams1 = Params.params();
+    params.forEach((key, value) {
+      final bool checkKey = Newparams1.containsKey(key);
+      if (!checkKey) {
+        Newparams[key] = value;
+      }
+    });
+    return Newparams;
   }
 }
