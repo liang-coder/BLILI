@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'NetImage.dart';
 import 'package:blili/modules/homePage/feedIndex.dart';
+import 'package:blili/command/images/images.dart';
 
 class Videocard extends StatelessWidget {
   final CardType cardType;
@@ -62,38 +63,52 @@ class Videocard extends StatelessWidget {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => print('object'),
-      child: Padding(padding: EdgeInsets.only(top: 8.w,bottom: 8.w),child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          LayoutBuilder(builder: (context, constraints) {
-            return _StackImage(
-                width: constraints.maxWidth,
-                imageUrl: cover,
-                PlaySum: coverLeftText1,
-                PlayTime: coverRightText,
-                DmSum: coverLeftText2);
-          }),
-          Expanded(child: Text(
-            title,
-            maxLines: 2,
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.ellipsis,
-          )),
-          SizedBox(
-            height: 8.w,
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.add_chart_sharp,
-                size: 10.sp,
+      child: Padding(
+        padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LayoutBuilder(builder: (context, constraints) {
+              return _StackImage(
+                  width: constraints.maxWidth,
+                  imageUrl: cover,
+                  PlaySum: coverLeftText1,
+                  PlayTime: coverRightText,
+                  DmSum: coverLeftText2);
+            }),
+            Expanded(
+                child: Padding(
+              padding: EdgeInsets.only(top: 2.w),
+              child: Text(
+                title,
+                maxLines: 2,
+                textAlign: TextAlign.justify,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 26.sp,
+                    color: Theme.of(context).textTheme.displayMedium!.color),
               ),
-              Text(args.upName)
-            ],
-          )
-        ],
-      ),),
+            )),
+            Row(
+              spacing: 6.w,
+              children: [
+                Image.asset(
+                  Images.videoCardUp,
+                  width: 35.w,
+                  height: 35.w,
+                ),
+                Text(
+                  args.upName,
+                  style: TextStyle(
+                      fontSize: 24.sp,
+                      color: Theme.of(context).textTheme.displayMedium!.color),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -108,8 +123,7 @@ class Videocard extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(12.r),
           child: NetImage(
-            imageUrl:
-                imageUrl,
+            imageUrl: imageUrl,
             fit: BoxFit.cover,
             height: 240.w,
             width: width,
@@ -120,15 +134,44 @@ class Videocard extends StatelessWidget {
             child: SizedBox(
               width: width,
               child: Padding(
-                padding: EdgeInsets.only(left: 2.w, right: 4.w),
+                padding: EdgeInsets.only(left: 4.w, right: 4.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
-                      spacing: 4.w,
-                      children: [Text(PlaySum), Text(DmSum)],
+                      spacing: 8.w,
+                      children: [
+                        Row(
+                          spacing: 2.w,
+                          children: [
+                            Image.asset(
+                              Images.videoCardPlay,
+                              width: 35.w,
+                              height: 35.w,
+                            ),
+                            Text(PlaySum, style: TextStyle(fontSize: 22.sp))
+                          ],
+                        ),
+                        Row(
+                          spacing: 2.w,
+                          children: [
+                            Image.asset(
+                              Images.videoCardDanmu,
+                              width: 35.w,
+                              height: 35.w,
+                            ),
+                            Text(
+                              DmSum,
+                              style: TextStyle(fontSize: 22.sp),
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                    Text(PlayTime)
+                    Text(
+                      PlayTime,
+                      style: TextStyle(fontSize: 22.sp),
+                    )
                   ],
                 ),
               ),

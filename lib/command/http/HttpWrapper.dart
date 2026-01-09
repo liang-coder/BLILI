@@ -38,7 +38,8 @@ class BInterceptorsWrapper {
     if (responsetype == ResponseType.json &&
         status == 200 &&
         response.data is Map) {
-      if (response.data['data'] != null) {
+      if (response.data['data'] != null &&
+          (response.data['data'] as Map).isNotEmpty) {
         response.data = response.data['data'];
       } else {
         BliliToast.show('加载失败');

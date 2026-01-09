@@ -35,7 +35,6 @@ class HomeController extends GetxController
   get tabController => _tabController;
   RxList<FeedIndex> get recommand => _recommand;
 
-
   void increment() => count.value++;
 
   void _init() {
@@ -44,7 +43,7 @@ class HomeController extends GetxController
   }
 
   void _feedIndex() async {
-    Map<String, dynamic> queryParameters = {
+    final Map<String, dynamic> queryParameters = {
       "ad_extra": "",
       "auto_refresh_state": "1",
       "autoplay_card": "2",
@@ -78,13 +77,9 @@ class HomeController extends GetxController
       "voice_balance": "1",
       "volume_balance": "1",
     };
-
-    queryParameters = Params.add(Newparams: queryParameters);
-
-    final httpresult = await Api.feedIndex(queryParameters: queryParameters);
-
-    _recommand.add(FeedIndex.fromJson(httpresult.data));
-
-    // print(DataConverter.washParame(queryParameters).toString());
+    final httpresult = await Api.feedIndex(
+        queryParameters: Params.add(Newparams: queryParameters));
+    final Map<String, dynamic> data = httpresult.data;
+    _recommand.add(FeedIndex.fromJson(data));
   }
 }
