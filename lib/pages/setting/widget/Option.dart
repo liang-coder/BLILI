@@ -30,7 +30,6 @@ class Option extends StatelessWidget {
           Row(
             children: [
               BText(label,
-                  strutStyle: StrutStyle(forceStrutHeight: true),
                   style: TextStyle(
                       color: context.themeService.theme.value.themeData
                           .textTheme.bodyMedium!.color)),

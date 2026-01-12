@@ -58,6 +58,7 @@ dependencies:
   logger: ^2.6.2
   package_info_plus: ^8.3.0
   json_annotation: ^4.9.0
+  lottie: ^3.3.0
 
 
 
@@ -95,6 +96,7 @@ flutter:
   assets:
     - assets/rsa_public_key.pem
     - assets/images/videoCard/
+    - assets/images/httpState/
   
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -115,6 +117,10 @@ flutter:
     - family: IndexIcon
       fonts:
         - asset: assets/icons/IndexIcon.ttf
+
+    - family: HttpIcon
+      fonts:
+        - asset: assets/icons/HttpIcon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

@@ -1,14 +1,20 @@
+import 'package:blili/command/utils/toast/BliliToast.dart';
 import 'package:flutter/material.dart';
 import 'VideoCard.dart';
 import 'package:blili/modules/homePage/feedIndex.dart';
 
 class Videogridview extends StatelessWidget {
   final List<Item> videoData;
-  const Videogridview({super.key, required this.videoData});
+  final VoidCallback request;
+  const Videogridview(
+      {super.key, required this.videoData, required this.request});
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController _scrollController = ScrollController();
+    _(_scrollController, request);
     return GridView.builder(
+        controller: _scrollController,
         // padding: EdgeInsets.only(top: 20.w),
         itemCount: videoData.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -43,5 +49,15 @@ class Videogridview extends StatelessWidget {
             gotoIcon: video.gotoIcon,
           );
         });
+  }
+
+  void _(ScrollController scrollController, VoidCallback request) {
+    scrollController.addListener(() {
+      if (scrollController.offset >
+          (scrollController.position.maxScrollExtent - 5)) {
+        request();
+        BliliToast.show('正在加载更多视频');
+      }
+    });
   }
 }

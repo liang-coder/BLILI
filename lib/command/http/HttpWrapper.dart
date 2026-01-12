@@ -8,10 +8,15 @@ import 'header.dart';
 class BInterceptorsWrapper {
   late InterceptorsWrapper _interceptorsWrapper;
   final Singer _singer = Singer();
+  final List<String> _requestList = [];
 
   BInterceptorsWrapper() {
     _interceptorsWrapper = InterceptorsWrapper(
       onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+        if (_requestList.contains(options.path)) {
+          return handler.reject(DioException.requestCancelled(
+              requestOptions: options, reason: '${options.path} 该接口正在请求中'));
+        }
         return handler.next(_onRequest(options));
       },
       onResponse: (Response response, ResponseInterceptorHandler handler) {
@@ -26,15 +31,16 @@ class BInterceptorsWrapper {
   InterceptorsWrapper get interceptorsWrapper => _interceptorsWrapper;
 
   RequestOptions _onRequest(RequestOptions options) {
+    _requestList.add(options.path);
     options.queryParameters = _singer.sign(options.queryParameters);
     _setHeader(options);
     return options;
   }
 
   Response _onResponse(Response response) {
+    _requestList.remove(response.requestOptions.path);
     final ResponseType responsetype = response.requestOptions.responseType;
     final int status = response.statusCode!;
-
     if (responsetype == ResponseType.json &&
         status == 200 &&
         response.data is Map) {
@@ -55,15 +61,15 @@ class BInterceptorsWrapper {
   }
 
   DioException _onError(DioException error) {
+    _requestList.remove(error.requestOptions.path);
     final String errorMessage = _onErrorMessage(error);
     if (errorMessage != '未知错误') BliliToast.show(errorMessage);
     return error;
   }
 
   void _setHeader(RequestOptions options) {
-    final Uri url = options.uri;
-    final bool isGetTicket = url.path.contains('bilibili.api.ticket.v1.Ticket');
-    if (isGetTicket) {
+    final bool isResponsebyte = options.responseType == ResponseType.bytes;
+    if (isResponsebyte) {
       options.headers
           .addAll(bliliHeader.basicHeader(useragent: bliliHeader.useragent2));
       options.headers.addAll(bliliHeader.xbiliHeader());

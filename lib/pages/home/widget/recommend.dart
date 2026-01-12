@@ -1,3 +1,4 @@
+import 'package:blili/widget/HttpLoading.dart';
 import 'package:flutter/material.dart';
 import 'package:blili/widget/VideoGridView.dart';
 import 'package:get/get.dart';
@@ -17,15 +18,19 @@ class _RecommendState extends State<Recommend>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Obx(() {
-      final List<Item> videoData = [];
-      widget.homeController.recommand.forEach((FeedIndex feedIndex) {
-        videoData.addAll(feedIndex.items);
-      });
-      return Videogridview(
-        videoData: videoData,
-      );
-    });
+    return Httploading(
+        successChild: Obx(() {
+          final List<Item> videoData = [];
+          widget.homeController.recommand.forEach((FeedIndex feedIndex) {
+            videoData.addAll(feedIndex.items);
+          });
+          return Videogridview(
+            videoData: videoData,
+            request: widget.homeController.feedIndex,
+          );
+        }),
+        controller: widget.homeController.httploadingController,
+        request: widget.homeController.feedIndex);
   }
 
   @override
