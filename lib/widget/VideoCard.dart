@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
+import 'package:flutter/material.dart' hide Card;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'NetImage.dart';
 import 'package:blili/modules/homePage/feedIndex.dart';
@@ -111,72 +112,134 @@ class Videocard extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _StackImage(
-      {required double width,
-      required String imageUrl,
-      required String PlaySum,
-      required String PlayTime,
-      required String DmSum}) {
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(12.r),
-          child: NetImage(
-            imageUrl: imageUrl,
-            fit: BoxFit.cover,
-            height: 240.w,
-            width: width,
-          ),
-        ),
-        Positioned(
-            bottom: 10.w,
-            child: SizedBox(
-              width: width,
-              child: Padding(
-                padding: EdgeInsets.only(left: 4.w, right: 4.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      spacing: 8.w,
-                      children: [
-                        Row(
-                          spacing: 2.w,
-                          children: [
-                            Image.asset(
-                              Images.videoCardPlay,
-                              width: 35.w,
-                              height: 35.w,
-                            ),
-                            Text(PlaySum, style: TextStyle(fontSize: 22.sp))
-                          ],
-                        ),
-                        Row(
-                          spacing: 2.w,
-                          children: [
-                            Image.asset(
-                              Images.videoCardDanmu,
-                              width: 35.w,
-                              height: 35.w,
-                            ),
-                            Text(
-                              DmSum,
-                              style: TextStyle(fontSize: 22.sp),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                    Text(
-                      PlayTime,
-                      style: TextStyle(fontSize: 22.sp),
-                    )
-                  ],
-                ),
+class Videocard2 extends StatelessWidget {
+  final Card card;
+  const Videocard2({
+    super.key,
+    required this.card,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
+      onPressed: () => print('object'),
+      child: Padding(
+        padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LayoutBuilder(builder: (context, constraints) {
+              return _StackImage(
+                width: constraints.maxWidth,
+                imageUrl: card.cardcontext.videoinfo.cover,
+                PlaySum: card.cardcontext.desc,
+                PlayTime: card.cardcontext.duration,
+              );
+            }),
+            Expanded(
+                child: Padding(
+              padding: EdgeInsets.only(top: 2.w),
+              child: Text(
+                card.cardcontext.videoinfo.title,
+                maxLines: 2,
+                textAlign: TextAlign.justify,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 26.sp,
+                    color: Theme.of(context).textTheme.displayMedium!.color),
               ),
-            ))
-      ],
+            )),
+            Row(
+              spacing: 6.w,
+              children: [
+                Image.asset(
+                  Images.videoCardUp,
+                  width: 35.w,
+                  height: 35.w,
+                ),
+                Text(
+                  card.cardcontext.authorName,
+                  style: TextStyle(
+                      fontSize: 24.sp,
+                      color: Theme.of(context).textTheme.displayMedium!.color),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
+}
+
+Widget _StackImage(
+    {required double width,
+    required String imageUrl,
+    required String PlaySum,
+    required String PlayTime,
+    String? DmSum = ''}) {
+  return Stack(
+    children: [
+      ClipRRect(
+        borderRadius: BorderRadius.circular(12.r),
+        child: NetImage(
+          imageUrl: imageUrl,
+          fit: BoxFit.cover,
+          height: 240.w,
+          width: width,
+        ),
+      ),
+      Positioned(
+          bottom: 10.w,
+          child: SizedBox(
+            width: width,
+            child: Padding(
+              padding: EdgeInsets.only(left: 4.w, right: 4.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    spacing: 8.w,
+                    children: [
+                      Row(
+                        spacing: 2.w,
+                        children: [
+                          Image.asset(
+                            Images.videoCardPlay,
+                            width: 35.w,
+                            height: 35.w,
+                          ),
+                          Text(PlaySum, style: TextStyle(fontSize: 22.sp))
+                        ],
+                      ),
+                      if(DmSum !='')Row(
+                        spacing: 2.w,
+                        children: [
+                          Image.asset(
+                            Images.videoCardDanmu,
+                            width: 35.w,
+                            height: 35.w,
+                          ),
+                          Text(
+                            DmSum!,
+                            style: TextStyle(fontSize: 22.sp),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  Text(
+                    PlayTime,
+                    style: TextStyle(fontSize: 22.sp),
+                  )
+                ],
+              ),
+            ),
+          ))
+    ],
+  );
 }

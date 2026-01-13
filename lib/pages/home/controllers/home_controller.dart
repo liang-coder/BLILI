@@ -1,4 +1,5 @@
 import 'package:blili/command/http/params.dart';
+import 'package:blili/command/http/protobuf/response/hotIndexReply.dart';
 import 'package:blili/command/utils/date/Date.dart';
 import 'package:blili/command/utils/device/deviceinfo.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:blili/command/http/api.dart';
 import 'package:blili/modules/homePage/feedIndex.dart';
 import 'package:blili/widget/HttpLoading.dart';
 import 'package:dio/dio.dart';
+import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
+import 'package:blili/command/http/protobuf/request/hotIndex.dart';
 
 class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -14,10 +17,11 @@ class HomeController extends GetxController
 
   final count = 0.obs;
   bool _pull = true;
-  int _recommandIndex = 0;
   late final TabController _tabController;
   final HttploadingController _httploadingController = HttploadingController();
+  final HttploadingController _httploadingController2 = HttploadingController();
   final RxList<FeedIndex> _recommand = <FeedIndex>[].obs;
+  final RxList<PopularReply> _hot = <PopularReply>[].obs;
 
   @override
   void onInit() {
@@ -37,15 +41,18 @@ class HomeController extends GetxController
 
   get tabController => _tabController;
   RxList<FeedIndex> get recommand => _recommand;
+  RxList<PopularReply> get hot => _hot;
   HttploadingController get httploadingController => _httploadingController;
+  HttploadingController get httploadingController2 => _httploadingController2;
   VoidCallback get feedIndex => _feedIndex;
+  VoidCallback get hotIndex => _hotIndex;
 
   void increment() => count.value++;
 
   void _init() {
     _tabController = TabController(length: 4, vsync: this);
+    _tabListener();
     _feedIndex();
-    _pull = false;
   }
 
   void _feedIndex() async {
@@ -90,12 +97,51 @@ class HomeController extends GetxController
       httpresult = await Api.feedIndex(
           queryParameters: Params.add(Newparams: queryParameters));
     } catch (e) {
-      _httploadingController.setState = HttploadingState.error;
+      if (_pull) _httploadingController.setState = HttploadingState.error;
       throw 'feedIndex连接错误';
     }
 
     final Map<String, dynamic> data = httpresult.data;
-    _recommand.add(FeedIndex.fromJson(data));
+    try {
+      _recommand.add(FeedIndex.fromJson(data));
+    } catch (e) {
+      if (_pull) _httploadingController.setState = HttploadingState.error;
+      throw '数据出错';
+    }
     _httploadingController.setState = HttploadingState.success;
+    if (_pull) _pull = false;
+  }
+
+  void _hotIndex() async {
+    if (_hot.isEmpty)
+      _httploadingController2.setState = HttploadingState.loading;
+    Response httpresult;
+    int idx = 0;
+    final String last_param =
+        _hot.isNotEmpty ? _hot.last.items.last.cardcontext.videoinfo.param : '';
+    _hot.forEach((e) => idx += e.items.length);
+    try {
+      httpresult = await Api.hotIndex(
+          data: hotIndexRe().result(idx: idx, last_param: last_param),
+          option: Options(responseType: ResponseType.bytes));
+    } catch (e) {
+      if (_hot.isEmpty)
+        _httploadingController2.setState = HttploadingState.error;
+      throw 'hotIndex连接错误';
+    }
+
+    final PopularReply popularReply = hotIndexReply().result(httpresult.data);
+    _hot.add(popularReply);
+    _httploadingController2.setState = HttploadingState.success;
+  }
+
+  void _tabListener() {
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging &&
+          _tabController.index == 1 &&
+          _hot.isEmpty) {
+        _hotIndex();
+      }
+    });
   }
 }

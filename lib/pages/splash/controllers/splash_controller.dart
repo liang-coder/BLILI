@@ -7,11 +7,11 @@ import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:blili/service/UserServer.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:blili/command/utils/device/bilifingerprint.dart';
+import 'package:blili/command/http/protobuf/request/bilifingerprint.dart';
 import 'package:blili/command/http/api.dart';
 import 'package:blili/command/http/params.dart';
 import 'package:blili/data/deviceinfo/init.dart';
-import 'package:blili/command/utils/device/blilifingerprint2.dart';
+import 'package:blili/command/http/protobuf/request/blilifingerprint2.dart';
 
 class SplashController extends GetxController {
   //TODO: Implement SplashController

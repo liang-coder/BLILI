@@ -20,14 +20,13 @@ class HomeView extends GetView<HomeController> {
         children: [
           _Tabbar(),
           Expanded(
-              child: TabBarView(
-                  controller: controller.tabController,
-                  children: [
-                Recommend(homeController: controller),
-                Hot(),
-                Anime(),
-                Tv()
-              ]))
+              child:
+                  TabBarView(controller: controller.tabController, children: [
+            Recommend(homeController: controller),
+            Hot(homeController: controller),
+            Anime(),
+            Tv()
+          ]))
         ],
       ),
     );

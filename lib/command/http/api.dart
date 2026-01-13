@@ -4,8 +4,7 @@ import 'package:dio/dio.dart';
 
 class Api {
   static Future<Response> feedIndex(
-      {required Map<String, dynamic> queryParameters,
-       Options? option}) async {
+      {required Map<String, dynamic> queryParameters, Options? option}) async {
     final result = await DioClient.dio.get('/x/v2/feed/index',
         queryParameters: queryParameters, options: option);
     return result;
@@ -17,6 +16,18 @@ class Api {
       required Map<String, dynamic> data}) async {
     final result = await DioClient.dio.post('/x/resource/fingerprint',
         queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> hotIndex(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      required Object data}) async {
+    final result = await DioClient.dio.post(
+        '/bilibili.app.show.v1.Popular/Index',
+        queryParameters: queryParameters,
+        options: option,
+        data: data);
     return result;
   }
 

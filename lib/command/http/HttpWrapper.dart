@@ -32,7 +32,7 @@ class BInterceptorsWrapper {
 
   RequestOptions _onRequest(RequestOptions options) {
     _requestList.add(options.path);
-    options.queryParameters = _singer.sign(options.queryParameters);
+    _setParame(options);
     _setHeader(options);
     return options;
   }
@@ -67,9 +67,14 @@ class BInterceptorsWrapper {
     return error;
   }
 
+  void _setParame(RequestOptions options) {
+    if (!(options.responseType == ResponseType.bytes)) {
+      options.queryParameters = _singer.sign(options.queryParameters);
+    }
+  }
+
   void _setHeader(RequestOptions options) {
-    final bool isResponsebyte = options.responseType == ResponseType.bytes;
-    if (isResponsebyte) {
+    if (options.responseType == ResponseType.bytes) {
       options.headers
           .addAll(bliliHeader.basicHeader(useragent: bliliHeader.useragent2));
       options.headers.addAll(bliliHeader.xbiliHeader());

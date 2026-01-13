@@ -65,10 +65,10 @@ class Id {
     return fp;
   }
 
-  static String fpremote(){
+  static String fpremote() {
     final bool checkfpremote = Shareperference.checkKey('fpremote');
 
-    if(checkfpremote){
+    if (checkfpremote) {
       return Shareperference.getString('fpremote')!;
     }
 

@@ -166,7 +166,7 @@ void BiliFingerprinttest() async {
 
   final Uint8List blilifingerprintbyte = blilifingerprint.writeToBuffer();
 
-  final Map result = await FingerprintEncrypt.encryptContent(blilifingerprintbyte);
+  final Map result = await FingerprintEncrypt().encryptContent(blilifingerprintbyte);
 
   log(result.toString());
 

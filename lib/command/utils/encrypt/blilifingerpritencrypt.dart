@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'basic.dart';
 
 class FingerprintEncrypt {
-  static Future<Map<String, String>> encryptContent(
-      Uint8List contentBytearray) async {
+  Future<Map<String, String>> encryptContent(Uint8List contentBytearray) async {
     try {
       final String pemPublicKey = await rootBundle.loadString(
           'assets/rsa_public_key.pem'); // 1. 生成随机 16 位 AES Key (对应 a.random16_key())

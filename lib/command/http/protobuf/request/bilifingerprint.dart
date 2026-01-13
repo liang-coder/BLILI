@@ -107,7 +107,7 @@ class BliliFingerprintData {
     final Uint8List blilifingerprintbyte = blilifingerprint.writeToBuffer();
 
     final Map result =
-        await FingerprintEncrypt.encryptContent(blilifingerprintbyte);
+        await FingerprintEncrypt().encryptContent(blilifingerprintbyte);
 
     return result;
 
