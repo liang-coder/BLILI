@@ -4,11 +4,13 @@ import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/toast/BliliToast.dart';
 import 'package:dio/dio.dart';
 import 'header.dart';
+import 'package:blili/widget/HttpLoading.dart';
 
 class BInterceptorsWrapper {
   late InterceptorsWrapper _interceptorsWrapper;
   final Singer _singer = Singer();
   final List<String> _requestList = [];
+  final List<String> _MapReKeys = ['result', 'data'];
 
   BInterceptorsWrapper() {
     _interceptorsWrapper = InterceptorsWrapper(
@@ -31,22 +33,27 @@ class BInterceptorsWrapper {
   InterceptorsWrapper get interceptorsWrapper => _interceptorsWrapper;
 
   RequestOptions _onRequest(RequestOptions options) {
-    _requestList.add(options.path);
+    final String path = options.path;
+    _requestList.add(path);
     _setParame(options);
     _setHeader(options);
+    HttploadingMap.getHttploadingController(path).loading();
     return options;
   }
 
   Response _onResponse(Response response) {
-    _requestList.remove(response.requestOptions.path);
+    final String path = response.requestOptions.path;
+    _requestList.remove(path);
     final ResponseType responsetype = response.requestOptions.responseType;
     final int status = response.statusCode!;
     if (responsetype == ResponseType.json &&
         status == 200 &&
         response.data is Map) {
-      if (response.data['data'] != null &&
-          (response.data['data'] as Map).isNotEmpty) {
-        response.data = response.data['data'];
+      final String key = _getKey(response.data);
+      if (response.data[key] != null &&
+          (response.data[key] as Map).isNotEmpty) {
+        response.data = response.data[key];
+        HttploadingMap.getHttploadingController(path).success();
       } else {
         BliliToast.show('加载失败');
       }
@@ -55,15 +62,19 @@ class BInterceptorsWrapper {
     if (responsetype == ResponseType.bytes && status == 200) {
       final List<int> data = response.data;
       if (data.isEmpty) BliliToast.show('加载失败');
+      if (data.isNotEmpty)
+        HttploadingMap.getHttploadingController(path).success();
     }
 
     return response;
   }
 
   DioException _onError(DioException error) {
-    _requestList.remove(error.requestOptions.path);
+    final String path = error.requestOptions.path;
+    _requestList.remove(path);
     final String errorMessage = _onErrorMessage(error);
     if (errorMessage != '未知错误') BliliToast.show(errorMessage);
+    HttploadingMap.getHttploadingController(path).error();
     return error;
   }
 
@@ -92,6 +103,15 @@ class BInterceptorsWrapper {
           .addAll(bliliHeader.basicHeader(useragent: bliliHeader.useragent1));
       options.headers.addAll(bliliHeader.xbiliHeader());
     }
+  }
+
+  String _getKey(Map data) {
+    for (int i = 0; i < _MapReKeys.length; i++) {
+      if (data.containsKey(_MapReKeys[i])) {
+        return _MapReKeys[i];
+      }
+    }
+    return '';
   }
 
   String _onErrorMessage(DioException error) {

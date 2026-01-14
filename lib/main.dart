@@ -4,14 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'routes/app_pages.dart';
 import 'init.dart';
-import 'deviceinfotest.dart';
-import 'blilifingerprintTest.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Init.init();
-  // BiliFingerprinttest();
-
 
   runApp(
     ScreenUtilInit(

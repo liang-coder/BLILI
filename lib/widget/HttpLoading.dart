@@ -6,13 +6,60 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+class HttploadingMap {
+  static final Map<String, HttploadingController> _map = {};
+  static Map<String, HttploadingController> get data => _map;
+  static void add(
+          {required String key, required HttploadingController value}) =>
+      _map[key] = value;
+  static void remove(String key) => _map.remove(key);
+  static HttploadingController getHttploadingController(String key) {
+    if (_map.containsKey(key)) {
+      return _map[key]!;
+    }
+    return HttploadingController();
+  }
+}
+
 enum HttploadingState { error, loading, success }
 
 class HttploadingController {
   ValueNotifier<HttploadingState> _state =
       ValueNotifier<HttploadingState>(HttploadingState.loading);
+  String _api = '';
+  bool _errorEnable = true;
+  bool _loadingEnable = true;
+
+  HttploadingController({String? api = ''}) {
+    _api = api!;
+    HttploadingMap.add(key: _api, value: this);
+  }
+
   ValueNotifier<HttploadingState> get state => _state;
-  set setState(HttploadingState value) => _state.value = value;
+  // set setState(HttploadingState value) => _state.value = value;
+  set setErrorEnable(bool v) => _errorEnable = v;
+  set setLoadingEnable(bool v) => _loadingEnable = v;
+
+  void loading() {
+    if (_loadingEnable) _state.value = HttploadingState.loading;
+  }
+
+  void error() {
+    if (_errorEnable) _state.value = HttploadingState.error;
+  }
+
+  void success() {
+    _state.value = HttploadingState.success;
+  }
+
+  void unenable() {
+    _loadingEnable = false;
+    _errorEnable = false;
+  }
+
+  void dispose() {
+    HttploadingMap.remove(_api);
+  }
 }
 
 class Httploading extends StatelessWidget {

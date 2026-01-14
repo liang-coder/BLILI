@@ -8,7 +8,7 @@ import 'package:blili/service/UserServer.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:blili/command/http/protobuf/request/bilifingerprint.dart';
-import 'package:blili/command/http/api.dart';
+import 'package:blili/command/http/apiRe.dart';
 import 'package:blili/command/http/params.dart';
 import 'package:blili/data/deviceinfo/init.dart';
 import 'package:blili/command/http/protobuf/request/blilifingerprint2.dart';
@@ -21,6 +21,7 @@ class SplashController extends GetxController {
   void onInit() async {
     super.onInit();
     await _initdata();
+    // await _fingerprint();
     if (!Shareperference.checkKey('fpremote')) await _fingerprint();
     await _getticket();
   }
@@ -46,7 +47,7 @@ class SplashController extends GetxController {
   Future<void> _fingerprint() async {
     final Map fingerprintdata = await BliliFingerprintData().result();
 
-    final httpresult = await Api.fingerprint(
+    final httpresult = await ApiRe.fingerprint(
         queryParameters: Params.params(),
         data: {
           'key': fingerprintdata['rsa_key'],
@@ -65,7 +66,7 @@ class SplashController extends GetxController {
     }
 
     final Uint8List fingerprintbyte = await BliliFingerprintData2().result();
-    final httpresult = await Api.getticket(
+    final httpresult = await ApiRe.getticket(
         option: Options(responseType: ResponseType.bytes),
         data: DataConverter.gzipCompress(Uint8List.fromList(fingerprintbyte)));
     final Uint8List ticketbyte = httpresult.data;

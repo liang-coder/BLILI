@@ -161,12 +161,14 @@ class Videocard2 extends StatelessWidget {
                   width: 35.w,
                   height: 35.w,
                 ),
-                Text(
+                Expanded(
+                    child: Text(
                   card.cardcontext.authorName,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: 24.sp,
                       color: Theme.of(context).textTheme.displayMedium!.color),
-                )
+                ))
               ],
             )
           ],
@@ -216,20 +218,21 @@ Widget _StackImage(
                           Text(PlaySum, style: TextStyle(fontSize: 22.sp))
                         ],
                       ),
-                      if(DmSum !='')Row(
-                        spacing: 2.w,
-                        children: [
-                          Image.asset(
-                            Images.videoCardDanmu,
-                            width: 35.w,
-                            height: 35.w,
-                          ),
-                          Text(
-                            DmSum!,
-                            style: TextStyle(fontSize: 22.sp),
-                          )
-                        ],
-                      )
+                      if (DmSum != '')
+                        Row(
+                          spacing: 2.w,
+                          children: [
+                            Image.asset(
+                              Images.videoCardDanmu,
+                              width: 35.w,
+                              height: 35.w,
+                            ),
+                            Text(
+                              DmSum!,
+                              style: TextStyle(fontSize: 22.sp),
+                            )
+                          ],
+                        )
                     ],
                   ),
                   Text(

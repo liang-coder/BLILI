@@ -1,9 +1,9 @@
 import 'package:blili/command/utils/date/Date.dart';
 
 class Params {
-
-  static Map<String,dynamic> params() {
-    final Map<String,dynamic> params = {
+  static Map<String, dynamic> params() {
+    final Map<String, dynamic> params = {
+      "ad_extra": "",
       "appkey": "dfca71928277209b",
       "build": "2001100",
       "c_locale": "zh_CN",
@@ -19,8 +19,8 @@ class Params {
     return params;
   }
 
-  static Map<String,dynamic> add({required Map<String,dynamic> Newparams}) {
-    final Map<String,dynamic> params1 = params();
+  static Map<String, dynamic> add({required Map<String, dynamic> Newparams}) {
+    final Map<String, dynamic> params1 = params();
     params1.addAll(Newparams);
     return params1;
   }
