@@ -135,5 +135,26 @@ class BasicCrypt {
   }
 
 
+  static String encryptPgcinfo(String plainText) {
+    try {
+      // 1. 准备 Key (128位 AES 需要 16 或 32 字符，这里是 32 字符的十六进制字符串)
+      final key = Key.fromUtf8("69DAD813E13A40418B81863B59E65AC5");
+
+      // 2. 初始化 AES 引擎，指定 ECB 模式和 PKCS7 填充
+      // (注意：Dart 的 PKCS7 与 Java 的 PKCS5 在 AES 下是通用的)
+      final encrypter = Encrypter(AES(key, mode: AESMode.ecb, padding: 'PKCS7'));
+
+      // 3. 执行加密
+      final encrypted = encrypter.encrypt(plainText);
+
+      // 4. 返回 Base64 字符串
+      return encrypted.base64;
+    } catch (e) {
+      print("加密失败: $e");
+      return "";
+    }
+  }
+
+
 
 }

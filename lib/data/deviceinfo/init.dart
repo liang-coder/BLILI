@@ -1,3 +1,4 @@
+import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:blili/command/utils/device/deviceinfo.dart';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +13,9 @@ class BiliFingerprintDataInit {
     final int boottime = await DeviceInfo.boottime();
     final String? androidid = await DeviceInfo.androidid();
     final List<String> sysapp = await DeviceInfo.sysapps();
-    final List<String> installapp = await DeviceInfo.apps();
+    final List<String> installapp = (await DeviceInfo.apps())
+        .map((e) => DataConverter.appinfoconvert(appinfo: e, sysapp: '0'))
+        .toList();
 
     final bool isfirst = Shareperference.checkKey('guid');
 

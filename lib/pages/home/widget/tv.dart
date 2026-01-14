@@ -12,7 +12,7 @@ class _TvState extends State<Tv> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Tvgridview();
+    return SizedBox();
   }
 
   @override

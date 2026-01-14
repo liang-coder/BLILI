@@ -24,7 +24,7 @@ class HomeView extends GetView<HomeController> {
                   TabBarView(controller: controller.tabController, children: [
             Recommend(homeController: controller),
             Hot(homeController: controller),
-            Anime(),
+            Anime(homeController: controller),
             Tv()
           ]))
         ],

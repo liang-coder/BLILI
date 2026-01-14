@@ -43,7 +43,7 @@ class DeviceInfo {
     return _build.model;
   }
 
-  static String deviceType(){
+  static String deviceType() {
     //0:m   1:I  2:t
     return '1';
   }
@@ -112,7 +112,7 @@ class DeviceInfo {
     return sysapp2;
   }
 
-  static Future<List<String>> apps() async {
+  static Future<List<AppInfo>> apps() async {
     final permissions = [
       'android.permission.NFC',
       'android.permission.ACCESS_FINE_LOCATION'
@@ -121,11 +121,11 @@ class DeviceInfo {
     final installapp = await DeviceInstalledApps.getApps(
         permissions: permissions, shouldHasAllPermissions: false);
 
-    final List<String> installapp2 = installapp
-        .map((e) => DataConverter.appinfoconvert(appinfo: e, sysapp: '0'))
-        .toList();
+    // final List<String> installapp2 = installapp
+    //     .map((e) => DataConverter.appinfoconvert(appinfo: e, sysapp: '0'))
+    //     .toList();
 
-    return installapp2;
+    return installapp;
   }
 
   static int osbuilddate() {

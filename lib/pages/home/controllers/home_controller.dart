@@ -3,6 +3,7 @@ import 'package:blili/command/http/params.dart';
 import 'package:blili/command/http/protobuf/response/hotIndexReply.dart';
 import 'package:blili/command/utils/date/Date.dart';
 import 'package:blili/command/utils/device/deviceinfo.dart';
+import 'package:blili/command/utils/encrypt/basic.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:blili/command/http/apiRe.dart';
@@ -50,10 +51,13 @@ class HomeController extends GetxController
   get tabController => _tabController;
   RxList<FeedIndex> get recommand => _recommand;
   RxList<PopularReply> get hot => _hot;
+  RxList<Bangumi> get GBangumi => _bangumi;
   HttploadingController get httploadingController => _httploadingController;
   HttploadingController get httploadingController2 => _httploadingController2;
+  HttploadingController get httploadingController3 => _httploadingController3;
   VoidCallback get feedIndex => _feedIndex;
   VoidCallback get hotIndex => _hotIndex;
+  VoidCallback get bangumiIndex => _bangumiIndex;
 
   void increment() => count.value++;
 
@@ -106,7 +110,7 @@ class HomeController extends GetxController
       _recommand.add(FeedIndex.fromJson(data));
     } catch (e) {
       httploadingController.error();
-      throw '数据出错';
+      throw '数据出错 $e';
     }
     if (_pull) {
       _pull = false;
@@ -130,7 +134,7 @@ class HomeController extends GetxController
       _hot.add(popularReply);
     } catch (e) {
       httploadingController2.error();
-      throw '数据出错';
+      throw '数据出错 $e';
     }
     _httploadingController2.unenable();
   }
@@ -149,8 +153,21 @@ class HomeController extends GetxController
       'jump_rank_id': ''
     };
 
+    final String pgcinfo = BasicCrypt.encryptPgcinfo(
+        (await DeviceInfo.apps()).map((e) => e.name).toList().toString());
+
     final Response httpresult = await ApiRe.bangumi(
-        queryParameters: Params.add(Newparams: queryParameters));
+        queryParameters: Params.add(Newparams: queryParameters),
+        option: Options(headers: {'pgcinfo': pgcinfo}));
+
+    try {
+      final Bangumi bangumi = Bangumi.fromJson(httpresult.data);
+      _bangumi.add(bangumi);
+    } catch (e) {
+      _httploadingController3.error();
+      throw '数据出错 $e';
+    }
+    _httploadingController3.unenable();
   }
 
   void _tabListener() {

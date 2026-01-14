@@ -7,3 +7,22 @@ class Api {
   static final String bangumi = '/pgc/page/bangumi';
   static final String cinema = '/pgc/page/cinema/tab';
 }
+
+class domainMap {
+  static final Map<String, String> _serviceDomainMap = {
+    Api.bangumi: 'https://api.bilibili.com',
+    Api.cinema: 'https://api.bilibili.com',
+    Api.hotIndex: 'https://app.bilibili.com',
+    Api.feedIndex: 'https://app.bilibili.com',
+    Api.fingerprint: 'https://app.bilibili.com',
+    Api.getticket: 'https://app.bilibili.com',
+    Api.guestid: 'https://app.bilibili.com',
+  };
+
+  static String getDomain(String key) {
+    if (_serviceDomainMap.containsKey(key)) {
+      return _serviceDomainMap[key]!;
+    }
+    return '';
+  }
+}

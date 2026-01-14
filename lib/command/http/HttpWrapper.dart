@@ -5,6 +5,7 @@ import 'package:blili/command/utils/toast/BliliToast.dart';
 import 'package:dio/dio.dart';
 import 'header.dart';
 import 'package:blili/widget/HttpLoading.dart';
+import 'api.dart';
 
 class BInterceptorsWrapper {
   late InterceptorsWrapper _interceptorsWrapper;
@@ -34,6 +35,7 @@ class BInterceptorsWrapper {
 
   RequestOptions _onRequest(RequestOptions options) {
     final String path = options.path;
+    options.baseUrl = domainMap.getDomain(path);
     _requestList.add(path);
     _setParame(options);
     _setHeader(options);

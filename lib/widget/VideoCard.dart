@@ -136,7 +136,7 @@ class Videocard2 extends StatelessWidget {
               return _StackImage(
                 width: constraints.maxWidth,
                 imageUrl: card.cardcontext.videoinfo.cover,
-                PlaySum: card.cardcontext.desc,
+                PlaySum: card.cardcontext.desc.replaceAll('·', ''),
                 PlayTime: card.cardcontext.duration,
               );
             }),

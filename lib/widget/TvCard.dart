@@ -1,44 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'BText.dart';
 import 'NetImage.dart';
+import 'package:blili/modules/homePage/bangumi.dart';
 
 class Tvcard extends StatelessWidget {
-  const Tvcard({super.key});
+  final Item item;
+  const Tvcard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => print('object'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _StackImage(
-              imageUrl: 'imageUrl',
-              PlaySum: '12万',
-              PlayTime: '02:45',
-              DmSum: '1203'),
-          Text(
-            '哈哈哈哈哈',
-            maxLines: 1,
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(
-            height: 4.w,
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.add_chart_sharp,
-                size: 10.sp,
-              ),
-              Text('奥索雅')
-            ],
-          )
-        ],
+      child: Padding(
+        padding: EdgeInsets.only(top: 12.w, bottom: 12.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 5.h,
+          children: [
+            _StackImage(
+                imageUrl: item.newEp!.cover == ''?item.cover:item.newEp!.cover,
+                PlaySum: '12万',
+                PlayTime: '02:45',
+                DmSum: '1203'),
+            Text(
+              item.title,
+              maxLines: 2,
+              textAlign: TextAlign.justify,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -53,10 +46,9 @@ class Tvcard extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(12.r),
           child: NetImage(
-            imageUrl:
-                'https://c-ssl.duitang.com/uploads/blog/202301/07/20230107131341_8c680.jpg',
+            imageUrl: imageUrl,
             fit: BoxFit.cover,
-            height: 320.w,
+            height: 315.w,
             width: double.infinity,
           ),
         ),

@@ -99,7 +99,16 @@ class ApiRe {
       {Map<String, dynamic>? queryParameters,
        Options? option,
       Object? data}) async {
-    final result = await DioClient.dio.post(Api.bangumi,
+    final result = await DioClient.dio.get(Api.bangumi,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> cinema(
+      {Map<String, dynamic>? queryParameters,
+       Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.get(Api.cinema,
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }
