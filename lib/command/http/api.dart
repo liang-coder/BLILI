@@ -6,6 +6,7 @@ class Api {
   static final String getticket = '/bilibili.api.ticket.v1.Ticket/GetTicket';
   static final String bangumi = '/pgc/page/bangumi';
   static final String cinema = '/pgc/page/cinema/tab';
+  static final String xlive = '/xlive/app-interface/v2/index/feed';
 }
 
 class domainMap {
@@ -17,6 +18,7 @@ class domainMap {
     Api.fingerprint: 'https://app.bilibili.com',
     Api.getticket: 'https://app.bilibili.com',
     Api.guestid: 'https://app.bilibili.com',
+    Api.xlive: 'https://api.live.bilibili.com',
   };
 
   static String getDomain(String key) {

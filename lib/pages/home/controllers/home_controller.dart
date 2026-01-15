@@ -13,6 +13,8 @@ import 'package:dio/dio.dart';
 import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
 import 'package:blili/command/http/protobuf/request/hotIndex.dart';
 import 'package:blili/modules/homePage/bangumi.dart';
+import 'package:blili/modules/homePage/cinema.dart';
+import 'package:blili/modules/homePage/basicModel.dart';
 
 class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -27,10 +29,13 @@ class HomeController extends GetxController
       HttploadingController(api: Api.hotIndex);
   final HttploadingController _httploadingController3 =
       HttploadingController(api: Api.bangumi);
+  final HttploadingController _httploadingController4 =
+      HttploadingController(api: Api.cinema);
 
   final RxList<FeedIndex> _recommand = <FeedIndex>[].obs;
   final RxList<PopularReply> _hot = <PopularReply>[].obs;
   final RxList<Bangumi> _bangumi = <Bangumi>[].obs;
+  final RxList<Cinema> _cinema = <Cinema>[].obs;
 
   @override
   void onInit() {
@@ -52,12 +57,15 @@ class HomeController extends GetxController
   RxList<FeedIndex> get recommand => _recommand;
   RxList<PopularReply> get hot => _hot;
   RxList<Bangumi> get GBangumi => _bangumi;
+  RxList<Cinema> get cinema => _cinema;
   HttploadingController get httploadingController => _httploadingController;
   HttploadingController get httploadingController2 => _httploadingController2;
   HttploadingController get httploadingController3 => _httploadingController3;
+  HttploadingController get httploadingController4 => _httploadingController4;
   VoidCallback get feedIndex => _feedIndex;
   VoidCallback get hotIndex => _hotIndex;
   VoidCallback get bangumiIndex => _bangumiIndex;
+  VoidCallback get cinemaIndex => _cinemaIndex;
 
   void increment() => count.value++;
 
@@ -170,6 +178,37 @@ class HomeController extends GetxController
     _httploadingController3.unenable();
   }
 
+  void _cinemaIndex() async {
+    final Map<String, dynamic> queryParameters = {
+      'cursor': '',
+      'feed_related_season_ids': '',
+      'fnval': '272',
+      'fnver': '0',
+      'fourk': '0',
+      'from_context': '',
+      'from_scene': '0',
+      'is_refresh': '1',
+      'jump_module': '',
+      'jump_rank_id': ''
+    };
+
+    final String pgcinfo = BasicCrypt.encryptPgcinfo(
+        (await DeviceInfo.apps()).map((e) => e.name).toList().toString());
+
+    final Response httpresult = await ApiRe.cinema(
+        queryParameters: Params.add(Newparams: queryParameters),
+        option: Options(headers: {'pgcinfo': pgcinfo}));
+
+    try {
+      final Cinema cinema = Cinema.fromJson(httpresult.data);
+      _cinema.add(cinema);
+    } catch (e) {
+      _httploadingController4.error();
+      throw '数据出错 $e';
+    }
+    _httploadingController4.unenable();
+  }
+
   void _tabListener() {
     _tabController.addListener(() {
       if (_tabController.indexIsChanging &&
@@ -182,6 +221,12 @@ class HomeController extends GetxController
           _tabController.index == 2 &&
           _bangumi.isEmpty) {
         _bangumiIndex();
+      }
+
+      if (_tabController.indexIsChanging &&
+          _tabController.index == 3 &&
+          _cinema.isEmpty) {
+        _cinemaIndex();
       }
     });
   }

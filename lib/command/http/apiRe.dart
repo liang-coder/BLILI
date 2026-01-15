@@ -112,4 +112,13 @@ class ApiRe {
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }
+
+  static Future<Response> xlive(
+      {Map<String, dynamic>? queryParameters,
+       Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.get(Api.xlive,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
 }

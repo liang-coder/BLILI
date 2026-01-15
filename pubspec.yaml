@@ -38,6 +38,7 @@ dependencies:
   flutter_snake_navigationbar:
     path: lib/plugin/SnakeBottomNavigationBar-master
   flutter_screenutil: ^5.9.3
+  easy_animated_indexed_stack: ^0.1.0
   flutter_lazy_indexed_stack: ^0.0.6
   flutter_animate: ^4.5.2
   cached_network_image: ^3.4.1
@@ -59,6 +60,7 @@ dependencies:
   package_info_plus: ^8.3.0
   json_annotation: ^4.9.0
   lottie: ^3.3.0
+
 
 
 
@@ -97,6 +99,7 @@ flutter:
     - assets/rsa_public_key.pem
     - assets/images/videoCard/
     - assets/images/httpState/
+    - assets/images/liveCard/
   
   # assets:
   #   - images/a_dot_burr.jpeg

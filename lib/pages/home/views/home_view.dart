@@ -25,7 +25,7 @@ class HomeView extends GetView<HomeController> {
             Recommend(homeController: controller),
             Hot(homeController: controller),
             Anime(homeController: controller),
-            Tv()
+            Tv(homeController: controller)
           ]))
         ],
       ),

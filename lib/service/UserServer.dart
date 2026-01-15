@@ -17,7 +17,7 @@ class Userserver extends GetxService {
   RxString get jwt => _jwt;
 
   void _initData() {
-    _jwt.value = Shareperference.getString('jwt')!;
+    _jwt.value = Shareperference.getString('jwt') ?? '';
   }
 }
 

@@ -265,6 +265,14 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "2.1.1"
+  easy_animated_indexed_stack:
+    dependency: "direct main"
+    description:
+      name: easy_animated_indexed_stack
+      sha256: f9ed97073c9dee50c84fcc461c08b384a33b23c81402be7400a990b9bf40b803
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.1.0"
   encrypt:
     dependency: "direct main"
     description:

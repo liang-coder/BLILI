@@ -1,6 +1,7 @@
 import 'package:blili/command/icons/icons.dart';
 import 'package:blili/command/theme/themeController.dart';
 import 'package:blili/widget/NetImage.dart';
+import 'package:easy_animated_indexed_stack/easy_animated_indexed_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,12 +26,13 @@ class IndexView extends GetView<IndexController> {
               child: Obx(() => LazyIndexedStack(
                     index: controller.GetIndex.value,
                     children: controller.IndexNavigationPages,
+                    // curve: Curves.easeInOut,
                   )))
         ],
       ),
     );
   }
-
+  // EasyAnimatedIndexedStack
   Widget _Leftnavigetionbar(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
