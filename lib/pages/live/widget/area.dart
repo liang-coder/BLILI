@@ -1,7 +1,9 @@
+import 'package:blili/routes/app_pages.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart';
 import 'package:blili/modules/livePage/areaLive.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class Area extends StatelessWidget {
   final AreaList areaList;
@@ -11,7 +13,11 @@ class Area extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => Get.toNamed(Routes.LIVE_SECOND, arguments: {
+        'area_id': areaList.id.toString(),
+        'parent_area_id': areaList.parentId.toString(),
+        'area_name': areaList.name
+      }),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: SizedBox(

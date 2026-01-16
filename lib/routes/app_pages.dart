@@ -8,6 +8,8 @@ import '../pages/index/bindings/index_binding.dart';
 import '../pages/index/views/index_view.dart';
 import '../pages/live/bindings/live_binding.dart';
 import '../pages/live/views/live_view.dart';
+import '../pages/liveSecond/bindings/live_second_binding.dart';
+import '../pages/liveSecond/views/live_second_view.dart';
 import '../pages/search/bindings/search_binding.dart';
 import '../pages/search/views/search_view.dart';
 import '../pages/setting/bindings/setting_binding.dart';
@@ -33,11 +35,10 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
-      name: _Paths.INDEX,
-      page: () => const IndexView(),
-      binding: IndexBinding(),
-      transition: Transition.fadeIn
-    ),
+        name: _Paths.INDEX,
+        page: () => const IndexView(),
+        binding: IndexBinding(),
+        transition: Transition.fadeIn),
     GetPage(
       name: _Paths.CATEGORY,
       page: () => const CategoryView(),
@@ -72,6 +73,11 @@ class AppPages {
       name: _Paths.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.LIVE_SECOND,
+      page: () => const LiveSecondView(),
+      binding: LiveSecondBinding(),
     ),
   ];
 }

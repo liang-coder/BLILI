@@ -1,6 +1,4 @@
-import 'dart:developer';
-
-import 'package:blili/command/utils/toast/BliliToast.dart';
+import 'package:blili/command/http/listViewRe.dart';
 import 'package:flutter/material.dart' hide Card;
 import 'VideoCard.dart';
 import 'package:blili/modules/homePage/feedIndex.dart';
@@ -15,7 +13,7 @@ class Videogridview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ScrollController _scrollController = ScrollController();
-    _(_scrollController, request);
+    ListViewRe().R(_scrollController, request);
     final bool isItem = videoData[0] is Item;
     return GridView.builder(
         controller: _scrollController,
@@ -60,15 +58,5 @@ class Videogridview extends StatelessWidget {
             );
           }
         });
-  }
-
-  void _(ScrollController scrollController, VoidCallback request) {
-    scrollController.addListener(() {
-      if (scrollController.offset >
-          (scrollController.position.maxScrollExtent - 5)) {
-        request();
-        BliliToast.show('正在加载更多视频');
-      }
-    });
   }
 }

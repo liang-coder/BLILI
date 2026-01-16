@@ -1,4 +1,3 @@
-import 'package:blili/command/utils/toast/BliliToast.dart';
 import 'package:blili/modules/livePage/areaLive.dart';
 import 'package:blili/modules/livePage/live.dart';
 import 'package:blili/widget/BTabBar.dart';
@@ -8,6 +7,7 @@ import 'package:get/get.dart';
 import '../controllers/live_controller.dart';
 import 'package:blili/widget/LiveGridView.dart';
 import 'areaGridView.dart';
+import 'package:blili/command/http/listViewRe.dart';
 
 class Body extends StatefulWidget {
   final LiveController liveController;
@@ -22,7 +22,7 @@ class _BodyState extends State<Body> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     final ScrollController _scrollController = ScrollController();
-    _(_scrollController, widget.liveController.xliveIndex);
+    ListViewRe().R(_scrollController, widget.liveController.xliveIndex);
     return Httploading(
         successChild: ListView(
           controller: _scrollController,
@@ -65,16 +65,6 @@ class _BodyState extends State<Body> with AutomaticKeepAliveClientMixin {
                       .toList())))
         ],
       );
-    });
-  }
-
-  void _(ScrollController scrollController, VoidCallback request) {
-    scrollController.addListener(() {
-      if (scrollController.offset >
-          (scrollController.position.maxScrollExtent - 5)) {
-        request();
-        BliliToast.show('正在加载更多直播');
-      }
     });
   }
 

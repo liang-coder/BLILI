@@ -8,6 +8,7 @@ class Api {
   static final String cinema = '/pgc/page/cinema/tab';
   static final String xlive = '/xlive/app-interface/v2/index/feed';
   static final String arealive = '/xlive/app-interface/v2/index/getAreaList';
+  static final String secondlive = '/xlive/app-interface/v2/second/getList';
 }
 
 class domainMap {
@@ -21,6 +22,7 @@ class domainMap {
     Api.guestid: 'https://app.bilibili.com',
     Api.xlive: 'https://api.live.bilibili.com',
     Api.arealive: 'https://api.live.bilibili.com',
+    Api.secondlive: 'https://api.live.bilibili.com',
   };
 
   static String getDomain(String key) {
