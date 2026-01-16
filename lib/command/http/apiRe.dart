@@ -97,7 +97,7 @@ class ApiRe {
 
   static Future<Response> bangumi(
       {Map<String, dynamic>? queryParameters,
-       Options? option,
+      Options? option,
       Object? data}) async {
     final result = await DioClient.dio.get(Api.bangumi,
         queryParameters: queryParameters, options: option, data: data);
@@ -106,7 +106,7 @@ class ApiRe {
 
   static Future<Response> cinema(
       {Map<String, dynamic>? queryParameters,
-       Options? option,
+      Options? option,
       Object? data}) async {
     final result = await DioClient.dio.get(Api.cinema,
         queryParameters: queryParameters, options: option, data: data);
@@ -115,9 +115,18 @@ class ApiRe {
 
   static Future<Response> xlive(
       {Map<String, dynamic>? queryParameters,
-       Options? option,
+      Options? option,
       Object? data}) async {
     final result = await DioClient.dio.get(Api.xlive,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> areaLive(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.get(Api.arealive,
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }

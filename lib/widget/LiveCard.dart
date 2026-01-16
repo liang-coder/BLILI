@@ -16,7 +16,7 @@ class Livecard extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: SizedBox(
-          height: 280.w,
+          height: 320.w,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +37,7 @@ class Livecard extends StatelessWidget {
                 padding: EdgeInsets.only(top: 2.w),
                 child: Text(
                   cardList.cardData.smallCardV1!.title,
-                  maxLines: 2,
+                  maxLines: 1,
                   textAlign: TextAlign.justify,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -45,6 +45,31 @@ class Livecard extends StatelessWidget {
                       color: Theme.of(context).textTheme.displayMedium!.color),
                 ),
               )),
+              Expanded(
+                  child: Padding(
+                padding: EdgeInsets.only(top: 6.w),
+                child: Row(
+                  spacing: 8.w,
+                  children: [
+                    ClipOval(
+                      child: NetImage(
+                        imageUrl: cardList.cardData.smallCardV1!.face,
+                        width: 35.w,
+                        height: 35.w,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Text(
+                      overflow: TextOverflow.ellipsis,
+                      cardList.cardData.smallCardV1!.uname,
+                      style: TextStyle(
+                        fontSize: 22.sp,
+                        color: Theme.of(context).textTheme.displayMedium!.color,
+                      ),
+                    ),
+                  ],
+                ),
+              ))
             ],
           ),
         ),
@@ -70,33 +95,33 @@ class Livecard extends StatelessWidget {
             width: width,
           ),
         ),
-        Positioned(
-            right: 0,
-            top: 10.w,
-            child: SizedBox(
-              width: width,
-              child: Padding(
-                padding: EdgeInsets.only(right: 4.w),
-                child: Row(
-                  spacing: 8.w,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      upName,
-                      style: TextStyle(fontSize: 22.sp),
-                    ),
-                    ClipOval(
-                      child: NetImage(
-                        imageUrl: upAvatar,
-                        width: 35.w,
-                        height: 35.w,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            )),
+        // Positioned(
+        //     right: 0,
+        //     top: 10.w,
+        //     child: SizedBox(
+        //       width: width,
+        //       child: Padding(
+        //         padding: EdgeInsets.only(right: 4.w),
+        //         child: Row(
+        //           spacing: 8.w,
+        //           mainAxisAlignment: MainAxisAlignment.end,
+        //           children: [
+        //             Text(
+        //               upName,
+        //               style: TextStyle(fontSize: 22.sp),
+        //             ),
+        //             ClipOval(
+        //               child: NetImage(
+        //                 imageUrl: upAvatar,
+        //                 width: 35.w,
+        //                 height: 35.w,
+        //                 fit: BoxFit.cover,
+        //               ),
+        //             )
+        //           ],
+        //         ),
+        //       ),
+        //     )),
         Positioned(
             bottom: 10.w,
             child: SizedBox(

@@ -37,6 +37,8 @@ class HomeController extends GetxController
   final RxList<Bangumi> _bangumi = <Bangumi>[].obs;
   final RxList<Cinema> _cinema = <Cinema>[].obs;
 
+  final FocusNode _focusNode = FocusNode();
+
   @override
   void onInit() {
     super.onInit();
@@ -54,6 +56,7 @@ class HomeController extends GetxController
   }
 
   get tabController => _tabController;
+  FocusNode get focusnode => _focusNode;
   RxList<FeedIndex> get recommand => _recommand;
   RxList<PopularReply> get hot => _hot;
   RxList<Bangumi> get GBangumi => _bangumi;

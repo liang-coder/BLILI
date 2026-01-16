@@ -12,14 +12,25 @@ class IndexController extends GetxController {
   //TODO: Implement IndexController
 
   final count = 0.obs;
-  final _SelectedIndex = 0.obs;
-  final _LeftNavigetionSize = 45.w;
-
-  final List<Widget> _IndexNavigationPages = const [
-    HomeView(),
-    CategoryView(),
-    SpaceView(),
-    LiveView(),
+  static RxInt _SelectedIndex = 0.obs;
+  double _LeftNavigetionSize = 45.w;
+  final List<Widget> _IndexNavigationPages = [
+    Obx(() => ExcludeFocus(
+          excluding: _SelectedIndex.value != 0,
+          child: const HomeView(),
+        )),
+    Obx(()=>ExcludeFocus(
+      excluding: _SelectedIndex.value != 1,
+      child: const CategoryView(),
+    )),
+    Obx(()=>ExcludeFocus(
+      excluding: _SelectedIndex.value != 2,
+      child: const SpaceView(),
+    )),
+    Obx(()=>ExcludeFocus(
+      excluding: _SelectedIndex.value != 3,
+      child: const LiveView(),
+    )),
   ];
 
   final List<IconData> _IndexNavigationIconData = const [
@@ -52,7 +63,7 @@ class IndexController extends GetxController {
 
   RxInt get GetIndex => _SelectedIndex;
   double get LeftNavigetionSize => _LeftNavigetionSize;
-  List<Widget> get IndexNavigationPages => _IndexNavigationPages;
+  List<Widget> get IndexNavigationPages => _IndexNavigationPages!;
   List<IconData> get IndexNavigationIconData => _IndexNavigationIconData;
   List<FocusNode> get IndexNavigationFocusNode => _IndexNavigationFocusNode;
 
