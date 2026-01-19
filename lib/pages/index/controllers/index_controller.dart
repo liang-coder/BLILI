@@ -19,10 +19,10 @@ class IndexController extends GetxController {
           excluding: _SelectedIndex.value != 0,
           child: const HomeView(),
         )),
-    Obx(()=>ExcludeFocus(
-      excluding: _SelectedIndex.value != 1,
-      child: const CategoryView(),
-    )),
+    // Obx(()=>ExcludeFocus(
+    //   excluding: _SelectedIndex.value != 1,
+    //   child: const CategoryView(),
+    // )),
     Obx(()=>ExcludeFocus(
       excluding: _SelectedIndex.value != 2,
       child: const SpaceView(),
@@ -35,13 +35,13 @@ class IndexController extends GetxController {
 
   final List<IconData> _IndexNavigationIconData = const [
     AppIcons.Home,
-    AppIcons.Category,
+    // AppIcons.Category,
     AppIcons.Space,
     AppIcons.Live,
   ];
 
   final List<FocusNode> _IndexNavigationFocusNode = [
-    for (int i = 0; i < 4; i++) FocusNode()
+    for (int i = 0; i < 3; i++) FocusNode()
   ];
 
   @override

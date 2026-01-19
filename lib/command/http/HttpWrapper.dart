@@ -53,7 +53,10 @@ class BInterceptorsWrapper {
         response.data is Map) {
       final String key = _getKey(response.data);
       if (response.data[key] != null &&
-          (response.data[key] as Map).isNotEmpty) {
+              (response.data[key] is Map &&
+                  (response.data[key] as Map).isNotEmpty) ||
+          (response.data[key] is List &&
+              (response.data[key] as List).isNotEmpty)) {
         response.data = response.data[key];
         HttploadingMap.getHttploadingController(path).success();
       } else {

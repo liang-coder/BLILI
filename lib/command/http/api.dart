@@ -9,6 +9,7 @@ class Api {
   static final String xlive = '/xlive/app-interface/v2/index/feed';
   static final String arealive = '/xlive/app-interface/v2/index/getAreaList';
   static final String secondlive = '/xlive/app-interface/v2/second/getList';
+  static final String hotSearch = '/x/v2/search/square';
 }
 
 class domainMap {
@@ -23,6 +24,7 @@ class domainMap {
     Api.xlive: 'https://api.live.bilibili.com',
     Api.arealive: 'https://api.live.bilibili.com',
     Api.secondlive: 'https://api.live.bilibili.com',
+    Api.hotSearch: 'https://app.bilibili.com',
   };
 
   static String getDomain(String key) {

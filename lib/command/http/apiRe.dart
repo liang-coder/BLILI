@@ -139,4 +139,13 @@ class ApiRe {
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }
+
+  static Future<Response> hotSearch(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.get(Api.hotSearch,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
 }
