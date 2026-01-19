@@ -23,7 +23,7 @@ class Keybutton extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         color: Theme.of(context).textTheme.bodyMedium!.color!.withAlpha(40),
-        splashColor: Colors.red,
+        // splashColor: Colors.red,
         focusNode: focusNode,
         child: Text(
           text,

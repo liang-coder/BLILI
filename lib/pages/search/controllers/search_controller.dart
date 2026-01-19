@@ -11,7 +11,7 @@ class SearchController extends GetxController {
   //TODO: Implement SearchController
 
   final count = 0.obs;
-  List<HotSearch> _hotSearch = [];
+  RxList<HotSearch> _hotSearch = <HotSearch>[].obs;
   final String _chatKey = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   final FocusNode _focusNode = FocusNode();
   final FocusNode _clearFocusNode = FocusNode();
@@ -42,7 +42,7 @@ class SearchController extends GetxController {
   TextEditingController get textEditingController => _textEditingController;
   HttploadingController get httploadingController => _httploadingController;
   String get chatkey => _chatKey;
-  List<HotSearch> get hotsearch => _hotSearch;
+  RxList<HotSearch> get hotsearch => _hotSearch;
   VoidCallback get hotS => _hotS;
 
   void textInput(String v) {

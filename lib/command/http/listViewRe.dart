@@ -5,7 +5,7 @@ class ListViewRe {
   void R(ScrollController scrollController, VoidCallback request) {
     scrollController.addListener(() {
       if (scrollController.offset >
-          (scrollController.position.maxScrollExtent - 5)) {
+          (scrollController.position.maxScrollExtent - 20)) {
         request();
         BliliToast.show('正在加载更多');
       }

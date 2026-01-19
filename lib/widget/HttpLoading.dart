@@ -118,9 +118,11 @@ class Httploading extends StatelessWidget {
 
   Widget _loading() {
     return SizedBox.expand(
-      child: Transform.scale(
-        scale: 0.4,
-        child: Lottie.asset(Images.httpStateLoding),
+      child: Center(
+        child: Transform.scale(
+          scale: 0.4,
+          child: Lottie.asset(Images.httpStateLoding),
+        ),
       ),
     );
   }
