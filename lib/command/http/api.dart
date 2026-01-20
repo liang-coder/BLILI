@@ -3,13 +3,16 @@ class Api {
   static final String fingerprint = '/x/resource/fingerprint';
   static final String hotIndex = '/bilibili.app.show.v1.Popular/Index';
   static final String guestid = '/x/passport-user/guest/reg';
-  static final String getticket = '/bilibili.api.ticket.v1.Ticket/GetTicket';
+  static final String getTicket = '/bilibili.api.ticket.v1.Ticket/GetTicket';
   static final String bangumi = '/pgc/page/bangumi';
   static final String cinema = '/pgc/page/cinema/tab';
   static final String xlive = '/xlive/app-interface/v2/index/feed';
   static final String arealive = '/xlive/app-interface/v2/index/getAreaList';
   static final String secondlive = '/xlive/app-interface/v2/second/getList';
   static final String hotSearch = '/x/v2/search/square';
+  static final String Suggest3 = '/bilibili.app.interface.v1.Search/Suggest3';
+  static final String search = '/x/v2/search';
+  static final String searchType = '/x/v2/search';
 }
 
 class domainMap {
@@ -19,12 +22,15 @@ class domainMap {
     Api.hotIndex: 'https://app.bilibili.com',
     Api.feedIndex: 'https://app.bilibili.com',
     Api.fingerprint: 'https://app.bilibili.com',
-    Api.getticket: 'https://app.bilibili.com',
+    Api.getTicket: 'https://app.bilibili.com',
     Api.guestid: 'https://app.bilibili.com',
     Api.xlive: 'https://api.live.bilibili.com',
     Api.arealive: 'https://api.live.bilibili.com',
     Api.secondlive: 'https://api.live.bilibili.com',
     Api.hotSearch: 'https://app.bilibili.com',
+    Api.Suggest3: 'https://app.bilibili.com',
+    Api.search: 'https://app.bilibili.com',
+    Api.searchType: 'https://app.bilibili.com',
   };
 
   static String getDomain(String key) {

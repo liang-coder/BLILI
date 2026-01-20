@@ -86,6 +86,13 @@ class Id {
     return sessionId;
   }
 
+  static String qvid() {
+    return md5
+        .convert(
+            utf8.encode('${buvid()}${DateTime.now().millisecondsSinceEpoch}'))
+        .toString();
+  }
+
   static String traceid() {
     return TraceId.genTraceId();
   }

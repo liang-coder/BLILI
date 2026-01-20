@@ -60,6 +60,8 @@ dependencies:
   package_info_plus: ^8.3.0
   json_annotation: ^4.9.0
   lottie: ^3.3.0
+  easy_debounce: ^2.0.3
+
 
 
 
@@ -124,6 +126,9 @@ flutter:
     - family: HttpIcon
       fonts:
         - asset: assets/icons/HttpIcon.ttf
+    - family: SearchIcon
+      fonts:
+        - asset: assets/icons/SearchIcon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

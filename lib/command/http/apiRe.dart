@@ -90,7 +90,7 @@ class ApiRe {
       {Map<String, dynamic>? queryParameters,
       required Options? option,
       Object? data}) async {
-    final result = await DioClient.dio.post(Api.getticket,
+    final result = await DioClient.dio.post(Api.getTicket,
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }
@@ -145,6 +145,24 @@ class ApiRe {
       Options? option,
       Object? data}) async {
     final result = await DioClient.dio.get(Api.hotSearch,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> search(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.get(Api.search,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> SearchSuggestion(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.post(Api.Suggest3,
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }

@@ -1,0 +1,35 @@
+import 'package:blili/widget/BTabBar.dart';
+import 'package:flutter/material.dart' hide SearchController;
+import '../controllers/search_controller.dart';
+
+class Searching extends StatelessWidget {
+  final SearchController searchController;
+  const Searching({super.key, required this.searchController});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _Tabbar(),
+        Expanded(
+            child: TabBarView(
+                controller: searchController.tabController,
+                children: [SizedBox(), SizedBox(), SizedBox()]))
+      ],
+    );
+  }
+
+  Widget _Tabbar() {
+    return BTabBar(controller: searchController.tabController, tabs: [
+      Tab(
+        text: '综合',
+      ),
+      Tab(
+        text: '番剧',
+      ),
+      Tab(
+        text: '影视',
+      ),
+    ]);
+  }
+}
