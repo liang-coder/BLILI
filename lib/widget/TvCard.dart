@@ -1,5 +1,5 @@
-import 'package:blili/widget/BText.dart';
-import 'package:flutter/material.dart';
+import 'package:blili/widget/badge.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'NetImage.dart';
 import 'package:blili/modules/homePage/bangumi.dart' as bangumi;
@@ -69,7 +69,8 @@ class Tvcard extends StatelessWidget {
             width: double.infinity,
           ),
         ),
-        if (badge != '') Positioned(right: 0, top: 0, child: _badge(badge)),
+        if (badge != '')
+          Positioned(right: 0, top: 0, child: BadgeWidget(badge: badge)),
         Positioned(
             right: 4.w,
             bottom: 4.w,
@@ -81,38 +82,6 @@ class Tvcard extends StatelessWidget {
             )),
         // Positioned(right: 0, child: Image.asset('name'))
       ],
-    );
-  }
-
-  Widget _badge(String badge) {
-    int bgcolor;
-
-    if (badge == '大会员') {
-      bgcolor = 0xffFB7299;
-    } else if (badge == '独家') {
-      bgcolor = 0xff00C0FF;
-    } else if (badge == '限时免费') {
-      bgcolor = 0xffFF7F24;
-    } else if (badge == '会员特价') {
-      bgcolor = 0xffFB7299;
-    } else {
-      bgcolor = 0xff00C0FF;
-    }
-
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 3.w, horizontal: 5.w),
-      decoration: BoxDecoration(
-          color: Color(bgcolor),
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(12.r),
-              topRight: Radius.circular(12.r))),
-      child: BText(
-        badge,
-        style: TextStyle(
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w500,
-            color: Theme.of(Get.context!).textTheme.bodyMedium!.color),
-      ),
     );
   }
 }

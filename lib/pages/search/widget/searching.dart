@@ -1,6 +1,7 @@
 import 'package:blili/widget/BTabBar.dart';
 import 'package:flutter/material.dart' hide SearchController;
 import '../controllers/search_controller.dart';
+import '../widget/all.dart';
 
 class Searching extends StatelessWidget {
   final SearchController searchController;
@@ -14,16 +15,22 @@ class Searching extends StatelessWidget {
         Expanded(
             child: TabBarView(
                 controller: searchController.tabController,
-                children: [SizedBox(), SizedBox(), SizedBox()]))
+                children: [
+              All(searchController: searchController),
+              SizedBox(),
+              SizedBox()
+            ]))
       ],
     );
   }
 
   Widget _Tabbar() {
     return BTabBar(controller: searchController.tabController, tabs: [
-      Tab(
-        text: '综合',
-      ),
+      Focus(
+          focusNode: searchController.typeFocusNode,
+          child: Tab(
+            text: '综合',
+          )),
       Tab(
         text: '番剧',
       ),

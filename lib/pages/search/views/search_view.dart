@@ -19,7 +19,6 @@ class SearchView extends GetView<SearchController> {
       body: Padding(
         padding: EdgeInsets.only(top: 40.h, left: 30.w, right: 30.w),
         child: Column(
-          spacing: 100.h,
           children: [
             Center(
               child: SizedBox(
@@ -28,7 +27,7 @@ class SearchView extends GetView<SearchController> {
               ),
             ),
             Obx(() => controller.seaching.value
-                ? Searching(searchController: controller)
+                ? Expanded(child: Searching(searchController: controller))
                 : _search(context))
           ],
         ),
@@ -37,55 +36,60 @@ class SearchView extends GetView<SearchController> {
   }
 
   Widget _search(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 50.w,
-      children: [
-        SizedBox(
-          width: 600.w,
-          child: _leftKeyboard(),
-        ),
-        Expanded(child: Obx(() {
-          if (controller.suggestion.value == null ||
-              controller.textEditingController.text.length == 0) {
-            return Column(
+    return Padding(
+      padding: EdgeInsets.only(top: 100.h),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 50.w,
+        children: [
+          SizedBox(
+            width: 600.w,
+            child: _leftKeyboard(),
+          ),
+          Expanded(child: Obx(() {
+            if (controller.suggestion.value == null ||
+                controller.textEditingController.text.length == 0) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 15.w,
+                children: [
+                  Text(
+                    '搜索记录',
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyMedium!.color!,
+                        fontSize: 35.sp,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  _historyList()
+                ],
+              );
+            } else {
+              return _keywordList(controller.suggestion.value!)
+                  .animate()
+                  .fade();
+            }
+          })),
+          SizedBox(
+            width: 500.w,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 15.w,
               children: [
                 Text(
-                  '搜索记录',
+                  '热搜',
                   style: TextStyle(
                       color: Theme.of(context).textTheme.bodyMedium!.color!,
                       fontSize: 35.sp,
                       fontWeight: FontWeight.w500),
                 ),
-                _historyList()
+                _rightHot()
               ],
-            );
-          } else {
-            return _keywordList(controller.suggestion.value!).animate().fade();
-          }
-        })),
-        SizedBox(
-          width: 500.w,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 15.w,
-            children: [
-              Text(
-                '热搜',
-                style: TextStyle(
-                    color: Theme.of(context).textTheme.bodyMedium!.color!,
-                    fontSize: 35.sp,
-                    fontWeight: FontWeight.w500),
-              ),
-              _rightHot()
-            ],
-          ),
-        )
-      ],
+            ),
+          )
+        ],
+      ),
     );
   }
 

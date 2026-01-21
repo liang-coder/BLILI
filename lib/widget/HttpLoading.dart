@@ -57,6 +57,11 @@ class HttploadingController {
     _errorEnable = false;
   }
 
+  void enable() {
+    _loadingEnable = true;
+    _errorEnable = true;
+  }
+
   void dispose() {
     HttploadingMap.remove(_api);
   }
