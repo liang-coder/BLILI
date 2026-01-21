@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:blili/modules/searchPage/searchAll.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../modules/searchPage/searchType.dart';
 
 class Tv extends StatelessWidget {
-  final Season2 season2;
-  const Tv({super.key, required this.season2});
+  Season2? season2;
+  Item? item;
+  bool? isSeason2;
+
+  Tv({super.key, this.isSeason2, this.season2, this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +27,14 @@ class Tv extends StatelessWidget {
           spacing: 5.h,
           children: [
             _StackImage(
-              imageUrl: season2.cover,
+              imageUrl: isSeason2! ?season2!.cover:item!.cover,
               index_show: '',
-              badge: season2.styleLabel.text ?? '',
+              badge: isSeason2! ?season2!.styleLabel.text:item!.styleLabel.text,
             ),
             Text(
-              season2.title
+              isSeason2! ?season2!.title
+                  .replaceAll('<em class="keyword">', '')
+                  .replaceAll('</em>', ''):item!.title
                   .replaceAll('<em class="keyword">', '')
                   .replaceAll('</em>', ''),
               maxLines: 2,

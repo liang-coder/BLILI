@@ -29,7 +29,7 @@ class Videocard extends StatelessWidget {
                     archive.danmaku == null ? '0' : archive.danmaku.toString(),
               );
             }),
-            IntrinsicHeight(
+            Expanded(
                 child: Padding(
               padding: EdgeInsets.only(top: 2.w),
               child: Text(

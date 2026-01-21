@@ -158,7 +158,7 @@ class SearchView extends GetView<SearchController> {
       child: ListView.separated(
           itemBuilder: (context, index) {
             return tipWidget(
-              keyword: controller.history[index],
+              keyword: controller.history[controller.history.length-1-index],
               function: (v) => controller.search(v),
             );
           },

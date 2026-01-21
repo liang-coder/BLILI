@@ -1,6 +1,6 @@
 import 'package:blili/widget/HttpLoading.dart';
 import 'package:flutter/material.dart';
-import 'package:blili/widget/VideoGridView.dart';
+import 'package:blili/pages/home/widget/VideoGridView.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 import 'package:blili/modules/homePage/feedIndex.dart';

@@ -2,6 +2,8 @@ import 'package:blili/widget/BTabBar.dart';
 import 'package:flutter/material.dart' hide SearchController;
 import '../controllers/search_controller.dart';
 import '../widget/all.dart';
+import 'bangumi.dart';
+import 'video.dart';
 
 class Searching extends StatelessWidget {
   final SearchController searchController;
@@ -17,8 +19,8 @@ class Searching extends StatelessWidget {
                 controller: searchController.tabController,
                 children: [
               All(searchController: searchController),
-              SizedBox(),
-              SizedBox()
+              Bangumi(searchController: searchController),
+              Video(searchController: searchController)
             ]))
       ],
     );

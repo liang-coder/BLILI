@@ -1,7 +1,7 @@
+import 'package:blili/widget/NetImage.dart';
 import 'package:blili/widget/badge.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'NetImage.dart';
 import 'package:blili/modules/homePage/bangumi.dart' as bangumi;
 import 'package:blili/modules/homePage/cinema.dart' as cinema;
 import 'package:get/get.dart';

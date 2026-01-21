@@ -126,6 +126,9 @@ flutter:
     - family: HttpIcon
       fonts:
         - asset: assets/icons/HttpIcon.ttf
+    - family: HttpIcon2
+      fonts:
+        - asset: assets/icons/HttpIcon2.ttf
     - family: SearchIcon
       fonts:
         - asset: assets/icons/SearchIcon.ttf

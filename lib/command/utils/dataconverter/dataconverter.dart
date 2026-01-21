@@ -129,15 +129,4 @@ class DataConverter {
     return utf8.decode(base64Url.decode(padded));
   }
 
-  static Map<String, dynamic> washParame(Map<String, dynamic> params) {
-    final Map<String, dynamic> Newparams = {};
-    final Map<String, dynamic> Newparams1 = Params.params();
-    params.forEach((key, value) {
-      final bool checkKey = Newparams1.containsKey(key);
-      if (!checkKey) {
-        Newparams[key] = value;
-      }
-    });
-    return Newparams;
-  }
 }

@@ -12,7 +12,7 @@ class Api {
   static final String hotSearch = '/x/v2/search/square';
   static final String Suggest3 = '/bilibili.app.interface.v1.Search/Suggest3';
   static final String search = '/x/v2/search';
-  static final String searchType = '/x/v2/search';
+  static final String searchType = '/x/v2/search/type';
 }
 
 class domainMap {

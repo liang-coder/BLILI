@@ -1,7 +1,7 @@
 import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
+import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart' hide Card;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'NetImage.dart';
 import 'package:blili/modules/homePage/feedIndex.dart';
 import 'package:blili/command/images/images.dart';
 

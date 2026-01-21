@@ -2,7 +2,7 @@ import 'package:blili/command/images/images.dart';
 import 'package:blili/modules/livePage/live.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'NetImage.dart';
+import '../../../widget/NetImage.dart';
 
 class Livecard extends StatelessWidget {
   final CardList cardList;

@@ -5,7 +5,7 @@ import 'package:blili/widget/HttpLoading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/live_controller.dart';
-import 'package:blili/widget/LiveGridView.dart';
+import 'LiveGridView.dart';
 import 'areaGridView.dart';
 import 'package:blili/command/http/listViewRe.dart';
 

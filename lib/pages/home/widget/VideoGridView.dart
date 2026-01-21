@@ -1,6 +1,6 @@
 import 'package:blili/command/http/listViewRe.dart';
-import 'package:flutter/material.dart' hide Card;
 import 'VideoCard.dart';
+import 'package:flutter/material.dart' hide Card;
 import 'package:blili/modules/homePage/feedIndex.dart';
 import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
 

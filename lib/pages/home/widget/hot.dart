@@ -1,5 +1,5 @@
 import 'package:blili/widget/HttpLoading.dart';
-import 'package:blili/widget/VideoGridView.dart';
+import 'package:blili/pages/home/widget/VideoGridView.dart';
 import 'package:flutter/material.dart' hide Card;
 import 'package:get/get.dart';
 import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';

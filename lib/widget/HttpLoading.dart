@@ -1,6 +1,7 @@
 import 'package:blili/command/icons/icons.dart';
 import 'package:blili/command/images/images.dart';
 import 'package:blili/command/theme/themeController.dart';
+import 'package:blili/command/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,8 @@ class HttploadingMap {
     if (_map.containsKey(key)) {
       return _map[key]!;
     }
+
+    appLogger.LoggerI('返回无状态HttploadingController，api: $key');
     return HttploadingController();
   }
 }

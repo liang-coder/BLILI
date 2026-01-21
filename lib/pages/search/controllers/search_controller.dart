@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'package:blili/widget/HttpLoading.dart';
 import 'package:blili/modules/searchPage/hot.dart';
 import 'package:blili/modules/searchPage/searchAll.dart';
+import 'package:blili/modules/searchPage/searchType.dart';
 import 'package:blili/protos/dart/search/searchReData.dart';
 import 'package:blili/protos/dart/search/Suggestion.pb.dart';
 
@@ -31,8 +32,11 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
   int _videoPage = 1;
   Rxn<Suggestion> _suggestion = Rxn<Suggestion>();
   final RxList<HotSearch> _hotSearch = <HotSearch>[].obs;
+
   List<String> _history = [];
   final RxList<SearchAll> _searchAll = <SearchAll>[].obs;
+  final RxList<SearchType> _searchBangumi = <SearchType>[].obs;
+  final RxList<SearchType> _searchVideo = <SearchType>[].obs;
   final String _chatKey = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   final FocusNode _focusNode = FocusNode();
   final FocusNode _clearFocusNode = FocusNode();
@@ -50,6 +54,7 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
   void onInit() {
     super.onInit();
     _tabController = TabController(length: 3, vsync: this);
+    _tabControllerlisiten();
     if (Shareperference.checkKey(_historyKey))
       _history.addAll(
           jsonDecode(Shareperference.getString(_historyKey)!).cast<String>());
@@ -87,9 +92,12 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
   Rxn<Suggestion> get suggestion => _suggestion;
   List<String> get history => _history;
   Function(String) get search => _search;
+  Function(String) get searchType => _searchType;
   TabController get tabController => _tabController;
   RxBool get seaching => _Searching;
   RxList<SearchAll> get searchall => _searchAll;
+  RxList<SearchType> get searchBangumi => _searchBangumi;
+  RxList<SearchType> get searchVideo => _searchVideo;
 
   void textInput(String v) {
     _textEditingController.value = TextEditingValue(
@@ -138,7 +146,7 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
       _Searching.value = true;
     }
 
-    if(_Searching.value && _textEditingController.text.length ==0){
+    if (_Searching.value && _textEditingController.text.length == 0) {
       _textEditingController.text = keyword;
     }
 
@@ -179,6 +187,44 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
     _httploadingController2.unenable();
   }
 
+  void _searchType(String type) async {
+    final Map<String, dynamic> parame = {
+      'fnval': '272',
+      'fnver': '0',
+      'fourk': '0',
+      'highlight': '1',
+      'keyword': _textEditingController.text,
+      'pn': type == '7' ? _bangumiPage.toString() : _videoPage.toString(),
+      'ps': '20',
+      'type': type
+    };
+
+    final httpresult =
+        await ApiRe.SearchType(queryParameters: Params.add(Newparams: parame));
+
+
+
+    try {
+      if (type == '7') {
+        _searchBangumi.add(SearchType.fromJson(httpresult.data));
+      } else {
+        _searchVideo.add(SearchType.fromJson(httpresult.data));
+      }
+    } catch (e) {
+      _httploadingController3.error();
+      throw '数据出错$e';
+    }
+
+    if (type == '7') {
+      _bangumiPage += 1;
+    } else {
+      _videoPage += 1;
+    }
+
+    if (_searchBangumi.isNotEmpty && _searchVideo.isNotEmpty)
+      _httploadingController3.unenable();
+  }
+
   void _searchSugestion(String v) async {
     final httpresult = await ApiRe.SearchSuggestion(
         option: Options(responseType: ResponseType.bytes),
@@ -206,14 +252,34 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
     Shareperference.setString(_historyKey, jsonEncode(_history));
   }
 
+  void _tabControllerlisiten() {
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging && _tabController.index == 1) {
+        if (_searchBangumi.isEmpty) {
+          _searchType('7');
+        } else {
+          _httploadingController3.success();
+        }
+      }
+
+      if (_tabController.indexIsChanging && _tabController.index == 2) {
+        if (_searchVideo.isEmpty) {
+          _searchType('8');
+        } else {
+          _httploadingController3.success();
+        }
+      }
+    });
+  }
+
   bool _KeyEvenhandel(KeyEvent event) {
     appLogger.LoggerI('$event');
     if (event is KeyDownEvent) {
       if (_focusNode.hasFocus) {
-        if(seaching.value){
+        if (seaching.value) {
           _typeFocusNode.requestFocus();
           return true;
-        }else{
+        } else {
           _clearFocusNode.requestFocus();
           return true;
         }
@@ -221,10 +287,12 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
       return false;
     }
 
-
-    if(event is KeyUpEvent){
-      if(_Searching.value){
+    if (event is KeyUpEvent) {
+      if (_Searching.value) {
         _Searching.value = false;
+        _allPage = 1;
+        _bangumiPage = 1;
+        _videoPage = 1;
         _textEditingController.clear();
         _searchAll.clear();
         _httploadingController2.enable();

@@ -64,8 +64,8 @@ Map<String, dynamic> _$AppDisplayOptionToJson(AppDisplayOption instance) =>
     };
 
 Items _$ItemsFromJson(Map<String, dynamic> json) => Items(
-      season2: ((json['season2'] ?? []) as List<dynamic>)
-          .map((e) => Season2.fromJson(e as Map<String, dynamic>))
+      season2: (json['season2'] as List<dynamic>?)
+          ?.map((e) => Season2.fromJson(e as Map<String, dynamic>))
           .toList(),
       archive: (json['archive'] as List<dynamic>)
           .map((e) => Archive.fromJson(e as Map<String, dynamic>))
@@ -83,7 +83,7 @@ Archive _$ArchiveFromJson(Map<String, dynamic> json) => Archive(
       uri: json['uri'] as String,
       param: json['param'] as String,
       goto: json['goto'] as String,
-      play: (json['play'] as num).toInt(),
+      play: (json['play'] as num?)?.toInt(),
       danmaku: (json['danmaku'] as num?)?.toInt(),
       author: json['author'] as String,
       ptime: (json['ptime'] as num).toInt(),

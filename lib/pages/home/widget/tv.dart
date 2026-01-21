@@ -1,7 +1,7 @@
 import 'package:blili/pages/home/controllers/home_controller.dart';
 import 'package:blili/widget/HttpLoading.dart';
-import 'package:blili/widget/TvGridView.dart';
-import 'package:blili/widget/TvListView.dart';
+import 'TvGridView.dart';
+import 'TvListView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

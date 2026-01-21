@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppIcons {
   static const String _IndexFamily = 'IndexIcon';
   static const String _HttpFamily = 'HttpIcon';
+  static const String _Http2Family = 'HttpIcon2';
   static const String _SearchFamily = 'SearchIcon';
 
   static const IconData Home = IconData(0xe6cf, fontFamily: _IndexFamily);
@@ -13,5 +14,6 @@ class AppIcons {
   static const IconData Search = IconData(0xe7de, fontFamily: _IndexFamily);
 
   static const IconData HttpError = IconData(0xe80c, fontFamily: _HttpFamily);
+  static const IconData HttpSourceNot = IconData(0xe625, fontFamily: _Http2Family);
   static const IconData search = IconData(0xe68c, fontFamily: _SearchFamily);
 }
