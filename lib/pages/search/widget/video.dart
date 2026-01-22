@@ -26,7 +26,7 @@ class _VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
         successChild: Obx(() {
           final List<Item> video = [];
           widget.searchController.searchVideo
-              .forEach((e) => video.addAll(e.items));
+              .forEach((e) => video.addAll(e.items!));
 
           if (video.isEmpty) {
             return Sourcenot();

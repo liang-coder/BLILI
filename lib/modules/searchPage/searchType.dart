@@ -20,7 +20,7 @@ class SearchType {
   @JsonKey(name: "result_is_recommend")
   int resultIsRecommend;
   @JsonKey(name: "items")
-  List<Item> items;
+  List<Item>? items;
 
   SearchType({
     required this.trackid,
@@ -31,7 +31,7 @@ class SearchType {
     required this.expStr,
     required this.keyword,
     required this.resultIsRecommend,
-    required this.items,
+    this.items,
   });
 
   factory SearchType.fromJson(Map<String, dynamic> json) =>

@@ -119,6 +119,8 @@ class HomeController extends GetxController
         queryParameters: Params.add(Newparams: queryParameters));
 
     final Map<String, dynamic> data = httpresult.data;
+    // _recommand.add(FeedIndex.fromJson(data));
+
     try {
       _recommand.add(FeedIndex.fromJson(data));
     } catch (e) {

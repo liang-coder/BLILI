@@ -103,8 +103,9 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       title: json['title'] as String,
       uri: json['uri'] as String,
       args: Args.fromJson(json['args'] as Map<String, dynamic>),
-      playerArgs:
-          PlayerArgs.fromJson(json['player_args'] as Map<String, dynamic>),
+      playerArgs: json['player_args'] == null
+          ? null
+          : PlayerArgs.fromJson(json['player_args'] as Map<String, dynamic>),
       idx: (json['idx'] as num).toInt(),
       threePointV2: (json['three_point_v2'] as List<dynamic>)
           .map((e) => ThreePointV2.fromJson(e as Map<String, dynamic>))

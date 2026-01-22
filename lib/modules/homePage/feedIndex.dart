@@ -16,7 +16,8 @@ class FeedIndex {
     required this.items,
   });
 
-  factory FeedIndex.fromJson(Map<String, dynamic> json) => _$FeedIndexFromJson(json);
+  factory FeedIndex.fromJson(Map<String, dynamic> json) =>
+      _$FeedIndexFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeedIndexToJson(this);
 }
@@ -122,7 +123,8 @@ class ToastClass {
     required this.toastMessage,
   });
 
-  factory ToastClass.fromJson(Map<String, dynamic> json) => _$ToastClassFromJson(json);
+  factory ToastClass.fromJson(Map<String, dynamic> json) =>
+      _$ToastClassFromJson(json);
 
   Map<String, dynamic> toJson() => _$ToastClassToJson(this);
 }
@@ -146,7 +148,7 @@ class Item {
   @JsonKey(name: "args")
   Args args;
   @JsonKey(name: "player_args")
-  PlayerArgs playerArgs;
+  PlayerArgs? playerArgs;
   @JsonKey(name: "idx")
   int idx;
   @JsonKey(name: "three_point_v2")
@@ -191,7 +193,7 @@ class Item {
     required this.title,
     required this.uri,
     required this.args,
-    required this.playerArgs,
+    this.playerArgs,
     required this.idx,
     required this.threePointV2,
     required this.trackId,
@@ -270,7 +272,8 @@ class DescButton {
     required this.type,
   });
 
-  factory DescButton.fromJson(Map<String, dynamic> json) => _$DescButtonFromJson(json);
+  factory DescButton.fromJson(Map<String, dynamic> json) =>
+      _$DescButtonFromJson(json);
 
   Map<String, dynamic> toJson() => _$DescButtonToJson(this);
 }
@@ -298,7 +301,8 @@ class GotoIcon {
     required this.iconHeight,
   });
 
-  factory GotoIcon.fromJson(Map<String, dynamic> json) => _$GotoIconFromJson(json);
+  factory GotoIcon.fromJson(Map<String, dynamic> json) =>
+      _$GotoIconFromJson(json);
 
   Map<String, dynamic> toJson() => _$GotoIconToJson(this);
 }
@@ -321,7 +325,8 @@ class PlayerArgs {
     required this.duration,
   });
 
-  factory PlayerArgs.fromJson(Map<String, dynamic> json) => _$PlayerArgsFromJson(json);
+  factory PlayerArgs.fromJson(Map<String, dynamic> json) =>
+      _$PlayerArgsFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlayerArgsToJson(this);
 }
@@ -350,7 +355,8 @@ class ThreePointV2 {
     this.reasons,
   });
 
-  factory ThreePointV2.fromJson(Map<String, dynamic> json) => _$ThreePointV2FromJson(json);
+  factory ThreePointV2.fromJson(Map<String, dynamic> json) =>
+      _$ThreePointV2FromJson(json);
 
   Map<String, dynamic> toJson() => _$ThreePointV2ToJson(this);
 }

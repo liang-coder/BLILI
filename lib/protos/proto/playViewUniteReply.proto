@@ -1,0 +1,416 @@
+import "google/protobuf/any.proto";
+syntax = "proto3";
+
+
+message PlayViewUniteReply {
+  VodInfo vod_info = 1;
+  PlayArcConf play_arc_conf = 2;
+  PlayDeviceConf play_device_conf = 3;
+  Event event = 4;
+  google.protobuf.Any supplement = 5;
+  PlayArc play_arc = 6;
+  QnTrialInfo qn_trial_info = 7;
+  History history = 8;
+  ViewInfo view_info = 9;
+}
+
+message Event {
+  Shake shake = 1;
+  QnTip qn_tip = 2;
+}
+
+message QnTip {
+  string msg = 1;
+}
+
+message Shake {
+  string file = 1;
+}
+
+message History {
+  HistoryInfo current_video = 1;
+  HistoryInfo related_video = 2;
+}
+
+
+message HistoryInfo {
+  int64 progress = 1;
+  int64 last_play_cid = 2;
+  Toast toast = 3;
+  Toast toast_without_time = 4;
+  int64 last_play_aid = 5;
+}
+
+message Toast {
+  string text = 1;
+  Button button = 2;
+}
+
+message Button {
+  string text = 1;
+  string link = 2;
+  map<string, string> report_params = 3;
+}
+
+message PlayArcConf {
+  map<int32, ArcConf> arc_confs = 1;
+}
+
+
+message ArcConf {
+  bool is_support = 1;
+  bool disabled = 2;
+  ExtraContent extra_content = 3;
+  repeated int32 unsupport_scene = 4;
+}
+
+message ExtraContent {
+  string disabled_reason = 1;
+  int64 disabled_code = 2;
+}
+
+
+message PlayArc {
+  int32 video_type = 1;
+  int64 aid = 2;
+  int64 cid = 3;
+  int32 drm_tech_type = 4;
+  int32 arc_type = 5;
+  Interaction interaction = 6;
+  Dimension dimension = 7;
+  int64 duration = 8;
+  bool is_preview = 9;
+  int64 watch_time_length = 10;
+  int64 duration_ms = 11;
+}
+
+message Dimension {
+  int64 width = 1;
+  int64 height = 2;
+  int64 rotate = 3;
+  int64 variable = 4;
+}
+
+message Interaction {
+  Node history_node = 1;
+  int64 graph_version = 2;
+  string msg = 3;
+  int64 mark = 4;
+}
+
+message Node {
+  int64 node_id = 1;
+  string title = 2;
+  int64 cid = 3;
+}
+
+message PlayDeviceConf {
+  map<int32, DeviceConf> device_confs = 1;
+}
+
+message DeviceConf {
+  ConfValue conf_value = 1;
+}
+
+message ConfValue {
+  oneof value {
+    bool switch_val = 1;
+    string selected_val = 2;
+  }
+}
+
+
+
+message QnTrialInfo {
+  bool trial_able = 1;
+  int32 remaining_times = 2;
+  int32 start = 3;
+  int32 time_length = 4;
+  Toast start_toast = 5;
+  Toast end_toast = 6;
+  Button quality_open_tip_btn = 8;
+  int32 trial_quality_type = 9;
+}
+
+
+message ViewInfo {
+  map<string, Dialog> dialog_map = 1;
+  PromptBar prompt_bar = 2;
+  repeated ComprehensiveToast toasts = 3;
+  PayWallOnshowAction pay_wall_onshow_action = 4;
+  ExpSwitch exp_switch = 5;
+  FullPromptBar full_prompt_bar = 6;
+}
+
+
+
+message ExpSwitch {
+  int32 hit_opti_try_watch = 2;
+  map<string, string> exp_ab = 3;
+}
+
+message FullPromptBar {
+  string icon = 1;
+  TextInfo title = 2;
+  int64 timer_countdown = 3;
+  bool countdown_enable = 4;
+  TextInfo subtitle = 5;
+  repeated ButtonInfo button = 6;
+  FoldData fold_data = 7;
+  Report report = 8;
+  string bg_image = 9;
+  int32 bar_height = 10;
+}
+
+
+message FoldData {
+  int32 fold_style = 1;
+  oneof data {
+    int64 count_down = 2;
+  }
+}
+
+message Report {
+  string show_event_id = 1;
+  string click_event_id = 2;
+  string extends = 3;
+}
+
+message TextInfo {
+  string text = 1;
+  string text_color = 2;
+  string text_color_night = 3;
+  int32 font_size = 4;
+}
+
+
+message ButtonInfo {
+  string text = 1;
+  string text_color = 2;
+  string text_color_night = 3;
+  string bg_color = 4;
+  string bg_color_night = 5;
+  string link = 6;
+  int32 action_type = 7;
+  BadgeInfo badge_info = 8;
+  Report report = 9;
+  string left_strikethrough_text = 10;
+  TextInfo simple_text_info = 11;
+  string simple_bg_color = 12;
+  string simple_bg_color_night = 13;
+  GradientColor bg_gradient_color = 14;
+  map<string, string> order_report_params = 15;
+  TaskParam task_param = 16;
+  string frame_color = 17;
+  string icon = 18;
+  int32 font_size = 19;
+  string tips_link = 20;
+  string deliver_code = 21;
+}
+
+
+message BadgeInfo {
+  string text = 1;
+  string bg_color = 2;
+  string bg_color_night = 3;
+  string text_color = 4;
+  GradientColor bg_gradient_color = 5;
+  string img = 6;
+}
+
+message GradientColor {
+  string start_color = 1;
+  string end_color = 2;
+}
+
+message TaskParam {
+  string task_type = 1;
+  int64 activity_id = 2;
+  int64 tips_id = 3;
+}
+
+message PayWallOnshowAction {
+  string link = 1;
+  map<string, string> order_report_params = 2;
+}
+
+message PromptBar {
+  TextInfo title = 1;
+  TextInfo subtitle = 2;
+  string sub_title_icon = 3;
+  string bg_image = 4;
+  GradientColor bg_gradient_color = 5;
+  repeated ButtonInfo button = 6;
+  Report report = 7;
+  string full_screen_ip_icon = 8;
+  GradientColor full_screen_bg_gradient_color = 9;
+  int32 prompt_bar_type = 10;
+  int32 prompt_bar_style = 11;
+  repeated BenefitInfo benefit_infos = 12;
+  int64 end_time = 13;
+  int32 show_on_paywall = 14;
+}
+
+message BenefitInfo {
+  string title = 1;
+  string icon = 2;
+}
+
+
+message Dialog {
+  int32 style_type = 1;
+  BackgroundInfo background_info = 2;
+  TextInfo title = 3;
+  TextInfo subtitle = 4;
+  ImageInfo image = 5;
+  repeated ButtonInfo button = 6;
+  ButtonInfo bottom_desc = 7;
+  Report report = 8;
+  int32 count_down_sec = 9;
+  TextInfo right_bottom_desc = 10;
+  repeated BottomDisplay bottom_display = 11;
+  ExtData ext_data = 12;
+  int32 limit_action_type = 13;
+  int32 is_hide_more_btn = 14;
+  int32 hide_button_on_half = 15;
+  string deliver_win_id = 16;
+  map<string, string> conditions = 17;
+}
+
+
+message BackgroundInfo {
+  string drawable_color = 1;
+  string drawable_bitmap_url = 2;
+  int32 effects = 3;
+}
+
+message ExtData {
+  int32 type = 1;
+  oneof data {
+    PlayListInfo play_list_info = 2;
+    Banner banner = 3;
+    EpInlineVideoInfo ep_inline_video_info = 4;
+    ChargingExt charging_ext = 5;
+  }
+}
+
+// 占位
+message PlayListInfo {}
+message Banner {}
+message EpInlineVideoInfo {}
+message ChargingExt {}
+
+message ImageInfo {
+  string url = 1;
+}
+
+message BottomDisplay {
+  TextInfo title = 1;
+  string icon = 2;
+}
+
+message ComprehensiveToast {
+  int32 type = 1;
+  ButtonInfo button = 2;
+  int32 show_style_type = 3;
+  string icon = 4;
+  TextInfo toast_text = 5;
+  Report report = 6;
+  map<string, string> order_report_params = 7;
+}
+
+
+message VodInfo {
+  int32 quality = 1;
+  string format = 2;
+  int64 timelength = 3;
+  int32 video_codecid = 4;
+  repeated Stream stream_list = 5;
+  repeated DashItem dash_audio = 6;
+  DolbyItem dolby = 7;
+  VolumeInfo volume = 8;
+  LossLessItem loss_less_item = 9;
+  bool support_project = 10;
+}
+
+message DolbyItem {
+  int32 type = 1;
+  repeated DashItem audio = 2;
+}
+
+message LossLessItem {
+  bool is_lossless_audio = 1;
+  DashItem audio = 2;
+  bool need_vip = 3;
+}
+
+message VolumeInfo {
+  double measured_i = 1;
+  double measured_lra = 2;
+  double measured_tp = 3;
+  double measured_threshold = 4;
+  double target_offset = 5;
+  double target_i = 6;
+  double target_tp = 7;
+  map<string, string> multi_scene_args = 8;
+}
+
+message DashItem {
+  int32 id = 1;
+  string base_url = 2;
+  repeated string backup_url = 3;
+  int32 bandwidth = 4;
+  int32 codecid = 5;
+  string md5 = 6;
+  int64 size = 7;
+  string frame_rate = 8;
+  string widevine_pssh = 9;
+  string bilidrm_uri = 10;
+}
+
+message Stream {
+  StreamInfo stream_info = 1;
+  oneof content {
+    DashItem dash_video = 2;
+    SegmentVideo segment_video = 3;
+  }
+}
+
+message SegmentVideo {}  // ← 未提供（切片流）
+
+
+message StreamInfo {
+  int32 quality = 1;
+  string format = 2;
+  string description = 3;
+  int32 err_code = 4;
+  StreamLimit limit = 5;          // ← 新增
+  bool need_vip = 6;
+  bool need_login = 7;
+  bool intact = 8;
+  bool no_rexcode = 9;
+  int64 attribute = 10;
+  string new_description = 11;
+  string display_desc = 12;
+  string superscript = 13;
+  bool vip_free = 14;
+  string subtitle = 15;
+  Scheme scheme = 16;             // ← 新增
+  bool support_drm = 17;
+}
+
+message StreamLimit {
+  string title = 1;
+  string uri = 2;
+  string msg = 3;
+}
+
+message Scheme {
+  ActionType action_type = 1;
+  string toast = 2;
+
+  enum ActionType {
+    UNKNOWN = 0;
+    SHOW_TOAST = 1;
+  }
+}

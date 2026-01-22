@@ -24,8 +24,8 @@ class _AllState extends State<All> with AutomaticKeepAliveClientMixin {
     final ScrollController _scrollController = ScrollController();
     ListViewRe().R(
         _scrollController,
-        () =>
-            widget.searchController.search(widget.searchController.textEditingController.text));
+        () => widget.searchController
+            .search(widget.searchController.textEditingController.text));
     return Httploading(
         successChild: Obx(() {
           final List<Season2> tvdata = [];

@@ -182,7 +182,6 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
       throw '数据出错$e';
     }
 
-    _httploadingController2.success();
     _allPage += 1;
     _httploadingController2.unenable();
   }
@@ -202,13 +201,17 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
     final httpresult =
         await ApiRe.SearchType(queryParameters: Params.add(Newparams: parame));
 
-
-
     try {
       if (type == '7') {
-        _searchBangumi.add(SearchType.fromJson(httpresult.data));
+        final SearchType bangumi = SearchType.fromJson(httpresult.data);
+        if (bangumi.items != null) {
+          _searchBangumi.add(bangumi);
+        }
       } else {
-        _searchVideo.add(SearchType.fromJson(httpresult.data));
+        final SearchType video = SearchType.fromJson(httpresult.data);
+        if (video.items != null) {
+          _searchBangumi.add(video);
+        }
       }
     } catch (e) {
       _httploadingController3.error();
@@ -247,8 +250,12 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void _recordSearch(String keword) {
+    final int index = _history.indexWhere((e) => e == keword);
+    if (index != -1) {
+      _history.removeAt(index);
+    }
     _history.add(keword);
-    if (keword.length > 20) _history.removeAt(_history.length - 1);
+    if (keword.length > 20) _history.removeAt(0);
     Shareperference.setString(_historyKey, jsonEncode(_history));
   }
 

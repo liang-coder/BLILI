@@ -14,7 +14,7 @@ class Videocard extends StatelessWidget {
   final String title;
   final String uri;
   final Args args;
-  final PlayerArgs playerArgs;
+  PlayerArgs? playerArgs;
   final int idx;
   final List<ThreePointV2> threePointV2;
   final String trackId;
@@ -31,7 +31,7 @@ class Videocard extends StatelessWidget {
   final String desc;
   final int canPlay;
   final GotoIcon gotoIcon;
-  const Videocard(
+  Videocard(
       {super.key,
       required this.cardType,
       required this.cardGoto,
@@ -41,7 +41,7 @@ class Videocard extends StatelessWidget {
       required this.title,
       required this.uri,
       required this.args,
-      required this.playerArgs,
+      this.playerArgs,
       required this.idx,
       required this.threePointV2,
       required this.trackId,

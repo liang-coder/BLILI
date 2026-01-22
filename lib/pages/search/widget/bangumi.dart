@@ -26,7 +26,7 @@ class _BangumiState extends State<Bangumi> with AutomaticKeepAliveClientMixin {
         successChild: Obx(() {
           final List<Item> video = [];
           widget.searchController.searchBangumi
-              .forEach((e) => video.addAll(e.items));
+              .forEach((e) => video.addAll(e.items!));
 
           if (video.isEmpty) {
             return Sourcenot();
