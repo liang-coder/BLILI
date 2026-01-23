@@ -18,6 +18,8 @@ import '../pages/space/bindings/space_binding.dart';
 import '../pages/space/views/space_view.dart';
 import '../pages/splash/bindings/splash_binding.dart';
 import '../pages/splash/views/splash_view.dart';
+import '../pages/tvDetails/bindings/tv_details_binding.dart';
+import '../pages/tvDetails/views/tv_details_view.dart';
 import '../pages/user/bindings/user_binding.dart';
 import '../pages/user/views/user_view.dart';
 
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.LIVE_SECOND,
       page: () => const LiveSecondView(),
       binding: LiveSecondBinding(),
+    ),
+    GetPage(
+      name: _Paths.TV_DETAILS,
+      page: () => const TvDetailsView(),
+      binding: TvDetailsBinding(),
     ),
   ];
 }

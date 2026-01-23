@@ -28,10 +28,18 @@ class _AllState extends State<All> with AutomaticKeepAliveClientMixin {
             .search(widget.searchController.textEditingController.text));
     return Httploading(
         successChild: Obx(() {
-          final List<Season2> tvdata = [];
+          final List<String> titleKey = [];
+          final List<Movie2> tvdata = [];
           final List<Archive> videodata = [];
           widget.searchController.searchall.forEach((SearchAll e) {
-            tvdata.addAll(e.items.season2 ?? []);
+            if (e.items.season2 != null)
+              e.items.season2!.forEach((season2) {
+                if (!titleKey.contains(season2.title)) {
+                  tvdata.add(season2);
+                  titleKey.add(season2.title);
+                }
+              });
+            // tvdata.addAll(e.items.season2 ?? []);
             videodata.addAll(e.items.archive);
           });
           return ListView(

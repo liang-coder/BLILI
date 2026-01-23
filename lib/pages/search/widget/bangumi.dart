@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blili/command/http/listViewRe.dart';
 import 'package:blili/widget/HttpLoading.dart';
 import 'package:blili/widget/sourceNot.dart';
@@ -27,7 +29,6 @@ class _BangumiState extends State<Bangumi> with AutomaticKeepAliveClientMixin {
           final List<Item> video = [];
           widget.searchController.searchBangumi
               .forEach((e) => video.addAll(e.items!));
-
           if (video.isEmpty) {
             return Sourcenot();
           }

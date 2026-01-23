@@ -19,6 +19,13 @@ message PlayViewUniteReq {
   VideoVod vod = 1;
   string spmid = 2;
   string from_spmid = 3;
-  map<string, string> extra_content = 4;
+  repeated ExtraContentEntry extra_content = 4;
   string bvid = 5;
+  string ad_extra = 6;
+  string from_scene = 8;
+}
+
+message ExtraContentEntry {
+  string key = 1;
+  string value = 2;
 }

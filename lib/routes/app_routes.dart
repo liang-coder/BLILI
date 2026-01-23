@@ -13,6 +13,7 @@ abstract class Routes {
   static const USER = _Paths.USER;
   static const SPLASH = _Paths.SPLASH;
   static const LIVE_SECOND = _Paths.LIVE_SECOND;
+  static const TV_DETAILS = _Paths.TV_DETAILS;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const USER = '/user';
   static const SPLASH = '/splash';
   static const LIVE_SECOND = '/live-second';
+  static const TV_DETAILS = '/tv-details';
 }

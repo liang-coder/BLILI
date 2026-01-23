@@ -110,7 +110,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       threePointV2: (json['three_point_v2'] as List<dynamic>)
           .map((e) => ThreePointV2.fromJson(e as Map<String, dynamic>))
           .toList(),
-      trackId: json['track_id'] as String,
+      trackId: json['track_id'] as String?,
       talkBack: json['talk_back'] as String,
       reportFlowData: json['report_flow_data'] as String,
       coverLeftText1: json['cover_left_text_1'] as String,

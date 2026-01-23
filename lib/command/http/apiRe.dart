@@ -175,4 +175,22 @@ class ApiRe {
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }
+
+  static Future<Response> PlayViewUnite(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.post(Api.playViewUnite,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> View(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.post(Api.View,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
 }

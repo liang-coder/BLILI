@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blili/modules/searchPage/searchAll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,7 +7,7 @@ import 'tv.dart';
 import '../../../modules/searchPage/searchType.dart';
 
 class Tvgrid extends StatelessWidget {
-  List<Season2>? tvdata;
+  List<Movie2>? tvdata;
   List<Item>? tvdata2;
   bool? isSeason2;
 
@@ -20,7 +22,7 @@ class Tvgrid extends StatelessWidget {
         return SizedBox(
           width: slotWidth,
           child: Tv(
-            season2: isSeason2! ? item as Season2: null,
+            season2: isSeason2! ? item as Movie2: null,
             item: isSeason2! ? null : item as Item,
             isSeason2: isSeason2!,
           ),

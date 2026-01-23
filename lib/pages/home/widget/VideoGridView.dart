@@ -36,7 +36,7 @@ class Videogridview extends StatelessWidget {
               playerArgs: video.playerArgs,
               idx: video.idx,
               threePointV2: video.threePointV2,
-              trackId: video.trackId,
+              trackId: video.trackId ?? '',
               talkBack: video.talkBack,
               reportFlowData: video.reportFlowData,
               canPlay: video.canPlay,

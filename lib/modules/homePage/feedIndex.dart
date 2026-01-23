@@ -154,7 +154,7 @@ class Item {
   @JsonKey(name: "three_point_v2")
   List<ThreePointV2> threePointV2;
   @JsonKey(name: "track_id")
-  String trackId;
+  String? trackId;
   @JsonKey(name: "talk_back")
   String talkBack;
   @JsonKey(name: "report_flow_data")
@@ -196,7 +196,7 @@ class Item {
     this.playerArgs,
     required this.idx,
     required this.threePointV2,
-    required this.trackId,
+     this.trackId,
     required this.talkBack,
     required this.reportFlowData,
     required this.coverLeftText1,

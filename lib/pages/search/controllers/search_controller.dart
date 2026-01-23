@@ -6,6 +6,7 @@ import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:blili/command/utils/device/id.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
+import 'package:blili/routes/app_pages.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:easy_debounce/easy_throttle.dart';
@@ -175,12 +176,14 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
     final httpresult =
         await ApiRe.search(queryParameters: Params.add(Newparams: parame));
 
-    try {
-      _searchAll.add(SearchAll.fromJson(httpresult.data));
-    } catch (e) {
-      _httploadingController2.error();
-      throw '数据出错$e';
-    }
+    _searchAll.add(SearchAll.fromJson(httpresult.data));
+
+    // try {
+    //   _searchAll.add(SearchAll.fromJson(httpresult.data));
+    // } catch (e) {
+    //   _httploadingController2.error();
+    //   throw '数据出错$e';
+    // }
 
     _allPage += 1;
     _httploadingController2.unenable();
@@ -281,29 +284,32 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
 
   bool _KeyEvenhandel(KeyEvent event) {
     appLogger.LoggerI('$event');
-    if (event is KeyDownEvent) {
-      if (_focusNode.hasFocus) {
-        if (seaching.value) {
-          _typeFocusNode.requestFocus();
-          return true;
-        } else {
-          _clearFocusNode.requestFocus();
+
+    if (Get.routing == Routes.SEARCH) {
+      if (event is KeyDownEvent) {
+        if (_focusNode.hasFocus) {
+          if (seaching.value) {
+            _typeFocusNode.requestFocus();
+            return true;
+          } else {
+            _clearFocusNode.requestFocus();
+            return true;
+          }
+        }
+        return false;
+      }
+
+      if (event is KeyUpEvent) {
+        if (_Searching.value) {
+          _Searching.value = false;
+          _allPage = 1;
+          _bangumiPage = 1;
+          _videoPage = 1;
+          _textEditingController.clear();
+          _searchAll.clear();
+          _httploadingController2.enable();
           return true;
         }
-      }
-      return false;
-    }
-
-    if (event is KeyUpEvent) {
-      if (_Searching.value) {
-        _Searching.value = false;
-        _allPage = 1;
-        _bangumiPage = 1;
-        _videoPage = 1;
-        _textEditingController.clear();
-        _searchAll.clear();
-        _httploadingController2.enable();
-        return true;
       }
     }
 

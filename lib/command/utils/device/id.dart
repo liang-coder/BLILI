@@ -93,6 +93,15 @@ class Id {
         .toString();
   }
 
+  static String ViewSessionId() {
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final random = Random().nextInt(1000000);
+    final seed = '${buvid()}$timestamp$random';
+    final bytes = utf8.encode(seed);
+    final hash = sha1.convert(bytes);
+    return hash.toString();
+  }
+
   static String traceid() {
     return TraceId.genTraceId();
   }

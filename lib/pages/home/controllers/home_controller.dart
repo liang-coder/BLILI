@@ -1,5 +1,6 @@
 import 'dart:developer';
-
+import 'package:blili/command/utils/dataconverter/dataconverter.dart';
+import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
 import 'package:blili/command/http/api.dart';
 import 'package:blili/command/http/params.dart';
 import 'package:blili/command/http/protobuf/response/hotIndexReply.dart';
@@ -119,14 +120,14 @@ class HomeController extends GetxController
         queryParameters: Params.add(Newparams: queryParameters));
 
     final Map<String, dynamic> data = httpresult.data;
-    // _recommand.add(FeedIndex.fromJson(data));
+    _recommand.add(FeedIndex.fromJson(data));
 
-    try {
-      _recommand.add(FeedIndex.fromJson(data));
-    } catch (e) {
-      httploadingController.error();
-      throw '数据出错 $e';
-    }
+    // try {
+    //   _recommand.add(FeedIndex.fromJson(data));
+    // } catch (e) {
+    //   httploadingController.error();
+    //   throw '数据出错 $e';
+    // }
     if (_pull) {
       _pull = false;
       _httploadingController.unenable();
@@ -145,7 +146,8 @@ class HomeController extends GetxController
         option: Options(responseType: ResponseType.bytes));
 
     try {
-      final PopularReply popularReply = hotIndexReply().result(httpresult.data);
+      final PopularReply popularReply = PopularReply.fromBuffer(
+          DataConverter.byteGzipconvertbyte(httpresult.data)!);
       _hot.add(popularReply);
     } catch (e) {
       httploadingController2.error();

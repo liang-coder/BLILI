@@ -8,8 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get/get.dart';
 import '../../../../pages/index/controllers/index_controller.dart';
-import 'package:blili/command/utils/logger/logger.dart';
 import '../widget/SnakeNavigationBarItem.dart';
+import 'package:blili/routes/app_pages.dart';
 
 class IndexView extends GetView<IndexController> {
   const IndexView({super.key});
@@ -32,6 +32,7 @@ class IndexView extends GetView<IndexController> {
       ),
     );
   }
+
   // EasyAnimatedIndexedStack
   Widget _Leftnavigetionbar(BuildContext context) {
     return Column(
@@ -42,8 +43,7 @@ class IndexView extends GetView<IndexController> {
             Obx(() => IconButton(
                 iconSize: controller.LeftNavigetionSize,
                 onPressed: () {
-                  appLogger.LoggerI('Page to Search');
-                  Get.toNamed('/search');
+                  Get.toNamed(Routes.SEARCH);
                 },
                 icon: Icon(
                   AppIcons.Search,
@@ -80,7 +80,7 @@ class IndexView extends GetView<IndexController> {
         Column(
           children: [
             IconButton(
-                onPressed: () => Get.toNamed('/user'),
+                onPressed: () => Get.toNamed(Routes.USER),
                 icon: ClipOval(
                   child: NetImage(
                     imageUrl:
@@ -92,8 +92,7 @@ class IndexView extends GetView<IndexController> {
             Obx(() => IconButton(
                 iconSize: controller.LeftNavigetionSize,
                 onPressed: () {
-                  appLogger.LoggerI('Page to setting');
-                  Get.toNamed('/setting');
+                  Get.toNamed(Routes.SETTING);
                 },
                 icon: Icon(
                   AppIcons.Setting,

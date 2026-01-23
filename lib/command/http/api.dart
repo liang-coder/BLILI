@@ -13,6 +13,8 @@ class Api {
   static final String Suggest3 = '/bilibili.app.interface.v1.Search/Suggest3';
   static final String search = '/x/v2/search';
   static final String searchType = '/x/v2/search/type';
+  static final String playViewUnite = '/bilibili.app.playerunite.v1.Player/PlayViewUnite';
+  static final String View = '/bilibili.app.viewunite.v1.View/View';
 }
 
 class domainMap {
@@ -31,6 +33,8 @@ class domainMap {
     Api.Suggest3: 'https://app.bilibili.com',
     Api.search: 'https://app.bilibili.com',
     Api.searchType: 'https://app.bilibili.com',
+    Api.playViewUnite: 'https://app.bilibili.com',
+    Api.View: 'https://app.bilibili.com',
   };
 
   static String getDomain(String key) {

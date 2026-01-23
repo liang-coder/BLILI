@@ -1,3 +1,5 @@
+import 'package:blili/routes/app_pages.dart';
+import 'dart:developer';
 import 'package:blili/widget/BText.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:blili/widget/badge.dart';
@@ -8,7 +10,7 @@ import 'package:get/get.dart';
 import '../../../modules/searchPage/searchType.dart';
 
 class Tv extends StatelessWidget {
-  Season2? season2;
+  Movie2? season2;
   Item? item;
   bool? isSeason2;
 
@@ -16,9 +18,10 @@ class Tv extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(season2!.toJson().toString());
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => Get.toNamed(Routes.TV_DETAILS),
       child: Padding(
         padding: EdgeInsets.only(top: 12.w, bottom: 12.w),
         child: Column(
@@ -27,16 +30,19 @@ class Tv extends StatelessWidget {
           spacing: 5.h,
           children: [
             _StackImage(
-              imageUrl: isSeason2! ?season2!.cover:item!.cover,
+              imageUrl: isSeason2! ? season2!.cover : item!.cover,
               index_show: '',
-              badge: isSeason2! ?season2!.styleLabel.text:item!.styleLabel.text,
+              badge:
+                  isSeason2! ? season2!.styleLabel!.text : item!.styleLabel.text,
             ),
             Text(
-              isSeason2! ?season2!.title
-                  .replaceAll('<em class="keyword">', '')
-                  .replaceAll('</em>', ''):item!.title
-                  .replaceAll('<em class="keyword">', '')
-                  .replaceAll('</em>', ''),
+              isSeason2!
+                  ? season2!.title
+                      .replaceAll('<em class="keyword">', '')
+                      .replaceAll('</em>', '')
+                  : item!.title
+                      .replaceAll('<em class="keyword">', '')
+                      .replaceAll('</em>', ''),
               maxLines: 2,
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,

@@ -22,9 +22,9 @@ class Videocard extends StatelessWidget {
             LayoutBuilder(builder: (context, constraints) {
               return _StackImage(
                 width: constraints.maxWidth,
-                imageUrl: archive.cover,
-                PlaySum: archive.viewContent,
-                PlayTime: archive.duration,
+                imageUrl: archive.cover!,
+                PlaySum: archive.viewContent!,
+                PlayTime: archive.duration!,
                 DmSum:
                     archive.danmaku == null ? '0' : archive.danmaku.toString(),
               );
@@ -33,8 +33,7 @@ class Videocard extends StatelessWidget {
                 child: Padding(
               padding: EdgeInsets.only(top: 2.w),
               child: Text(
-                archive.title
-                    .replaceAll('<em class="keyword">', '')
+                archive.title!.replaceAll('<em class="keyword">', '')
                     .replaceAll('</em>', ''),
                 maxLines: 2,
                 textAlign: TextAlign.justify,
@@ -54,7 +53,7 @@ class Videocard extends StatelessWidget {
                 ),
                 Expanded(
                     child: Text(
-                  archive.author,
+                  archive.author!,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: 24.sp,
