@@ -1,5 +1,5 @@
 syntax = "proto3";
-
+import "google/protobuf/any.proto";
 
 message ViewReply {
   Arc arc = 1;
@@ -76,6 +76,9 @@ message ViewReply {
   ArgueBar argue_bar = 72;
 }
 
+message CoinCustom {
+  string toast = 1;  // 投币成功后显示的 Toast 提示文案
+}
 
 message ActivitySeason {
   Arc arc = 1;
@@ -143,10 +146,6 @@ message CoinStyle {
   string coin_app_icon_4 = 5;
 }
 
-message ListenerConfig {
-  int64 jump_style = 1;
-  ListenerGuideBar guide_bar = 2;
-}
 
 message ListenerGuideBar {
   int64 show_strategy = 1;
@@ -170,6 +169,10 @@ message ActivityResource {
 
 message ArcExtra {
   string arc_pub_location = 1;
+}
+
+message ChargingPlus {
+  bool pass = 1;  // 是否通过 Charging Plus 权益校验
 }
 
 message Arc {
@@ -241,13 +244,6 @@ message Dislike {
   repeated DislikeReasons reasons = 3;
 }
 
-message DislikeReasons {
-  int64 id = 1;
-  int64 mid = 2;
-  int32 rid = 3;
-  int64 tag_id = 4;
-  string name = 5;
-}
 
 message ElecRank {
   repeated ElecRankItem list = 1;   // 充电用户列表
@@ -379,18 +375,6 @@ message ReasonStyle {
   int32 selected = 9;
 }
 
-message Author {
-  int64 mid = 1;      // 用户唯一 ID (Member ID)
-  string name = 2;    // 昵称
-  string face = 3;    // 头像 URL
-}
-
-message Button {
-  string title = 1;              // 按钮文案
-  string uri = 2;                // 跳转链接（bilibili:// 或 https://）
-  string icon = 3;               // 图标 URL 或资源标识
-  int32 jump_show_type = 4;      // 跳转展示类型（控制如何打开）
-}
 
 message Dimension {
   int64 width = 1;
@@ -437,17 +421,6 @@ message RankInfo {
   string rank_link = 8;      // 点击跳转链接（如排行榜页面）
 }
 
-message ReasonStyle {
-  string text = 1;
-  string text_color = 2;
-  string bg_color = 3;
-  string border_color = 4;
-  string text_color_night = 5;
-  string bg_color_night = 6;
-  string border_color_night = 7;
-  int32 bg_style = 8;
-  int32 selected = 9;
-}
 
 message DislikeReasons {
   int64 id = 1;
@@ -478,33 +451,17 @@ message ArchiveStat {
   StatInfo view_vt = 11;
   }
 
-message StatInfo {
-  int32 icon = 1;          // 图标类型（如播放量图标、弹幕图标等）
-  string text = 2;         // 带格式的展示文本（如 "12.3万"）
-  string pure_text = 3;    // 纯文本/原始数值（如 "123456"）
-}
-
-
-message Stat {
-  int64 aid = 1;          // 视频 AV 号
-  int32 view = 2;         // 播放次数
-  int32 danmaku = 3;      // 弹幕数量
-  int32 reply = 4;        // 评论数
-  int32 fav = 5;          // 收藏数
-  int32 coin = 6;         // 投币数
-  int32 share = 7;        // 分享数
-  int32 now_rank = 8;     // 当前排名（如日榜、周榜名次）
-  int32 his_rank = 9;     // 历史最高排名
-  int32 like = 10;        // 点赞数
-  int32 dislike = 11;     // 点踩数（通常为 0，因 Bilibili 无公开点踩按钮，但接口保留）
-}
-
 
 message WikiInfo {
   string wiki_label = 1;   // Wiki 标签文案，如 “原神角色”
   string wiki_url = 2;     // 跳转链接，如 bilibili://wiki/xxx 或 https://...
 }
 
+message StaffInfo {
+  int64 mid = 1;        // 成员的用户 ID（Bilibili UID）
+  string title = 2;     // 职位/角色名称（如“导演”、“原画”、“配音”）
+  int64 attribute = 3;  // 成员属性标志位（用于权限或展示控制）
+}
 
 message Order {
   bool status = 1;                     // 是否已预约/已追更
@@ -526,6 +483,18 @@ message Order {
   StatInfo season_stat_view_vt = 11;   // 格式化后的播放量展示（如 "12.3万"）
 }
 
+
+message Reserve {
+  int64 aid = 1;            // 正片稿件 ID
+  int64 reserve_time = 2;   // 预约时间戳（可选）
+  // 可能还有 type, cid 等，需 Java 类确认
+}
+
+message FavSeason {
+  int64 season_id = 1;      // 番剧/合集 ID
+  int32 is_fav = 2;         // 是否已收藏（0/1，冗余字段，与外层 status 对应）
+  // 可能还有 media_id, title 等
+}
 
 message OnwerExt {  // 注意：保留你提供的拼写 "OnwerExt"
   OfficialVerify official_verify = 1;
@@ -677,9 +646,6 @@ message ReqUser {
   ELecPlus elec_plus = 10;        // 充电专属状态
 }
 
-message ArchiveStat {
-  StatInfo view_vt = 11;   // 格式化后的播放量展示（如 "12.3万"）
-}
 
 message Tab {
   string background = 1;                // 背景图 URL 或颜色值（如 "#FFFFFF"）
@@ -695,7 +661,7 @@ message Tab {
   google.protobuf.Any ad_tab_info = 11; // 广告扩展信息（通常为空或特定活动数据）
 }
 
-message subTFPanel {
+message SubTFPanel {
   string right_btn_img = 1;          // 右侧按钮图标 URL
   string right_btn_text = 2;         // 按钮文案，如 “分享”
   string right_btn_text_color = 3;   // 按钮文字颜色（如 "#00A1D6"）
@@ -823,4 +789,494 @@ message UgcSeasonStat {
   int32 now_rank = 8;       // 当前排名（如周榜第3）
   int32 his_rank = 9;       // 历史最高排名
   int32 like = 10;          // 点赞数
+}
+
+message Section {
+  int64 id = 1;                     // 分季 ID
+  string title = 2;                 // 分季标题（如 “第一季”、“番外篇”）
+  int64 type = 3;                   // 类型（0=普通, 1=预告, 2=特别篇）
+  repeated Episode episodes = 4;    // 该季下的所有视频（剧集）
+}
+
+message Episode {
+  int64 id = 1;                     // 分集唯一 ID（ep_id）
+  int64 aid = 2;                    // 关联的稿件 ID（archive ID）
+  int64 cid = 3;                    // 视频流 ID（content ID，用于播放）
+  string title = 4;                 // 分集标题（如 “第1话 命运的相遇”）
+  string cover = 5;                 // 封面图 URL
+  string cover_right_text = 6;      // 封面右上角标签文案（如 “会员专享”、“预告”）
+  Page page = 7;                    // 分 P 信息（通常单集 = 单 P）
+  Stat stat = 8;                    // 旧版统计信息（播放、弹幕等）
+  string bvid = 9;                  // BV 号（如 BV1xx411c7mu）
+  Author author = 10;               // UP 主/作者信息
+  string author_desc = 11;          // 作者描述（如 “制作：XX 动画工作室”）
+  BadgeStyle badge_style = 12;      // 角标样式（颜色、文本等）
+  bool need_pay = 13;               // 是否需要付费观看（通用开关）
+  bool episode_pay = 14;            // 是否为单集付费（区别于大会员）
+  bool free_watch = 15;             // 是否可免费试看（如新用户福利）
+  string first_frame = 16;          // 首帧预览图 URL（用于加载占位）
+  ArchiveStat stat_v2 = 17;         // 新版统计信息（格式化后的播放量等）
+}
+
+message Author {
+  int64 mid = 1;        // 用户 UID
+  string name = 2;      // 用户名
+  string face = 3;      // 头像 URL
+}
+
+message BadgeStyle {
+  string text = 1;                    // 徽章文案（如 “付费”、“试看”）
+  string text_color = 2;              // 文字颜色（日间）
+  string text_color_night = 3;        // 文字颜色（夜间）
+  string bg_color = 4;                // 背景色（日间）
+  string bg_color_night = 5;          // 背景色（夜间）
+  string border_color = 6;            // 边框颜色（日间）
+  string border_color_night = 7;      // 边框颜色（夜间）
+  int32 bg_style = 8;                 // 背景样式（0=矩形, 1=圆角, 2=胶囊）
+}
+
+
+
+message Page {
+  int64 cid = 1;                // 视频流 ID（Content ID）
+  int32 page = 2;               // 分 P 序号（从 1 开始）
+  string from = 3;              // 来源（如 "vupload", "hunan"）
+  string part = 4;              // 分 P 标题（如 "环境搭建"）
+  int64 duration = 5;           // 时长（秒）
+  string vid = 6;               // 外部视频 ID（如芒果 TV 联播）
+  string desc = 7;              // 描述（通常为空）
+  string web_link = 8;          // 外链跳转地址（如合作方页面）
+  Dimension dimension = 9;      // 分辨率信息
+  string first_frame = 10;      // 首帧预览图 URL
+}
+
+
+message Stat {
+  int64 aid = 1;          // 稿件 AID
+  int32 view = 2;         // 播放量
+  int32 danmaku = 3;      // 弹幕数
+  int32 reply = 4;        // 评论数
+  int32 fav = 5;          // 收藏数
+  int32 coin = 6;         // 投币数
+  int32 share = 7;        // 分享数
+  int32 now_rank = 8;     // 当前排名（如周榜第3）
+  int32 his_rank = 9;     // 历史最高排名
+  int32 like = 10;        // 点赞数
+  int32 dislike = 11;     // 点踩数（通常为 0，B站已隐藏点踩）
+}
+
+message UpLikeImg {
+  string pre_img = 1;     // 点赞前图标（如灰色爱心）
+  string suc_img = 2;     // 点赞后图标（如红色爱心）
+  string content = 3;     // 备用文案或描述（可能用于无障碍）
+  int64 type = 4;         // 图标类型（0=默认, 1=节日限定, 2=活动专属）
+}
+
+message UserGarb {
+  string url_image_ani_cut = 1;   // 用户装扮动效裁剪图 URL（用于点赞特效）
+  string like_toast = 2;          // 点赞成功提示文案（如 “感谢支持！”）
+}
+
+message ViewPage {
+  Page page = 1;                    // 分 P 基础信息（cid, part, duration...）
+  Audio audio = 2;                  // 音频轨道信息（如 AAC 音频流）
+  DM dm = 3;                        // 弹幕配置（开关、密度、样式）
+  string download_title = 4;        // 下载按钮主文案（如 “高清 1080P”）
+  string download_subtitle = 5;     // 下载按钮副文案（如 “约 120MB”）
+}
+
+message Audio {
+  string title = 1;             // 音频标题（如 “片头曲 - 星光”）
+  string cover_url = 2;         // 封面图 URL
+  int64 song_id = 3;            // 歌曲 ID（用于音乐区关联）
+  int64 play_count = 4;         // 播放次数
+  int64 reply_count = 5;        // 评论数
+  int64 upper_id = 6;           // 上传者 UID
+  string entrance = 7;          // 入口跳转链接（如 bilibili://music/...）
+  int64 song_attr = 8;          // 歌曲属性位掩码（如是否 VIP、版权状态）
+}
+
+message DM {
+  bool closed = 1;        // 弹幕是否关闭（0=开启, 1=关闭）
+  bool real_name = 2;     // 是否启用实名弹幕（部分活动要求）
+  int64 count = 3;        // 弹幕总数（用于显示“共 xxx 条弹幕”）
+}
+
+
+message DescV2 {
+  string text = 1;      // 显示文本（如 “@某UP主”、“#热门话题”）
+  int32 type = 2;       // 文本类型：
+                        //   1 = 普通文本
+                        //   2 = @用户（可点击跳转主页）
+                        //   3 = 话题（#xxx，跳转搜索）
+                        //   4 = 链接（http://...）
+                        //   5 = 商品（ugc_season）
+  string uri = 3;       // 跳转 URI：
+                        //   - 用户：bilibili://user-space/{mid}
+                        //   - 话题：bilibili://search?keyword={topic}
+                        //   - 外链：https://example.com
+                        //   - 商品：bilibili://ugc-season/{season_id}
+  int64 rid = 4;        // 关联 ID：
+                        //   - 若 type=2（@用户），则为 mid
+                        //   - 若 type=3（话题），可能为话题 ID
+                        //   - 若 type=5（商品），则为 season_id
+}
+
+message CellFluid {
+  string top_base_color = 1;      // 卡片顶部背景色（日间）
+  string top_split_color = 2;     // 分割线颜色（日间）
+  string top_text_color = 3;      // 顶部文字颜色（日间）
+  // 注意：夜间模式颜色可能通过其他字段或主题系统控制
+}
+
+
+message SpecialCell {
+  string icon = 1;                    // 左侧图标 URL（日间）
+  string icon_night = 2;              // 左侧图标 URL（夜间）
+  string text = 3;                    // 主文案（如 “预约直播”、“查看合集”）
+  string text_color = 4;              // 文字颜色（日间）
+  string text_color_night = 5;        // 文字颜色（夜间）
+  string jump_url = 6;                // 点击跳转链接（如 bilibili://ugc-season/123）
+  string cell_type = 7;               // 卡片类型（如 "reservation", "ugc_season", "activity"）
+  string cell_bgcolor = 8;            // 背景色（日间）
+  string cell_bgcolor_night = 9;      // 背景色（夜间）
+  string param = 10;                  // 附加参数（JSON 或 KV 字符串）
+  string page_title = 11;             // 跳转页面的标题（用于埋点或回退）
+  string jump_type = 12;              // 跳转类型（如 "internal", "web", "app_schema"）
+  string end_icon = 13;               // 右侧图标（如箭头 ▶️，日间）
+  string end_icon_night = 14;         // 右侧图标（夜间）
+  int64 notes_count = 15;             // 通知红点数字（如未读数、更新集数）
+  CellFluid cell_fluid = 16;          // 流式布局样式配置
+}
+
+message Season {
+  string allow_download = 1;
+  int64 season_id = 2;
+  int32 is_jump = 3;           // 可能实际是 bool，但 Java 中用 int 表示
+  string title = 4;
+  string cover = 5;
+  int32 is_finish = 6;         // 同上，可能是 bool
+  int64 newest_ep_id = 7;
+  string newest_ep_index = 8;
+  int64 total_count = 9;
+  int32 weekday = 10;
+  UserSeason user_season = 11;
+  SeasonPlayer player = 12;
+  string ogv_playurl = 13;
+}
+
+message SeasonPlayer {
+  int64 aid = 1;
+  string vid = 2;
+  int64 cid = 3;
+  string from = 4;
+}
+
+message UserSeason {
+  string attention = 1;
+}
+
+message TIcon {
+  string icon = 1;
+}
+
+message Tag {
+  int64 id = 1;
+  string name = 2;
+  int64 likes = 3;
+  int64 hates = 4;
+  int32 liked = 5;        // 可能语义为 bool（是否已点赞）
+  int32 hated = 6;        // 可能语义为 bool（是否已点踩）
+  string uri = 7;
+  string tag_type = 8;    // 注意：Java 字段名 tagType_ 对应 proto 的 snake_case: tag_type
+}
+
+message RelateTab {
+  string id = 1;
+  string title = 2;
+}
+
+message Bgm {
+  int64 sid = 1;
+  int64 mid = 2;
+  string title = 3;
+  string author = 4;
+  string jump_url = 5;
+  string cover = 6;
+}
+
+message Staff {
+  int64 mid = 1;                    // 用户 UID
+  string title = 2;                 // 职位/头衔，如“导演”、“配音”
+  string face = 3;                  // 头像 URL
+  string name = 4;                  // 昵称
+  OfficialVerify official_verify = 5; // 官方认证信息
+  Vip vip = 6;                      // VIP 信息
+  int32 attention = 7;              // 是否关注（0/1，或关注数？）
+  int32 label_style = 8;            // 标签样式（可能用于 UI 渲染）
+  NameRender name_render = 9;       // 富文本名称渲染（如带颜色、高亮等）
+}
+
+message Interaction {
+  Node history_node = 1;        // 历史节点信息
+  int64 graph_version = 2;      // 图版本号（时间戳或递增ID）
+  string msg = 3;               // 消息内容（可能为提示或错误信息）
+  string evaluation = 4;        // 评价内容（如用户反馈、AI评估等）
+  int64 mark = 5;               // 标记值（可能用于打点、评分、状态标识）
+}
+
+message Node {
+  int64 node_id = 1;
+  string title = 2;
+  int64 cid = 3;
+}
+
+message Config {
+  // 基础字符串配置
+  string relates_title = 1;
+  int32 relates_style = 2;
+  int32 relate_gif_exp = 3;
+  int32 end_page_half = 4;
+  int32 end_page_full = 5;
+
+  // 布尔开关（auto_swindow 等）
+  bool auto_swindow = 6;
+  bool popup_info = 7;
+  string abtest_small_window = 8;
+  int32 rec_three_point_style = 9;
+  bool is_absolute_time = 10;
+  bool new_swindow = 11;
+  bool relates_biserial = 12;
+
+  // 嵌套配置
+  ListenerConfig listener_conf = 13;
+
+  // 字符串样式配置
+  string relates_feed_style = 14;
+  bool relates_feed_popup = 15;
+  bool relates_has_next = 16;
+
+  // 播放相关整型配置
+  int32 local_play = 17;
+
+  // 故事/剧情相关布尔开关
+  bool play_story = 18;
+  bool arc_play_story = 19;
+
+  // 图标资源
+  string story_icon = 20;
+  bool landscape_story = 21;
+  bool arc_landscape_story = 22;
+
+  // 横屏图标
+  string landscape_icon = 23;
+
+  // 按钮显示控制
+  bool show_listen_button = 24;
+
+  // 有效期配置（时间戳或版本号）
+  int64 valid_show_m = 25;
+  int64 valid_show_n = 26;
+
+  // 弹幕宝箱控制
+  bool dm_treasure_box_control = 27;
+}
+
+
+message ListenerConfig {
+  int64 jump_style = 1;
+  ListenerGuideBar guide_bar = 2;
+}
+
+message UpAct {
+  int64 sid = 1;           // 活动唯一标识 ID
+  string title = 3;        // 标题
+  string statement = 4;    // 描述或声明
+  int64 mid = 2;           // 用户 UID（可能是发起者）
+  string image = 5;        // 图片 URL 或资源标识符
+  string url = 6;          // 目标链接（点击后跳转地址）
+  string button = 7;       // 按钮文本（如“查看详情”、“参与活动”）
+}
+
+message LiveOrderInfo {
+  int64 sid = 1;                     // 直播场次/计划 ID
+  string text = 2;                   // 显示文本（如“即将开播”、“预约提醒”）
+  int64 live_plan_start_time = 3;    // 直播计划开始时间（Unix 毫秒时间戳）
+  bool is_follow = 4;                // 当前用户是否已关注该主播
+  int64 follow_count = 5;            // 主播的关注数（粉丝数）
+  string style = 6;                  // 样式标识（用于前端 UI 渲染，如颜色、图标等）
+}
+
+message CmIpad {
+  CM cm = 1;
+  Author author = 2;
+  Stat stat = 3;
+  int64 duration = 4;
+  int64 aid = 5;
+  ArchiveStat stat_v2 = 6;
+}
+
+message ViewMaterial {
+  int64 oid = 1;          // 内容唯一标识 ID（如稿件、课程、素材 ID）
+  int64 mid = 2;          // 作者用户 UID（member id）
+  string title = 3;       // 标题
+  string author = 4;      // 作者名称（昵称）
+  string jump_url = 5;    // 点击跳转链接
+}
+
+
+message LikeComment {
+  string reply = 1;   // 点赞后的默认评论内容（如“点赞支持！”）
+  string title = 2;   // 标题或提示文案（如“感谢点赞”）
+}
+
+// 外层消息：LikeCustom
+message LikeCustom {
+  bool like_switch = 1;                // 是否启用自定义点赞功能
+  int64 full_to_half_progress = 2;     // 全赞转半赞的进度阈值（可能用于动画或状态切换）
+  int64 non_full_progress = 3;         // 非全赞状态下的进度值
+  int64 update_count = 4;              // 更新计数（用于版本控制或缓存失效）
+  bool immediately_upgrade = 5;        // 是否立即升级/生效（如点赞后立刻触发特效）
+  LikeComment like_comment = 6;        // 点赞时附带的评论配置
+}
+
+
+message PremiereResource {
+  Premiere premiere = 1;
+  PremiereReserve reserve = 2;
+  PremiereText text = 3;
+}
+
+// 首播核心状态信息
+message Premiere {
+  int32 premiere_state = 1;   // 首播状态（如 0: 未开始, 1: 直播中, 2: 已结束）
+  int64 start_time = 2;       // 首播开始时间（Unix 毫秒时间戳）
+  int64 service_time = 3;     // 服务可用时间（可能用于倒计时起点）
+  int64 room_id = 4;          // 关联的直播间 ID（若为直播首播）
+}
+
+// 预约相关信息
+message PremiereReserve {
+  int64 reserve_id = 1;       // 预约记录 ID
+  int64 count = 2;            // 预约人数
+  bool is_follow = 3;         // 当前用户是否已关注该内容
+}
+
+// UI 文案与图标资源
+message PremiereText {
+  string title = 1;                   // 主标题（如“即将首播”）
+  string subtitle = 2;                // 副标题（如“明天 20:00 准时开播”）
+  string online_text = 3;             // 直播中提示文案（如“正在直播”）
+  string online_icon = 4;             // 直播中图标（日间模式）
+  string online_icon_dark = 5;        // 直播中图标（夜间/深色模式）
+  string intro_title = 6;             // 引导页标题
+  string intro_icon = 7;              // 引导页图标（日间）
+  string guidance_pulldown = 8;       // 下拉引导文案（如“下拉查看首播详情”）
+  string guidance_entry = 9;          // 入口引导文案（如“点击进入首播”）
+  string intro_icon_night = 10;       // 引导页图标（夜间模式）
+}
+
+message MaterialLeft {
+  string icon = 1;                // 动态图标 URL（可能随状态变化）
+  string text = 2;                // 显示文案（如“点赞”、“收藏”）
+  string url = 3;                 // 点击跳转链接（HTTPS 或 bilibili:// 协议）
+  string left_type = 4;           // 左侧控件类型（如 "like", "coin", "share"）
+  string param = 5;               // 附加参数（JSON 字符串或 KV 对，用于埋点或行为控制）
+  string operational_type = 6;     // 操作类型（用于区分业务逻辑，如 "feedback", "report"）
+  string static_icon = 7;         // 静态图标（不随状态变化，用于兜底或默认展示）
+}
+
+message PullClientAction {
+  string type = 1;          // 动作类型标识（如 "refresh", "enter_live", "show_menu"）
+  bool pull_action = 2;     // 是否启用该下拉动作（开关）
+  string params = 3;        // 附加参数（通常为 JSON 字符串，传递业务数据）
+}
+
+message PaginationReply {
+  string next = 1;   // 下一页的游标/令牌（非空表示还有更多数据）
+  string prev = 2;   // 上一页的游标/令牌（可选，用于双向翻页）
+}
+
+message RefreshPage {
+  int32 refreshable = 1;      // 是否可刷新（0: 不可, 1: 可；或作为状态码）
+  int32 refresh_icon = 2;     // 刷新图标资源 ID（如 R.drawable.xxx 的整型 ID）
+  string refresh_text = 3;    // 刷新提示文案（如“下拉刷新”、“释放更新”）
+  float refresh_show = 4;     // 刷新控件显示阈值（如 0.5 表示滑动超过 50% 才触发）
+}
+
+message UpViewMaterial {
+  InteractArea like_info = 1;        // 点赞/互动区域信息
+  string data_center_info = 2;       // 数据中心埋点或统计信息（JSON 字符串）
+  TabModule tab_module = 3;          // 标签页模块配置（需单独定义，见下文说明）
+}
+
+// 互动区域：包含用户列表和顶部文案
+message InteractArea {
+  repeated User list = 1;            // 互动用户列表（如最近点赞的用户）
+  string text = 2;                   // 顶部提示文案（如“最近点赞的用户”）
+}
+
+// 用户基本信息
+message User {
+  int64 mid = 1;                     // 用户 UID
+  string name = 2;                   // 昵称
+  string face = 3;                   // 头像 URL
+  int64 follower = 4;                // 粉丝数
+  int64 is_attention = 5;            // 是否被当前用户关注（0/1 或布尔语义）
+  int64 is_interrelation = 6;        // 是否互相关注（0/1）
+  int64 is_follow = 7;               // 是否已关注该用户（0/1）
+  string interact_desc = 8;          // 互动描述（如“刚刚点赞”、“投了 2 枚硬币”）
+}
+
+message TabModule {
+  repeated ExtTab ext_tabs = 1;      // 扩展标签页列表
+  int32 idx = 2;                     // 当前选中标签索引（或默认激活 tab 的位置）
+  string protocol_url = 3;           // 协议链接（如 bilibili://tab?module=xxx，用于深度跳转或埋点）
+}
+
+// 内层：ExtTab —— 单个扩展标签页
+message ExtTab {
+  int32 ext_type = 1;                // 标签类型（用于区分内容模板，如 1=视频, 2=直播, 3=专栏）
+  string data = 2;                   // 标签数据（通常为 JSON 字符串，包含标题、ID、样式等）
+}
+
+message UserRelation {
+  InteractArea like_info = 1;  // 点赞/互动区域信息
+}
+
+message RejectPage {
+  int32 business = 1;                // 业务类型标识（用于区分不同场景）
+  string pic = 2;                    // 插图 URL（如“小电视哭脸”图标）
+  string primary_text = 3;           // 主标题文案（大字体，如“内容不可见”）
+  string secondary_text = 4;         // 副标题文案（小字体，如“该视频因违规已被下架”）
+  Button button = 5;                 // 操作按钮配置（如“返回首页”、“联系客服”）
+}
+
+message PlayToast {
+  int32 business = 1;        // 业务类型标识（用于区分不同 Toast 场景）
+  string icon_url = 2;       // 图标 URL（如“硬币”、“点赞”、“礼物”等小图标）
+  string text = 3;           // 提示文案（如“感谢投币！”、“已加入稍后再看”）
+}
+
+message Rights {
+  int32 bp = 1;                    // 是否为 bangumi（番剧）内容
+  int32 elec = 2;                  // 是否支持充电（打赏）
+  int32 download = 3;              // 是否允许下载
+  int32 movie = 4;                 // 是否为电影/影视内容（受 DRM 保护）
+  int32 pay = 5;                   // 是否为付费观看（大会员专享或单片付费）
+  int32 hd5 = 6;                   // 是否支持高清（如 1080P+）播放
+  int32 no_reprint = 7;            // 是否禁止转载（“禁止转载”标志）
+  int32 autoplay = 8;              // 是否允许自动播放（受浏览器策略影响）
+  int32 ugc_pay = 9;               // 是否为 UGC 付费内容（用户上传的付费视频）
+  int32 is_cooperation = 10;       // 是否为合作视频（如品牌联名）
+  int32 ugc_pay_preview = 11;      // UGC 付费内容是否允许试看
+  int32 no_background = 12;        // 是否禁止后台播放（移动端）
+  int32 arc_pay = 13;              // 是否为稿件级付费（arc = archive）
+  int32 pay_free_watch = 14;       // 是否可免费试看（如新用户福利）
+}
+
+message SeasonTheme {
+  string bg_color = 1;             // 背景颜色（十六进制，如 "#FF66CC"）
+  string selected_bg_color = 2;    // 选中状态背景颜色（如 Tab 选中项）
+  string text_color = 3;           // 文字颜色（与背景搭配使用）
 }
