@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../controllers/tv_details_controller.dart';
 import '../widget/selectionCard.dart';
 import '../widget/pvCard.dart';
+import '../widget/recommand.dart';
 
 class TvDetailsView extends GetView<TvDetailsController> {
   const TvDetailsView({super.key});
@@ -48,8 +49,7 @@ class TvDetailsView extends GetView<TvDetailsController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 5.h,
       children: [
-        Text(
-            '番剧推荐',
+        Text('番剧推荐',
             style: TextStyle(
                 fontSize: 30.sp,
                 fontWeight: FontWeight.w600,
@@ -59,10 +59,10 @@ class TvDetailsView extends GetView<TvDetailsController> {
           child: Row(
             children: List.generate(
                 controller.viewReply.value!.tab.tabModule[0].introduction
-                    .modules[12].sectionData.episodes.length, (index) {
-              return Pvcard(
-                  viewEpisode: controller.viewReply.value!.tab.tabModule[0]
-                      .introduction.modules[12].sectionData.episodes[index]);
+                    .modules[12].relates.cards.length, (index) {
+              return Recommand(
+                  relateCard: controller.viewReply.value!.tab.tabModule[0]
+                      .introduction.modules[12].relates.cards[index]);
             }),
           ),
         )
@@ -155,68 +155,75 @@ class TvDetailsView extends GetView<TvDetailsController> {
   }
 
   Widget _details(BuildContext context) {
-    return Row(
-      spacing: 20.w,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          child: NetImage(
-            imageUrl: controller.cover,
-            height: 500.w,
+    return SizedBox(
+      height: 500.w,
+      child: Row(
+        spacing: 20.w,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            child: NetImage(
+              imageUrl: controller.cover,
+              // height: 500.w,
+            ),
+            borderRadius: BorderRadius.circular(15.r),
           ),
-          borderRadius: BorderRadius.circular(15.r),
-        ),
-        Expanded(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              controller.viewReply.value!.tab.tabModule[0].introduction
-                  .modules[0].ogvTitle.title,
-              style: TextStyle(
-                  fontSize: 40.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).textTheme.bodyMedium!.color),
-            ),
-            Text(
-              '${controller.viewReply.value!.tab.tabModule[0].introduction.modules[5].sectionData.more}',
-              style: TextStyle(
-                  fontSize: 30.sp,
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .color!
-                      .withAlpha(60)),
-            ),
-            Text(
-              '${controller.viewReply.value!.tab.tabModule[0].introduction.modules[1].ogvIntroduction.score} | ${controller.viewReply.value!.tab.tabModule[0].introduction.modules[1].ogvIntroduction.followers}追番 | ${controller.viewReply.value!.tab.tabModule[0].introduction.modules[1].ogvIntroduction.playData.pureText}',
-              style: TextStyle(
-                  fontSize: 30.sp,
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .color!
-                      .withAlpha(60)),
-            ),
-            Text(
-              controller.synthesizeFeedData.mediaInfo.evaluate,
-              style: TextStyle(
-                  fontSize: 28.sp,
-                  color: Theme.of(context).textTheme.bodyMedium!.color),
-            ),
-            SizedBox(
-              height: 35.h,
-            ),
-            Row(
-              spacing: 20.w,
-              children: [
-                _button(context, '立即观看', () => print('立即观看')),
-                _button(context, '追番', () => print('追番'))
-              ],
-            )
-          ],
-        ))
-      ],
+          Expanded(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                controller.viewReply.value!.tab.tabModule[0].introduction
+                    .modules[0].ogvTitle.title,
+                style: TextStyle(
+                    fontSize: 40.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).textTheme.bodyMedium!.color),
+              ),
+              Text(
+                '${controller.viewReply.value!.tab.tabModule[0].introduction.modules[5].sectionData.more}',
+                style: TextStyle(
+                    fontSize: 30.sp,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .color!
+                        .withAlpha(60)),
+              ),
+              Text(
+                '${controller.viewReply.value!.tab.tabModule[0].introduction.modules[1].ogvIntroduction.score} | ${controller.viewReply.value!.tab.tabModule[0].introduction.modules[1].ogvIntroduction.followers}追番 | ${controller.viewReply.value!.tab.tabModule[0].introduction.modules[1].ogvIntroduction.playData.pureText}',
+                style: TextStyle(
+                    fontSize: 30.sp,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .color!
+                        .withAlpha(60)),
+                overflow: TextOverflow.ellipsis,
+              ),
+              Expanded(
+                  child: IntrinsicWidth(
+                child: Text(
+                  controller.synthesizeFeedData.mediaInfo.evaluate,
+                  style: TextStyle(
+                      fontSize: 28.sp,
+                      color: Theme.of(context).textTheme.bodyMedium!.color),
+                ),
+              )),
+              SizedBox(
+                height: 35.h,
+              ),
+              Row(
+                spacing: 20.w,
+                children: [
+                  _button(context, '立即观看', () => print('立即观看')),
+                  _button(context, '追番', () => print('追番'))
+                ],
+              )
+            ],
+          ))
+        ],
+      ),
     );
   }
 

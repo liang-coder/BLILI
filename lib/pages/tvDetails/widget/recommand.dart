@@ -1,13 +1,12 @@
-import 'package:blili/command/utils/date/Date.dart';
 import 'package:blili/widget/NetImage.dart';
+import 'package:blili/widget/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Pvcard extends StatelessWidget {
-  final ViewEpisode viewEpisode;
-
-  const Pvcard({super.key, required this.viewEpisode});
+class Recommand extends StatelessWidget {
+  final RelateCard relateCard;
+  const Recommand({super.key, required this.relateCard});
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +20,13 @@ class Pvcard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _StackImage(
-                imageUrl: viewEpisode.cover,
-                PlayTime: viewEpisode.duration,
-                badge: viewEpisode.badgeInfo.text),
+                imageUrl: relateCard.bangumi.newEp.cover,
+                indexShow: relateCard.bangumi.newEp.indexShow,
+                badge: relateCard.bangumi.badgeInfo.text),
             Padding(
               padding: EdgeInsets.only(top: 2.w),
               child: Text(
-                viewEpisode.title,
+                relateCard.basicInfo.desc,
                 maxLines: 1,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
@@ -36,18 +35,21 @@ class Pvcard extends StatelessWidget {
                     color: Theme.of(context).textTheme.displayMedium!.color),
               ),
             ),
-            SizedBox(width: 300.w,child:  Padding(
-              padding: EdgeInsets.only(top: 2.w),
-              child: Text(
-                viewEpisode.longTitle,
-                maxLines: 1,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontSize: 26.sp,
-                    color: Theme.of(context).textTheme.displayMedium!.color),
+            SizedBox(
+              width: 300.w,
+              child: Padding(
+                padding: EdgeInsets.only(top: 2.w),
+                child: Text(
+                  relateCard.basicInfo.title,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: 26.sp,
+                      color: Theme.of(context).textTheme.displayMedium!.color),
+                ),
               ),
-            ),),
+            ),
           ],
         ),
       ),
@@ -56,7 +58,7 @@ class Pvcard extends StatelessWidget {
 
   Widget _StackImage({
     required String imageUrl,
-    required int PlayTime,
+    required String indexShow,
     required String badge,
   }) {
     return Stack(
@@ -71,12 +73,13 @@ class Pvcard extends StatelessWidget {
           ),
         ),
         Positioned(
-            right: 2.w,
+            left: 2.w,
             bottom: 2.w,
             child: Text(
-              Date.formatMillisecondsToMinutesSeconds(PlayTime),
+              indexShow,
               style: TextStyle(fontSize: 22.sp),
             )),
+        Positioned(right: 0, top: 0, child: BadgeWidget(badge: badge))
       ],
     );
   }
