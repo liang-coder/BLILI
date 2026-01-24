@@ -20,7 +20,7 @@ class viewReq {
     viewReq.playerArgs = PlayerArgs(
         qn: Int64(32), fnval: Int64(272), voiceBalance: Int64(1), qnPolicy: 1);
     viewReq.extraContent.addAll([
-      ExtraContentEntry(key: 'ep_id', value: '1524248'),
+      ExtraContentEntry(key: 'ep_id', value: epid),
       ExtraContentEntry(key: 'autoplay', value: '0'),
       ExtraContentEntry(key: 'nature_ad', value: '')
     ]);

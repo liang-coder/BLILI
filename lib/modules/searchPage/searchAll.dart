@@ -1201,7 +1201,7 @@ class Movie2 {
   @JsonKey(name: "cv")
   String? cv;
   @JsonKey(name: "rating")
-  double rating;
+  double? rating;
   @JsonKey(name: "vote")
   int vote;
   @JsonKey(name: "area")
@@ -1297,7 +1297,7 @@ class Movie2 {
     required this.stylesV2,
     this.styleLabel,
     this.cv,
-    required this.rating,
+     this.rating,
     required this.vote,
     required this.area,
     required this.authorPrefix,

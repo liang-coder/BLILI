@@ -822,7 +822,7 @@ Movie2 _$Movie2FromJson(Map<String, dynamic> json) => Movie2(
           ? null
           : BadgesV2.fromJson(json['style_label'] as Map<String, dynamic>),
       cv: json['cv'] as String?,
-      rating: (json['rating'] as num).toDouble(),
+      rating: (json['rating'] as num?)?.toDouble(),
       vote: (json['vote'] as num).toInt(),
       area: json['area'] as String,
       authorPrefix: json['author_prefix'] as String,

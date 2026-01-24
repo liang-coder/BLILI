@@ -1,24 +1,239 @@
+import 'package:blili/widget/HttpLoading.dart';
+import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../controllers/tv_details_controller.dart';
+import '../widget/selectionCard.dart';
+import '../widget/pvCard.dart';
 
 class TvDetailsView extends GetView<TvDetailsController> {
   const TvDetailsView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(controller.v),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'TvDetailsView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: Httploading(
+          successChild: Obx(() {
+            if (controller.viewReply.value == null) return SizedBox();
+            return ListView(
+              padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 40.w),
+              children: [
+                _details(context),
+                SizedBox(
+                  height: 20.h,
+                ),
+                _Selections(context),
+                SizedBox(
+                  height: 20.h,
+                ),
+                _pv(context),
+                SizedBox(
+                  height: 20.h,
+                ),
+                _op(context),
+                SizedBox(
+                  height: 20.h,
+                ),
+                _recommand(context),
+              ],
+            );
+          }),
+          controller: controller.httploadingController,
+          request: controller.PlayView),
     );
+  }
+
+  Widget _recommand(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 5.h,
+      children: [
+        Text(
+            '番剧推荐',
+            style: TextStyle(
+                fontSize: 30.sp,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).textTheme.bodyMedium!.color)),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(
+                controller.viewReply.value!.tab.tabModule[0].introduction
+                    .modules[12].sectionData.episodes.length, (index) {
+              return Pvcard(
+                  viewEpisode: controller.viewReply.value!.tab.tabModule[0]
+                      .introduction.modules[12].sectionData.episodes[index]);
+            }),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _op(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 5.h,
+      children: [
+        Text(
+            controller.viewReply.value!.tab.tabModule[0].introduction.modules[7]
+                .sectionData.title,
+            style: TextStyle(
+                fontSize: 30.sp,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).textTheme.bodyMedium!.color)),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(
+                controller.viewReply.value!.tab.tabModule[0].introduction
+                    .modules[7].sectionData.episodes.length, (index) {
+              return Pvcard(
+                  viewEpisode: controller.viewReply.value!.tab.tabModule[0]
+                      .introduction.modules[7].sectionData.episodes[index]);
+            }),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _pv(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 5.h,
+      children: [
+        Text(
+            controller.viewReply.value!.tab.tabModule[0].introduction.modules[6]
+                .sectionData.title,
+            style: TextStyle(
+                fontSize: 30.sp,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).textTheme.bodyMedium!.color)),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(
+                controller.viewReply.value!.tab.tabModule[0].introduction
+                    .modules[6].sectionData.episodes.length, (index) {
+              return Pvcard(
+                  viewEpisode: controller.viewReply.value!.tab.tabModule[0]
+                      .introduction.modules[6].sectionData.episodes[index]);
+            }),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _Selections(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 5.h,
+      children: [
+        Text(
+            controller.viewReply.value!.tab.tabModule[0].introduction.modules[5]
+                .sectionData.title,
+            style: TextStyle(
+                fontSize: 30.sp,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).textTheme.bodyMedium!.color)),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(
+                controller.viewReply.value!.tab.tabModule[0].introduction
+                    .modules[5].sectionData.episodes.length, (index) {
+              return Selectioncard(
+                  viewEpisode: controller.viewReply.value!.tab.tabModule[0]
+                      .introduction.modules[5].sectionData.episodes[index]);
+            }),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _details(BuildContext context) {
+    return Row(
+      spacing: 20.w,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          child: NetImage(
+            imageUrl: controller.cover,
+            height: 500.w,
+          ),
+          borderRadius: BorderRadius.circular(15.r),
+        ),
+        Expanded(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              controller.viewReply.value!.tab.tabModule[0].introduction
+                  .modules[0].ogvTitle.title,
+              style: TextStyle(
+                  fontSize: 40.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).textTheme.bodyMedium!.color),
+            ),
+            Text(
+              '${controller.viewReply.value!.tab.tabModule[0].introduction.modules[5].sectionData.more}',
+              style: TextStyle(
+                  fontSize: 30.sp,
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .color!
+                      .withAlpha(60)),
+            ),
+            Text(
+              '${controller.viewReply.value!.tab.tabModule[0].introduction.modules[1].ogvIntroduction.score} | ${controller.viewReply.value!.tab.tabModule[0].introduction.modules[1].ogvIntroduction.followers}追番 | ${controller.viewReply.value!.tab.tabModule[0].introduction.modules[1].ogvIntroduction.playData.pureText}',
+              style: TextStyle(
+                  fontSize: 30.sp,
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .color!
+                      .withAlpha(60)),
+            ),
+            Text(
+              controller.synthesizeFeedData.mediaInfo.evaluate,
+              style: TextStyle(
+                  fontSize: 28.sp,
+                  color: Theme.of(context).textTheme.bodyMedium!.color),
+            ),
+            SizedBox(
+              height: 35.h,
+            ),
+            Row(
+              spacing: 20.w,
+              children: [
+                _button(context, '立即观看', () => print('立即观看')),
+                _button(context, '追番', () => print('追番'))
+              ],
+            )
+          ],
+        ))
+      ],
+    );
+  }
+
+  Widget _button(BuildContext context, String text, VoidCallback function) {
+    return MaterialButton(
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        elevation: 0,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+        color: Theme.of(context).textTheme.bodyMedium!.color!.withAlpha(40),
+        // splashColor: Colors.red,
+        child: Text(
+          text,
+          style:
+              TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color!),
+        ),
+        // color: Colors.purple,
+        onPressed: function);
   }
 }

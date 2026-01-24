@@ -18,10 +18,16 @@ class Tv extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(season2!.toJson().toString());
+    log(season2!.episodes[0].toJson().toString());
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => Get.toNamed(Routes.TV_DETAILS),
+      onPressed: () => Get.toNamed(Routes.TV_DETAILS, arguments: {
+        'from': '5',
+        'epid':
+            isSeason2! ? season2!.episodes[0].param : item!.episodes[0].param,
+        'cover': isSeason2! ? season2!.cover : item!.cover,
+        'parame': isSeason2! ? season2!.param : item!.param,
+      }),
       child: Padding(
         padding: EdgeInsets.only(top: 12.w, bottom: 12.w),
         child: Column(
@@ -32,8 +38,9 @@ class Tv extends StatelessWidget {
             _StackImage(
               imageUrl: isSeason2! ? season2!.cover : item!.cover,
               index_show: '',
-              badge:
-                  isSeason2! ? season2!.styleLabel!.text : item!.styleLabel.text,
+              badge: isSeason2!
+                  ? season2!.styleLabel!.text
+                  : item!.styleLabel.text,
             ),
             Text(
               isSeason2!

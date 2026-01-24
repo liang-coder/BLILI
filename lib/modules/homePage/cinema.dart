@@ -1,9 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'basicModel.dart';part 'cinema.g.dart';
-
+part 'cinema.g.dart';
 
 @JsonSerializable()
-class Cinema{
+class Cinema {
   @JsonKey(name: "has_next")
   int hasNext;
   @JsonKey(name: "hot")
@@ -82,7 +81,7 @@ class Module {
   @JsonKey(name: "size")
   int size;
   @JsonKey(name: "style")
-  Style style;
+  String style;
   @JsonKey(name: "sub_title")
   String subTitle;
   @JsonKey(name: "title")
@@ -193,7 +192,7 @@ class Item {
   @JsonKey(name: "aid")
   int? aid;
   @JsonKey(name: "badge")
-  Badge? badge;
+  String? badge;
   @JsonKey(name: "badge_info")
   BadgeInfo? badgeInfo;
   @JsonKey(name: "badge_type")
@@ -245,7 +244,7 @@ class Item {
   @JsonKey(name: "title")
   String title;
   @JsonKey(name: "type")
-  Type? type;
+  String? type;
   @JsonKey(name: "wid")
   int? wid;
   @JsonKey(name: "bottom_left_badge")
@@ -257,11 +256,11 @@ class Item {
   @JsonKey(name: "sources")
   String? sources;
   @JsonKey(name: "from_spmid")
-  Spmid? fromSpmid;
+  String? fromSpmid;
   @JsonKey(name: "item_show_type")
   int? itemShowType;
   @JsonKey(name: "spmid")
-  Spmid? spmid;
+  String? spmid;
   @JsonKey(name: "unique_id")
   String? uniqueId;
 
@@ -310,29 +309,14 @@ class Item {
   Map<String, dynamic> toJson() => _$ItemToJson(this);
 }
 
-enum Badge {
-  @JsonValue("独家")
-  BADGE,
-  @JsonValue("大会员")
-  EMPTY,
-  @JsonValue("出品")
-  FLUFFY,
-  @JsonValue("限时免费")
-  PURPLE,
-  @JsonValue("")
-  STICKY,
-  @JsonValue("会员特价")
-  TENTACLED
-}
-
 @JsonSerializable()
 class BadgeInfo {
   @JsonKey(name: "bg_color")
-  BgColor bgColor;
+  String bgColor;
   @JsonKey(name: "bg_color_night")
-  BgColorNight bgColorNight;
+  String bgColorNight;
   @JsonKey(name: "text")
-  Badge text;
+  String text;
   @JsonKey(name: "text_size")
   int textSize;
 
@@ -346,28 +330,6 @@ class BadgeInfo {
   factory BadgeInfo.fromJson(Map<String, dynamic> json) => _$BadgeInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$BadgeInfoToJson(this);
-}
-
-enum BgColor {
-  @JsonValue("")
-  EMPTY,
-  @JsonValue("#FB7299")
-  FB7299,
-  @JsonValue("#FF7F24")
-  FF7_F24,
-  @JsonValue("#00C0FF")
-  THE_00_C0_FF
-}
-
-enum BgColorNight {
-  @JsonValue("#D44E7D")
-  D44_E7_D,
-  @JsonValue("#D66011")
-  D66011,
-  @JsonValue("")
-  EMPTY,
-  @JsonValue("#0B91BE")
-  THE_0_B91_BE
 }
 
 @JsonSerializable()
@@ -385,11 +347,6 @@ class BottomLeftBadge {
   factory BottomLeftBadge.fromJson(Map<String, dynamic> json) => _$BottomLeftBadgeFromJson(json);
 
   Map<String, dynamic> toJson() => _$BottomLeftBadgeToJson(this);
-}
-
-enum Spmid {
-  @JsonValue("pgc.cinema-tab.double_feed.0")
-  PGC_CINEMA_TAB_DOUBLE_FEED_0
 }
 
 @JsonSerializable()
@@ -417,9 +374,9 @@ class ItemReport {
   @JsonKey(name: "action_id")
   String actionId;
   @JsonKey(name: "avid")
-  Avid avid;
+  String avid;
   @JsonKey(name: "card_type")
-  Style cardType;
+  String cardType;
   @JsonKey(name: "content_type")
   String? contentType;
   @JsonKey(name: "epid")
@@ -431,7 +388,7 @@ class ItemReport {
   @JsonKey(name: "module_id")
   String moduleId;
   @JsonKey(name: "module_type")
-  Style moduleType;
+  String moduleType;
   @JsonKey(name: "ogv_session_id")
   String ogvSessionId;
   @JsonKey(name: "oid")
@@ -477,34 +434,6 @@ class ItemReport {
   Map<String, dynamic> toJson() => _$ItemReportToJson(this);
 }
 
-enum Avid {
-  @JsonValue("")
-  EMPTY,
-  @JsonValue("115683451013809")
-  THE_115683451013809,
-  @JsonValue("115693450168545")
-  THE_115693450168545,
-  @JsonValue("115711938659995")
-  THE_115711938659995,
-  @JsonValue("115723800216252")
-  THE_115723800216252,
-  @JsonValue("115762119378226")
-  THE_115762119378226,
-  @JsonValue("115807501682460")
-  THE_115807501682460
-}
-
-enum Style {
-  @JsonValue("banner_v3")
-  BANNER_V3,
-  @JsonValue("card")
-  CARD,
-  @JsonValue("double_feed")
-  DOUBLE_FEED,
-  @JsonValue("v_card")
-  V_CARD
-}
-
 @JsonSerializable()
 class Stat {
   @JsonKey(name: "danmaku")
@@ -528,11 +457,6 @@ class Stat {
   Map<String, dynamic> toJson() => _$StatToJson(this);
 }
 
-enum Type {
-  @JsonValue("PGC")
-  PGC
-}
-
 @JsonSerializable()
 class ModuleReport {
   @JsonKey(name: "action_id")
@@ -540,7 +464,7 @@ class ModuleReport {
   @JsonKey(name: "module_id")
   String moduleId;
   @JsonKey(name: "module_type")
-  Style moduleType;
+  String moduleType;
   @JsonKey(name: "ogv_session_id")
   String ogvSessionId;
 

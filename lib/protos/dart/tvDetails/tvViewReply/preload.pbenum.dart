@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from lib/protos/proto/ViewReply.proto.
+// Generated from lib/protos/proto/preload.proto.
 
 // @dart = 3.3
 

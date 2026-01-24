@@ -208,13 +208,17 @@ class HomeController extends GetxController
         queryParameters: Params.add(Newparams: queryParameters),
         option: Options(headers: {'pgcinfo': pgcinfo}));
 
-    try {
-      final Cinema cinema = Cinema.fromJson(httpresult.data);
-      _cinema.add(cinema);
-    } catch (e) {
-      _httploadingController4.error();
-      throw '数据出错 $e';
-    }
+    final Cinema cinema = Cinema.fromJson(httpresult.data);
+    _cinema.add(cinema);
+
+
+    // try {
+    //   final Cinema cinema = Cinema.fromJson(httpresult.data);
+    //   _cinema.add(cinema);
+    // } catch (e) {
+    //   _httploadingController4.error();
+    //   throw '数据出错 $e';
+    // }
     _httploadingController4.unenable();
   }
 

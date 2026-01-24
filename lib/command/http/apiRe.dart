@@ -167,6 +167,15 @@ class ApiRe {
     return result;
   }
 
+  static Future<Response> synthesizeFeed(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.get(Api.synthesizeFeed,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
   static Future<Response> SearchSuggestion(
       {Map<String, dynamic>? queryParameters,
       Options? option,

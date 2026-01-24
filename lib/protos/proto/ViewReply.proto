@@ -77,7 +77,11 @@ message ViewReply {
 }
 
 message CoinCustom {
-  string toast = 1;  // 投币成功后显示的 Toast 提示文案
+  string toast = 1;
+}
+
+message ChargingPlus {
+  bool pass = 1;
 }
 
 message ActivitySeason {
@@ -146,7 +150,6 @@ message CoinStyle {
   string coin_app_icon_4 = 5;
 }
 
-
 message ListenerGuideBar {
   int64 show_strategy = 1;
   string icon = 2;
@@ -169,10 +172,6 @@ message ActivityResource {
 
 message ArcExtra {
   string arc_pub_location = 1;
-}
-
-message ChargingPlus {
-  bool pass = 1;  // 是否通过 Charging Plus 权益校验
 }
 
 message Arc {
@@ -210,6 +209,21 @@ message Arc {
   string short_link_v2 = 40;
   int32 up_from_v2 = 41;
   string first_frame = 42;
+}
+
+message StaffInfo {
+  int64 mid = 1;
+  string title = 2;
+  int64 attribute = 3;
+}
+
+message SubTFPanel {
+  string right_btn_img = 1;
+  string right_btn_text = 2;
+  string right_btn_text_color = 3;
+  string right_btn_link = 4;
+  string main_label = 5;
+  string operator = 6;
 }
 
 
@@ -457,10 +471,24 @@ message WikiInfo {
   string wiki_url = 2;     // 跳转链接，如 bilibili://wiki/xxx 或 https://...
 }
 
-message StaffInfo {
-  int64 mid = 1;        // 成员的用户 ID（Bilibili UID）
-  string title = 2;     // 职位/角色名称（如“导演”、“原画”、“配音”）
-  int64 attribute = 3;  // 成员属性标志位（用于权限或展示控制）
+message Episode {
+  int64 id = 1;
+  int64 aid = 2;
+  int64 cid = 3;
+  string title = 4;
+  string cover = 5;
+  string cover_right_text = 6;
+  Page page = 7;
+  Stat stat = 8;
+  string bvid = 9;
+  Author author = 10;
+  string author_desc = 11;
+  BadgeStyle badge_style = 12;
+  bool need_pay = 13;
+  bool episode_pay = 14;
+  bool free_watch = 15;
+  string first_frame = 16;
+  ArchiveStat stat_v2 = 17;
 }
 
 message Order {
@@ -483,17 +511,22 @@ message Order {
   StatInfo season_stat_view_vt = 11;   // 格式化后的播放量展示（如 "12.3万"）
 }
 
-
 message Reserve {
-  int64 aid = 1;            // 正片稿件 ID
-  int64 reserve_time = 2;   // 预约时间戳（可选）
-  // 可能还有 type, cid 等，需 Java 类确认
+    // 活动id
+    int64 activity_id = 1;
+    // 场景
+    string from = 2;
+    // 类型
+    string type = 3;
+    // 资源id
+    int64 oid = 4;
+    //
+    int64 reserve_id = 5;
 }
 
 message FavSeason {
-  int64 season_id = 1;      // 番剧/合集 ID
-  int32 is_fav = 2;         // 是否已收藏（0/1，冗余字段，与外层 status 对应）
-  // 可能还有 media_id, title 等
+    // 合集id
+    int64 season_id = 1;
 }
 
 message OnwerExt {  // 注意：保留你提供的拼写 "OnwerExt"
@@ -661,7 +694,7 @@ message Tab {
   google.protobuf.Any ad_tab_info = 11; // 广告扩展信息（通常为空或特定活动数据）
 }
 
-message SubTFPanel {
+message subTFPanel {
   string right_btn_img = 1;          // 右侧按钮图标 URL
   string right_btn_text = 2;         // 按钮文案，如 “分享”
   string right_btn_text_color = 3;   // 按钮文字颜色（如 "#00A1D6"）
@@ -796,26 +829,6 @@ message Section {
   string title = 2;                 // 分季标题（如 “第一季”、“番外篇”）
   int64 type = 3;                   // 类型（0=普通, 1=预告, 2=特别篇）
   repeated Episode episodes = 4;    // 该季下的所有视频（剧集）
-}
-
-message Episode {
-  int64 id = 1;                     // 分集唯一 ID（ep_id）
-  int64 aid = 2;                    // 关联的稿件 ID（archive ID）
-  int64 cid = 3;                    // 视频流 ID（content ID，用于播放）
-  string title = 4;                 // 分集标题（如 “第1话 命运的相遇”）
-  string cover = 5;                 // 封面图 URL
-  string cover_right_text = 6;      // 封面右上角标签文案（如 “会员专享”、“预告”）
-  Page page = 7;                    // 分 P 信息（通常单集 = 单 P）
-  Stat stat = 8;                    // 旧版统计信息（播放、弹幕等）
-  string bvid = 9;                  // BV 号（如 BV1xx411c7mu）
-  Author author = 10;               // UP 主/作者信息
-  string author_desc = 11;          // 作者描述（如 “制作：XX 动画工作室”）
-  BadgeStyle badge_style = 12;      // 角标样式（颜色、文本等）
-  bool need_pay = 13;               // 是否需要付费观看（通用开关）
-  bool episode_pay = 14;            // 是否为单集付费（区别于大会员）
-  bool free_watch = 15;             // 是否可免费试看（如新用户福利）
-  string first_frame = 16;          // 首帧预览图 URL（用于加载占位）
-  ArchiveStat stat_v2 = 17;         // 新版统计信息（格式化后的播放量等）
 }
 
 message Author {
@@ -1243,6 +1256,7 @@ message ExtTab {
 message UserRelation {
   InteractArea like_info = 1;  // 点赞/互动区域信息
 }
+
 
 message RejectPage {
   int32 business = 1;                // 业务类型标识（用于区分不同场景）

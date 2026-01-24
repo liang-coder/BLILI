@@ -60,7 +60,7 @@ Module _$ModuleFromJson(Map<String, dynamic> json) => Module(
       moduleTag: json['module_tag'] as String,
       report: ModuleReport.fromJson(json['report'] as Map<String, dynamic>),
       size: (json['size'] as num).toInt(),
-      style: $enumDecode(_$StyleEnumMap, json['style']),
+      style: json['style'] as String,
       subTitle: json['sub_title'] as String,
       title: json['title'] as String,
       type: (json['type'] as num).toInt(),
@@ -81,19 +81,12 @@ Map<String, dynamic> _$ModuleToJson(Module instance) => <String, dynamic>{
       'module_tag': instance.moduleTag,
       'report': instance.report,
       'size': instance.size,
-      'style': _$StyleEnumMap[instance.style]!,
+      'style': instance.style,
       'sub_title': instance.subTitle,
       'title': instance.title,
       'type': instance.type,
       'wid': instance.wid,
     };
-
-const _$StyleEnumMap = {
-  Style.BANNER_V3: 'banner_v3',
-  Style.CARD: 'card',
-  Style.DOUBLE_FEED: 'double_feed',
-  Style.V_CARD: 'v_card',
-};
 
 Attr _$AttrFromJson(Map<String, dynamic> json) => Attr(
       auto: (json['auto'] as num).toInt(),
@@ -144,7 +137,7 @@ Map<String, dynamic> _$RegionReportToJson(RegionReport instance) =>
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       aid: (json['aid'] as num?)?.toInt(),
-      badge: $enumDecodeNullable(_$BadgeEnumMap, json['badge']),
+      badge: json['badge'] as String?,
       badgeInfo: json['badge_info'] == null
           ? null
           : BadgeInfo.fromJson(json['badge_info'] as Map<String, dynamic>),
@@ -176,7 +169,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
           ? null
           : Stat.fromJson(json['stat'] as Map<String, dynamic>),
       title: json['title'] as String,
-      type: $enumDecodeNullable(_$TypeEnumMap, json['type']),
+      type: json['type'] as String?,
       wid: (json['wid'] as num?)?.toInt(),
       bottomLeftBadge: json['bottom_left_badge'] == null
           ? null
@@ -185,15 +178,15 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       cursor: json['cursor'] as String?,
       isAuto: (json['is_auto'] as num?)?.toInt(),
       sources: json['sources'] as String?,
-      fromSpmid: $enumDecodeNullable(_$SpmidEnumMap, json['from_spmid']),
+      fromSpmid: json['from_spmid'] as String?,
       itemShowType: (json['item_show_type'] as num?)?.toInt(),
-      spmid: $enumDecodeNullable(_$SpmidEnumMap, json['spmid']),
+      spmid: json['spmid'] as String?,
       uniqueId: json['unique_id'] as String?,
     );
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'aid': instance.aid,
-      'badge': _$BadgeEnumMap[instance.badge],
+      'badge': instance.badge,
       'badge_info': instance.badgeInfo,
       'badge_type': instance.badgeType,
       'blink': instance.blink,
@@ -219,62 +212,31 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'season_type': instance.seasonType,
       'stat': instance.stat,
       'title': instance.title,
-      'type': _$TypeEnumMap[instance.type],
+      'type': instance.type,
       'wid': instance.wid,
       'bottom_left_badge': instance.bottomLeftBadge,
       'cursor': instance.cursor,
       'is_auto': instance.isAuto,
       'sources': instance.sources,
-      'from_spmid': _$SpmidEnumMap[instance.fromSpmid],
+      'from_spmid': instance.fromSpmid,
       'item_show_type': instance.itemShowType,
-      'spmid': _$SpmidEnumMap[instance.spmid],
+      'spmid': instance.spmid,
       'unique_id': instance.uniqueId,
     };
 
-const _$BadgeEnumMap = {
-  Badge.BADGE: '独家',
-  Badge.EMPTY: '大会员',
-  Badge.FLUFFY: '出品',
-  Badge.PURPLE: '限时免费',
-  Badge.STICKY: '',
-  Badge.TENTACLED: '会员特价',
-};
-
-const _$TypeEnumMap = {
-  Type.PGC: 'PGC',
-};
-
-const _$SpmidEnumMap = {
-  Spmid.PGC_CINEMA_TAB_DOUBLE_FEED_0: 'pgc.cinema-tab.double_feed.0',
-};
-
 BadgeInfo _$BadgeInfoFromJson(Map<String, dynamic> json) => BadgeInfo(
-      bgColor: $enumDecode(_$BgColorEnumMap, json['bg_color']),
-      bgColorNight: $enumDecode(_$BgColorNightEnumMap, json['bg_color_night']),
-      text: $enumDecode(_$BadgeEnumMap, json['text']),
+      bgColor: json['bg_color'] as String,
+      bgColorNight: json['bg_color_night'] as String,
+      text: json['text'] as String,
       textSize: (json['text_size'] as num).toInt(),
     );
 
 Map<String, dynamic> _$BadgeInfoToJson(BadgeInfo instance) => <String, dynamic>{
-      'bg_color': _$BgColorEnumMap[instance.bgColor]!,
-      'bg_color_night': _$BgColorNightEnumMap[instance.bgColorNight]!,
-      'text': _$BadgeEnumMap[instance.text]!,
+      'bg_color': instance.bgColor,
+      'bg_color_night': instance.bgColorNight,
+      'text': instance.text,
       'text_size': instance.textSize,
     };
-
-const _$BgColorEnumMap = {
-  BgColor.EMPTY: '',
-  BgColor.FB7299: '#FB7299',
-  BgColor.FF7_F24: '#FF7F24',
-  BgColor.THE_00_C0_FF: '#00C0FF',
-};
-
-const _$BgColorNightEnumMap = {
-  BgColorNight.D44_E7_D: '#D44E7D',
-  BgColorNight.D66011: '#D66011',
-  BgColorNight.EMPTY: '',
-  BgColorNight.THE_0_B91_BE: '#0B91BE',
-};
 
 BottomLeftBadge _$BottomLeftBadgeFromJson(Map<String, dynamic> json) =>
     BottomLeftBadge(
@@ -302,14 +264,14 @@ Map<String, dynamic> _$NewEpToJson(NewEp instance) => <String, dynamic>{
 
 ItemReport _$ItemReportFromJson(Map<String, dynamic> json) => ItemReport(
       actionId: json['action_id'] as String,
-      avid: $enumDecode(_$AvidEnumMap, json['avid']),
-      cardType: $enumDecode(_$StyleEnumMap, json['card_type']),
+      avid: json['avid'] as String,
+      cardType: json['card_type'] as String,
       contentType: json['content_type'] as String?,
       epid: json['epid'] as String,
       index: json['index'] as String?,
       itemId: json['item_id'] as String,
       moduleId: json['module_id'] as String,
-      moduleType: $enumDecode(_$StyleEnumMap, json['module_type']),
+      moduleType: json['module_type'] as String,
       ogvSessionId: json['ogv_session_id'] as String,
       oid: json['oid'] as String,
       playlistId: json['playlist_id'] as String?,
@@ -324,14 +286,14 @@ ItemReport _$ItemReportFromJson(Map<String, dynamic> json) => ItemReport(
 Map<String, dynamic> _$ItemReportToJson(ItemReport instance) =>
     <String, dynamic>{
       'action_id': instance.actionId,
-      'avid': _$AvidEnumMap[instance.avid]!,
-      'card_type': _$StyleEnumMap[instance.cardType]!,
+      'avid': instance.avid,
+      'card_type': instance.cardType,
       'content_type': instance.contentType,
       'epid': instance.epid,
       'index': instance.index,
       'item_id': instance.itemId,
       'module_id': instance.moduleId,
-      'module_type': _$StyleEnumMap[instance.moduleType]!,
+      'module_type': instance.moduleType,
       'ogv_session_id': instance.ogvSessionId,
       'oid': instance.oid,
       'playlist_id': instance.playlistId,
@@ -342,16 +304,6 @@ Map<String, dynamic> _$ItemReportToJson(ItemReport instance) =>
       'is_wtgt': instance.isWtgt,
       'inline_epid': instance.inlineEpid,
     };
-
-const _$AvidEnumMap = {
-  Avid.EMPTY: '',
-  Avid.THE_115683451013809: '115683451013809',
-  Avid.THE_115693450168545: '115693450168545',
-  Avid.THE_115711938659995: '115711938659995',
-  Avid.THE_115723800216252: '115723800216252',
-  Avid.THE_115762119378226: '115762119378226',
-  Avid.THE_115807501682460: '115807501682460',
-};
 
 Stat _$StatFromJson(Map<String, dynamic> json) => Stat(
       danmaku: (json['danmaku'] as num).toInt(),
@@ -370,7 +322,7 @@ Map<String, dynamic> _$StatToJson(Stat instance) => <String, dynamic>{
 ModuleReport _$ModuleReportFromJson(Map<String, dynamic> json) => ModuleReport(
       actionId: json['action_id'] as String,
       moduleId: json['module_id'] as String,
-      moduleType: $enumDecode(_$StyleEnumMap, json['module_type']),
+      moduleType: json['module_type'] as String,
       ogvSessionId: json['ogv_session_id'] as String,
     );
 
@@ -378,7 +330,7 @@ Map<String, dynamic> _$ModuleReportToJson(ModuleReport instance) =>
     <String, dynamic>{
       'action_id': instance.actionId,
       'module_id': instance.moduleId,
-      'module_type': _$StyleEnumMap[instance.moduleType]!,
+      'module_type': instance.moduleType,
       'ogv_session_id': instance.ogvSessionId,
     };
 

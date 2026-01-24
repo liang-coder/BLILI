@@ -9,21 +9,20 @@ void main(){
     "build": "2001100",
     "c_locale": "zh_CN",
     "channel": "bili",
+    "cursor": "-1_-1",
     "disable_rcmd": "0",
-    "fnval": "272",
-    "fnver": "0",
-    "fourk": "0",
-    "highlight": "1",
-    "keyword": "牧神记",
+    "media_id": "28223043",
     "mobi_app": "android_hd",
+    "oid": "0",
+    "otype": "0",
     "platform": "android",
-    "pn": "1",
     "ps": "20",
     "s_locale": "zh_CN",
+    "source_type": "1",
     "statistics": "{\"appId\":5,\"platform\":3,\"version\":\"2.0.1\",\"abtest\":\"\"}",
-    "ts": "1768915758",
-    "type": "7",
-    "sign": "97e15b820e56d9b240d25363a303ffc5"
+    "ts": "1769257903",
+    "type": "0",
+    "sign": "879a218ab7b1afe933ee090f96f88d28"
   };
 
 

@@ -15,6 +15,7 @@ class Api {
   static final String searchType = '/x/v2/search/type';
   static final String playViewUnite = '/bilibili.app.playerunite.v1.Player/PlayViewUnite';
   static final String View = '/bilibili.app.viewunite.v1.View/View';
+  static final String synthesizeFeed = '/pgc/review/gateway//synthesize/feed';
 }
 
 class domainMap {
@@ -35,6 +36,7 @@ class domainMap {
     Api.searchType: 'https://app.bilibili.com',
     Api.playViewUnite: 'https://app.bilibili.com',
     Api.View: 'https://app.bilibili.com',
+    Api.synthesizeFeed: 'https://api.bilibili.com',
   };
 
   static String getDomain(String key) {

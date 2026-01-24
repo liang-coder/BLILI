@@ -285,7 +285,7 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
   bool _KeyEvenhandel(KeyEvent event) {
     appLogger.LoggerI('$event');
 
-    if (Get.routing == Routes.SEARCH) {
+    if (Get.routing.current == Routes.SEARCH) {
       if (event is KeyDownEvent) {
         if (_focusNode.hasFocus) {
           if (seaching.value) {

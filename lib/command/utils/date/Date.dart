@@ -21,4 +21,12 @@ class Date {
   static int UnixTimestamp() {
     return DateTime.now().millisecondsSinceEpoch ~/ 1000;
   }
+
+  static String formatMillisecondsToMinutesSeconds(int milliseconds) {
+    final totalSeconds = milliseconds ~/ 1000; // 转为整数秒
+    final minutes = totalSeconds ~/ 60;
+    final seconds = totalSeconds % 60;
+
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
 }

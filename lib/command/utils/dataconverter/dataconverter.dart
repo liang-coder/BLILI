@@ -82,6 +82,7 @@ class DataConverter {
       // 4. 执行解压
       List<int> decoded = GZipDecoder().decodeBytes(gzipData);
 
+      appLogger.LoggerI('数据解压成功');
       return decoded;
     }
   }

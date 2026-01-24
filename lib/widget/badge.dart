@@ -11,7 +11,7 @@ class BadgeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     int bgcolor;
 
-    if (badge == '大会员') {
+    if (badge.contains('会员')) {
       bgcolor = 0xffFB7299;
     } else if (badge == '独家') {
       bgcolor = 0xff00C0FF;
@@ -22,6 +22,8 @@ class BadgeWidget extends StatelessWidget {
     } else {
       bgcolor = 0xff00C0FF;
     }
+
+    if(badge == '')return SizedBox();
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 3.w, horizontal: 5.w),
