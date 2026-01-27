@@ -1,63 +1,17 @@
+import 'dart:developer';
+import 'package:blili/modules/player/BiliVideoUrlModel.dart';
 import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart' hide Card;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:blili/modules/homePage/feedIndex.dart';
 import 'package:blili/command/images/images.dart';
+import 'package:get/get.dart';
+import 'package:blili/routes/app_pages.dart';
 
 class Videocard extends StatelessWidget {
-  final CardType cardType;
-  final CardGoto cardGoto;
-  final CardGoto goto;
-  final String param;
-  final String cover;
-  final String title;
-  final String uri;
-  final Args args;
-  PlayerArgs? playerArgs;
-  final int idx;
-  final List<ThreePointV2> threePointV2;
-  final String trackId;
-  final String talkBack;
-  final String reportFlowData;
-  final String coverLeftText1;
-  final int coverLeftIcon1;
-  final String coverLeft1ContentDescription;
-  final String coverLeftText2;
-  final int coverLeftIcon2;
-  final String coverLeft2ContentDescription;
-  final String coverRightText;
-  final DescButton descButton;
-  final String desc;
-  final int canPlay;
-  final GotoIcon gotoIcon;
-  Videocard(
-      {super.key,
-      required this.cardType,
-      required this.cardGoto,
-      required this.goto,
-      required this.param,
-      required this.cover,
-      required this.title,
-      required this.uri,
-      required this.args,
-      this.playerArgs,
-      required this.idx,
-      required this.threePointV2,
-      required this.trackId,
-      required this.talkBack,
-      required this.reportFlowData,
-      required this.coverLeftText1,
-      required this.coverLeftIcon1,
-      required this.coverLeft1ContentDescription,
-      required this.coverLeftText2,
-      required this.coverLeftIcon2,
-      required this.coverLeft2ContentDescription,
-      required this.coverRightText,
-      required this.descButton,
-      required this.desc,
-      required this.canPlay,
-      required this.gotoIcon});
+  final Item item;
+  const Videocard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -73,16 +27,16 @@ class Videocard extends StatelessWidget {
             LayoutBuilder(builder: (context, constraints) {
               return _StackImage(
                   width: constraints.maxWidth,
-                  imageUrl: cover,
-                  PlaySum: coverLeftText1,
-                  PlayTime: coverRightText,
-                  DmSum: coverLeftText2);
+                  imageUrl: item.cover,
+                  PlaySum: item.coverLeftText1,
+                  PlayTime: item.coverRightText,
+                  DmSum: item.coverLeftText2);
             }),
             Expanded(
                 child: Padding(
               padding: EdgeInsets.only(top: 2.w),
               child: Text(
-                title,
+                item.title,
                 maxLines: 2,
                 textAlign: TextAlign.justify,
                 overflow: TextOverflow.ellipsis,
@@ -100,7 +54,7 @@ class Videocard extends StatelessWidget {
                   height: 35.w,
                 ),
                 Text(
-                  args.upName,
+                  item.args.upName,
                   style: TextStyle(
                       fontSize: 24.sp,
                       color: Theme.of(context).textTheme.displayMedium!.color),
@@ -123,9 +77,13 @@ class Videocard2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(card.toString());
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => Get.toNamed(Routes.PLAYER, arguments: {
+        'biliVideoUrlModel':
+            BiliVideoUrlModel.fromUri(card.cardcontext.videoinfo.uri)
+      }),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: Column(

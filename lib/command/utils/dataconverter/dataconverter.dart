@@ -87,8 +87,6 @@ class DataConverter {
     }
   }
 
-
-
   static List<int>? hexGzipconvertbyte(String hex) {
     Uint8List fullBytes =
         BasicCrypt.hexToBytes(hex.replaceAll(RegExp(r'\s+'), ''));
@@ -98,6 +96,27 @@ class DataConverter {
     // 3. 关键点：从索引 5 开始截取（跳过 01 00 00 00 F3）
     // 确保起始字节是 1F 8B
   }
+
+  // static BilibiliVideoPreload? urltopreload(String url) {
+  //   String withUnicode = url.replaceAllMapped(
+  //     RegExp(r'\\u([0-9a-fA-F]{4})'),
+  //     (match) => String.fromCharCode(int.parse(match.group(1)!, radix: 16)),
+  //   );
+  //   Uri uri = Uri.parse(withUnicode);
+  //   String? encodedJson = uri.queryParameters['player_preload'];
+  //
+  //   if (encodedJson != null) {
+  //     // 先 URL 解码（%7B -> {）
+  //     String decodedJson = Uri.decodeComponent(encodedJson);
+  //
+  //     // 再解析 JSON
+  //     Map<String, dynamic> jsonMap = jsonDecode(decodedJson);
+  //
+  //     // 构建 Model
+  //     BilibiliVideoPreload preload = BilibiliVideoPreload.fromJson(jsonMap);
+  //     return preload;
+  //   }
+  // }
 
   static List<int> gzipCompress(Uint8List data) {
     // 1. 压缩
@@ -129,5 +148,4 @@ class DataConverter {
     }
     return utf8.decode(base64Url.decode(padded));
   }
-
 }

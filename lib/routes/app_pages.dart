@@ -10,6 +10,8 @@ import '../pages/live/bindings/live_binding.dart';
 import '../pages/live/views/live_view.dart';
 import '../pages/liveSecond/bindings/live_second_binding.dart';
 import '../pages/liveSecond/views/live_second_view.dart';
+import '../pages/player/bindings/player_binding.dart';
+import '../pages/player/views/player_view.dart';
 import '../pages/search/bindings/search_binding.dart';
 import '../pages/search/views/search_view.dart';
 import '../pages/setting/bindings/setting_binding.dart';
@@ -85,6 +87,11 @@ class AppPages {
       name: _Paths.TV_DETAILS,
       page: () => const TvDetailsView(),
       binding: TvDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PLAYER,
+      page: () => const PlayerView(),
+      binding: PlayerBinding(),
     ),
   ];
 }

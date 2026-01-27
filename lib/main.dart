@@ -6,7 +6,6 @@ import 'routes/app_pages.dart';
 import 'init.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   await Init.init();
 
   runApp(
