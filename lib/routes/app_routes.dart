@@ -15,6 +15,7 @@ abstract class Routes {
   static const LIVE_SECOND = _Paths.LIVE_SECOND;
   static const TV_DETAILS = _Paths.TV_DETAILS;
   static const PLAYER = _Paths.PLAYER;
+  static const LOGIN = _Paths.LOGIN;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const LIVE_SECOND = '/live-second';
   static const TV_DETAILS = '/tv-details';
   static const PLAYER = '/player';
+  static const LOGIN = '/login';
 }

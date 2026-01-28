@@ -10,6 +10,8 @@ import '../pages/live/bindings/live_binding.dart';
 import '../pages/live/views/live_view.dart';
 import '../pages/liveSecond/bindings/live_second_binding.dart';
 import '../pages/liveSecond/views/live_second_view.dart';
+import '../pages/login/bindings/login_binding.dart';
+import '../pages/login/views/login_view.dart';
 import '../pages/player/bindings/player_binding.dart';
 import '../pages/player/views/player_view.dart';
 import '../pages/search/bindings/search_binding.dart';
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.PLAYER,
       page: () => const PlayerView(),
       binding: PlayerBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN,
+      page: () => const LoginView(),
+      binding: LoginBinding(),
     ),
   ];
 }

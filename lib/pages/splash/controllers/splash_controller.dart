@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:blili/command/utils/date/Date.dart';
+import 'package:blili/command/utils/device/deviceinfo.dart';
+import 'package:blili/modules/ip/ip.dart';
 import 'package:blili/protos/dart/ticket/ticket.pb.dart';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:blili/service/UserServer.dart';
@@ -25,6 +27,7 @@ class SplashController extends GetxController {
     // await _fingerprint();
     if (!Shareperference.checkKey('fpremote')) await _fingerprint();
     await _getticket();
+    await _getip();
   }
 
   @override
@@ -56,6 +59,11 @@ class SplashController extends GetxController {
           'content': fingerprintdata['aes_content']
         });
     Shareperference.setString('fpremote', httpresult.data['bili_deviceId']);
+  }
+
+  Future<void> _getip()async{
+    final httpresult = await ApiRe.ip();
+    DeviceInfo.setip(Ip.fromJson(httpresult.data));
   }
 
   Future<void> _getticket() async {

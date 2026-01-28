@@ -211,7 +211,6 @@ class HomeController extends GetxController
     final Cinema cinema = Cinema.fromJson(httpresult.data);
     _cinema.add(cinema);
 
-
     // try {
     //   final Cinema cinema = Cinema.fromJson(httpresult.data);
     //   _cinema.add(cinema);

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:android_id/android_id.dart';
+import 'package:blili/command/http/apiRe.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:device_installed_apps/app_info.dart';
 import 'package:system_info2/system_info2.dart';
@@ -9,17 +10,20 @@ import 'package:system_boot_time/system_boot_time.dart';
 import 'package:uuid/uuid.dart';
 import '../sharepreference/sharepreference.dart';
 import '../dataconverter/dataconverter.dart';
+import 'package:blili/modules/ip/ip.dart';
 
 class DeviceInfo {
   static late AndroidDeviceInfo _build;
   static const _androidIdPlugin = AndroidId();
   static const int _megaByte = 1024 * 1024;
+  static late Ip _ip;
   // var diskInfo = await SystemInfo.diskInfo;
-
 
   Future<void> init() async {
     _build = await DeviceInfoPlugin().androidInfo;
   }
+
+  static void setip(Ip v)=>_ip=v;
 
   static int sdkversion() {
     return _build.version.sdkInt;
@@ -94,6 +98,10 @@ class DeviceInfo {
     return SysInfo.userId;
   }
 
+  static Ip ip() {
+    return _ip;
+  }
+
   static Future<String?> androidid() async {
     return await _androidIdPlugin.getId();
   }
@@ -148,7 +156,7 @@ class DeviceInfo {
     return millsecond;
   }
 
-  static String realCpu(){
+  static String realCpu() {
     final core = SysInfo.cores[0];
     return core.name;
   }

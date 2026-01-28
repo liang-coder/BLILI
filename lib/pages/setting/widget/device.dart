@@ -31,12 +31,13 @@ class Device extends StatelessWidget {
         ),
         Option(
           title: '分辨率',
-          label: '${ScreenUtil().screenHeight.toInt()}x${ScreenUtil().screenWidth.toInt()}',
+          label:
+              '${ScreenUtil().screenHeight.toInt()}x${ScreenUtil().screenWidth.toInt()}',
           onPressed: () => print('null'),
         ),
         Option(
           title: '网络',
-          label: DeviceInfo.cpuhardware(),
+          label: '${DeviceInfo.ip().addr} ${DeviceInfo.ip().city}',
           onPressed: () => print('null'),
         )
       ],

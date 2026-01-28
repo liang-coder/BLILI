@@ -176,6 +176,15 @@ class ApiRe {
     return result;
   }
 
+  static Future<Response> ip(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.get(Api.ip,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
   static Future<Response> SearchSuggestion(
       {Map<String, dynamic>? queryParameters,
       Options? option,
