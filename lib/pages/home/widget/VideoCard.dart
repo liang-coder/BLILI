@@ -17,7 +17,10 @@ class Videocard extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed:  () => Get.toNamed(Routes.PLAYER, arguments: {
+    'biliVideoUrlModel':
+    BiliVideoUrlModel.fromUri(item.uri)
+    }),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: Column(
@@ -77,7 +80,6 @@ class Videocard2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(card.toString());
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => Get.toNamed(Routes.PLAYER, arguments: {

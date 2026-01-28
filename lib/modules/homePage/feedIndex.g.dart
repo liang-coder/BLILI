@@ -125,7 +125,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       descButton:
           DescButton.fromJson(json['desc_button'] as Map<String, dynamic>),
       desc: json['desc'] as String,
-      canPlay: (json['can_play'] as num).toInt(),
+      canPlay: (json['can_play'] as num?)?.toInt(),
       gotoIcon: GotoIcon.fromJson(json['goto_icon'] as Map<String, dynamic>),
       officialIcon: (json['official_icon'] as num?)?.toInt(),
     );

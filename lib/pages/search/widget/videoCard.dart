@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blili/command/images/images.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ class Videocard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(archive.toJson().toString());
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => print('object'),

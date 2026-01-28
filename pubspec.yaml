@@ -134,6 +134,9 @@ flutter:
     - family: SearchIcon
       fonts:
         - asset: assets/icons/SearchIcon.ttf
+    - family: SettingIcon
+      fonts:
+        - asset: assets/icons/SettingIcon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

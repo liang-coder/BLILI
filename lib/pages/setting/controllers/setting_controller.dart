@@ -1,9 +1,14 @@
 import 'package:blili/command/icons/icons.dart';
+import 'package:blili/command/utils/cache/appCache.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widget/General.dart';
+import '../widget/playSetting.dart';
+import '../widget/device.dart';
+import '../widget/appInfo.dart';
 import 'package:blili/command/theme/themeData.dart';
+import 'package:blili/data/playconfig/config.dart';
 
 class SettingController extends GetxController {
   //TODO: Implement SettingController
@@ -14,13 +19,20 @@ class SettingController extends GetxController {
   //通用设置选项显示值
   final RxString _Theme = '暗色'.obs;
 
+  //播放配置
+  final RxString _videoQuality = PlayConfig.videoQuality.obs;
+  final RxString _audioQuality = PlayConfig.audioQuality.obs;
+  final RxDouble _playSpeed = PlayConfig.playSpeed.obs;
+  final RxDouble _SeekTime = PlayConfig.SeekTime.obs;
+  RxString _cache = ''.obs;
+
   late final List<Widget> _LeftNavigationPages;
 
   final List<IconData> _LeftNavigationIconData = const [
     AppIcons.Setting,
-    AppIcons.Category,
-    AppIcons.Space,
-    AppIcons.Live,
+    AppIcons.PlayConfig,
+    AppIcons.AppInfo,
+    AppIcons.DeviceInfo,
   ];
 
   final List<Map> _AllTheme = [
@@ -40,16 +52,17 @@ class SettingController extends GetxController {
   ];
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     _LeftNavigationPages = [
       General(
         settingController: this,
       ),
-      SizedBox(),
-      SizedBox(),
-      SizedBox(),
+      Playsetting(settingController: this),
+      Appinfo(),
+      Device(settingController: this),
     ];
+    _cache.value = await AppCache().checkCache();
   }
 
   @override
@@ -73,6 +86,13 @@ class SettingController extends GetxController {
 
   //通用设置
   RxString get ThemeValue => _Theme;
+  RxString get cache => _cache;
+
+  //播放设置
+  RxString get videoQuality => _videoQuality;
+  RxString get audioQuality => _audioQuality;
+  RxDouble get playSpeed => _playSpeed;
+  RxDouble get SeekTime => _SeekTime;
 
   set SetThemeValue(String NewTheme) => _Theme.value = NewTheme;
 
@@ -84,5 +104,30 @@ class SettingController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _LeftNavigationFocusNode[index].requestFocus();
     });
+  }
+
+  void setVideoQuality(String v) {
+    _videoQuality.value = v;
+    PlayConfig.setvideoQuality(v);
+  }
+
+  void setAudioQuality(String v) {
+    _audioQuality.value = v;
+    PlayConfig.setaudioQuality(v);
+  }
+
+  void setPlaySpeed(double v) {
+    _playSpeed.value = v;
+    PlayConfig.setplaySpeed(v);
+  }
+
+  void setSeekTime(double v) {
+    _SeekTime.value = v;
+    PlayConfig.setSeekTime(v);
+  }
+
+  void clearCache() async {
+    AppCache().checkCache();
+    _cache.value = await AppCache().checkCache();
   }
 }

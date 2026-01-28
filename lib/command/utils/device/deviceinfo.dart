@@ -14,6 +14,8 @@ class DeviceInfo {
   static late AndroidDeviceInfo _build;
   static const _androidIdPlugin = AndroidId();
   static const int _megaByte = 1024 * 1024;
+  // var diskInfo = await SystemInfo.diskInfo;
+
 
   Future<void> init() async {
     _build = await DeviceInfoPlugin().androidInfo;
@@ -144,6 +146,11 @@ class DeviceInfo {
   static Future<int> boottime() async {
     final millsecond = (await SystemBootTime().second()) * 1000;
     return millsecond;
+  }
+
+  static String realCpu(){
+    final core = SysInfo.cores[0];
+    return core.name;
   }
 
   static String cpuhardware() {

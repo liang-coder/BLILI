@@ -1,3 +1,4 @@
+import 'package:blili/command/utils/appinfo/appinfo.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/theme/theme.dart';
 import 'package:blili/command/theme/themeController.dart';
@@ -19,6 +20,16 @@ class General extends StatelessWidget {
     return Rightcontainer(
         chile: ListView(
       children: [
+        Obx(() => Option(
+              title: '清除缓存',
+              label: settingController.cache.value,
+              onPressed: () => settingController.clearCache,
+            )),
+        // Option(
+        //   title: '检查更新',
+        //   label: AppInfo.version(),
+        //   onPressed: () => Dialog.show(child: _themeSelect()),
+        // ),
         Obx(() => Option(
               title: '主题',
               label: settingController.ThemeValue.value,
@@ -70,6 +81,7 @@ class General extends StatelessWidget {
       onPressed: () {
         Get.context!.themeService.switchTheme(newTheme);
         settingController.SetThemeValue = name;
+        Get.back();
         appLogger.LoggerI('theme switch $name');
       },
       child: Obx(() => BText(

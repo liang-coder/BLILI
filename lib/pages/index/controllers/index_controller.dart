@@ -24,11 +24,11 @@ class IndexController extends GetxController {
     //   child: const CategoryView(),
     // )),
     Obx(()=>ExcludeFocus(
-      excluding: _SelectedIndex.value != 2,
+      excluding: _SelectedIndex.value != 1,
       child: const SpaceView(),
     )),
     Obx(()=>ExcludeFocus(
-      excluding: _SelectedIndex.value != 3,
+      excluding: _SelectedIndex.value != 2,
       child: const LiveView(),
     )),
   ];

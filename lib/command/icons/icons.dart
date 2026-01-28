@@ -5,6 +5,7 @@ class AppIcons {
   static const String _HttpFamily = 'HttpIcon';
   static const String _Http2Family = 'HttpIcon2';
   static const String _SearchFamily = 'SearchIcon';
+  static const String _SettingFamily = 'SettingIcon';
 
   static const IconData Home = IconData(0xe6cf, fontFamily: _IndexFamily);
   static const IconData Setting = IconData(0xe637, fontFamily: _IndexFamily);
@@ -16,4 +17,9 @@ class AppIcons {
   static const IconData HttpError = IconData(0xe80c, fontFamily: _HttpFamily);
   static const IconData HttpSourceNot = IconData(0xe625, fontFamily: _Http2Family);
   static const IconData search = IconData(0xe68c, fontFamily: _SearchFamily);
+
+  static const IconData PlayConfig = IconData(0xe637, fontFamily: _SettingFamily);
+  static const IconData AppInfo = IconData(0xe6dc, fontFamily: _SettingFamily);
+  static const IconData DeviceInfo = IconData(0xe6ce, fontFamily: _SettingFamily);
+
 }

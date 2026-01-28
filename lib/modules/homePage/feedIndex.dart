@@ -178,7 +178,7 @@ class Item {
   @JsonKey(name: "desc")
   String desc;
   @JsonKey(name: "can_play")
-  int canPlay;
+  int? canPlay;
   @JsonKey(name: "goto_icon")
   GotoIcon gotoIcon;
   @JsonKey(name: "official_icon")
@@ -208,7 +208,7 @@ class Item {
     required this.coverRightText,
     required this.descButton,
     required this.desc,
-    required this.canPlay,
+     this.canPlay,
     required this.gotoIcon,
     this.officialIcon,
   });
