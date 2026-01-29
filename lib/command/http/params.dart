@@ -1,4 +1,6 @@
 import 'package:blili/command/utils/date/Date.dart';
+import 'package:blili/service/UserServer.dart';
+import 'package:get/get.dart';
 
 class Params {
   static Map<String, dynamic> params() {
@@ -16,6 +18,12 @@ class Params {
           "{\"appId\":5,\"platform\":3,\"version\":\"2.0.1\",\"abtest\":\"\"}",
       "ts": Date.UnixTimestamp().toString(),
     };
+
+    if(Get.context!.userserver.loginStatus.value){
+      params.addAll({'accessKey':Get.context!.userserver.accessKey()});
+    }
+
+
     return params;
   }
 

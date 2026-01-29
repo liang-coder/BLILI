@@ -18,7 +18,7 @@ class BiliVideoUrlModel {
   });
 
   factory BiliVideoUrlModel.fromUri(String url) {
-    Uri uri = Uri.parse(url.replaceAll('bilibili://', 'https://')); // 适配 Uri 解析器
+    Uri uri = Uri.parse(url.replaceAll('bilibili://', 'https://'));
     String? preloadJson = uri.queryParameters['player_preload'];
 
     return BiliVideoUrlModel(
@@ -31,6 +31,17 @@ class BiliVideoUrlModel {
           ? PlayerPreload.fromJson(jsonDecode(preloadJson))
           : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'aid': aid,
+      'cid': cid,
+      'playerHeight': playerHeight,
+      'playerWidth': playerWidth,
+      'playerPreload': playerPreload?.toJson(), // 调用嵌套类的 toJson
+      'trackid': trackid,
+    };
   }
 }
 
@@ -60,6 +71,16 @@ class PlayerPreload {
           .toList(),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'expire_time': expireTime,
+      'cid': cid,
+      'quality': quality,
+      'dash': dash?.toJson(),
+      'accept_formats': acceptFormats.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
 class Dash {
@@ -73,6 +94,13 @@ class Dash {
       video: (json['video'] as List? ?? []).map((e) => DashItem.fromJson(e)).toList(),
       audio: (json['audio'] as List? ?? []).map((e) => DashItem.fromJson(e)).toList(),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'video': video.map((e) => e.toJson()).toList(),
+      'audio': audio.map((e) => e.toJson()).toList(),
+    };
   }
 }
 
@@ -103,6 +131,17 @@ class DashItem {
       backupUrl: List<String>.from(json['backup_url'] ?? []),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'base_url': baseUrl,
+      'bandwidth': bandwidth,
+      'codecid': codecid,
+      'frame_rate': frameRate,
+      'backup_url': backupUrl,
+    };
+  }
 }
 
 class AcceptFormat {
@@ -125,5 +164,14 @@ class AcceptFormat {
       displayDesc: json['display_desc'] ?? '',
       needVip: json['need_vip'] ?? false,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'quality': quality,
+      'description': description,
+      'display_desc': displayDesc,
+      'need_vip': needVip,
+    };
   }
 }

@@ -12,6 +12,7 @@ class BInterceptorsWrapper {
   final Singer _singer = Singer();
   final List<String> _requestList = [];
   final List<String> _MapReKeys = ['result', 'data'];
+  final List<String> _NotParameUrl = [Api.qrcode,Api.qrcodePoll];
 
   BInterceptorsWrapper() {
     _interceptorsWrapper = InterceptorsWrapper(
@@ -48,6 +49,10 @@ class BInterceptorsWrapper {
     _requestList.remove(path);
     final ResponseType responsetype = response.requestOptions.responseType;
     final int status = response.statusCode!;
+
+
+    if(path == Api.qrcodePoll)return response;
+
     if (responsetype == ResponseType.json &&
         status == 200 &&
         response.data is Map) {
@@ -84,6 +89,10 @@ class BInterceptorsWrapper {
   }
 
   void _setParame(RequestOptions options) {
+    if (_NotParameUrl.contains(options.path)) {
+      return;
+    }
+
     if (!(options.responseType == ResponseType.bytes)) {
       options.queryParameters = _singer.sign(options.queryParameters);
     }

@@ -114,13 +114,13 @@ class Config {
 @JsonSerializable()
 class ToastClass {
   @JsonKey(name: "has_toast")
-  bool hasToast;
+  bool? hasToast;
   @JsonKey(name: "toast_message")
-  String toastMessage;
+  String? toastMessage;
 
   ToastClass({
-    required this.hasToast,
-    required this.toastMessage,
+    this.hasToast,
+    this.toastMessage,
   });
 
   factory ToastClass.fromJson(Map<String, dynamic> json) =>
@@ -196,7 +196,7 @@ class Item {
     this.playerArgs,
     required this.idx,
     required this.threePointV2,
-     this.trackId,
+    this.trackId,
     required this.talkBack,
     required this.reportFlowData,
     required this.coverLeftText1,
@@ -208,7 +208,7 @@ class Item {
     required this.coverRightText,
     required this.descButton,
     required this.desc,
-     this.canPlay,
+    this.canPlay,
     required this.gotoIcon,
     this.officialIcon,
   });

@@ -211,4 +211,31 @@ class ApiRe {
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }
+
+  static Future<Response> qrcode(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.post(Api.qrcode,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> qrcodePoll(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.post(Api.qrcodePoll,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> webKey(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.get(Api.webKey,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
 }

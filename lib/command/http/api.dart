@@ -18,6 +18,9 @@ class Api {
   static final String View = '/bilibili.app.viewunite.v1.View/View';
   static final String synthesizeFeed = '/pgc/review/gateway//synthesize/feed';
   static final String ip = '/x/resource/ip';
+  static final String qrcode = '/x/passport-tv-login/qrcode/auth_code';
+  static final String qrcodePoll = '/x/passport-tv-login/qrcode/poll';
+  static final String webKey = '/x/passport-login/web/key';
 }
 
 class domainMap {
@@ -40,6 +43,9 @@ class domainMap {
     Api.playViewUnite: 'https://app.bilibili.com',
     Api.View: 'https://app.bilibili.com',
     Api.synthesizeFeed: 'https://api.bilibili.com',
+    Api.qrcode: 'https://passport.bilibili.com',
+    Api.qrcodePoll: 'https://passport.bilibili.com',
+    Api.webKey: 'https://passport.bilibili.com',
   };
 
   static String getDomain(String key) {

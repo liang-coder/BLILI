@@ -134,7 +134,6 @@ class BasicCrypt {
     return digest.bytes;
   }
 
-
   static String encryptPgcinfo(String plainText) {
     try {
       // 1. 准备 Key (128位 AES 需要 16 或 32 字符，这里是 32 字符的十六进制字符串)
@@ -142,7 +141,8 @@ class BasicCrypt {
 
       // 2. 初始化 AES 引擎，指定 ECB 模式和 PKCS7 填充
       // (注意：Dart 的 PKCS7 与 Java 的 PKCS5 在 AES 下是通用的)
-      final encrypter = Encrypter(AES(key, mode: AESMode.ecb, padding: 'PKCS7'));
+      final encrypter =
+          Encrypter(AES(key, mode: AESMode.ecb, padding: 'PKCS7'));
 
       // 3. 执行加密
       final encrypted = encrypter.encrypt(plainText);
@@ -155,6 +155,54 @@ class BasicCrypt {
     }
   }
 
+  static String auroraeId(String str) {
+    const String key = "ad1va46a7lza";
+    final List<int> strBytes = utf8.encode(str); // 获取输入字符串的字节
+    final List<int> keyBytes = utf8.encode(key); // 获取密钥的字节
 
+    final Uint8List resultBytes = Uint8List(strBytes.length);
 
+    for (int i = 0; i < strBytes.length; i++) {
+      // 执行异或运算：当前字符 ^ 对应位置的密钥字符
+      resultBytes[i] = strBytes[i] ^ keyBytes[i % keyBytes.length];
+    }
+
+    // Java 中的 Base64.encodeToString(..., 10)
+    // 10 对应的是 NO_WRAP (2) | URL_SAFE (8)
+    // 如果你在 Java 中使用的是标准的 Base64.DEFAULT，则直接使用 base64.encode
+    // 如果是 10，则通常需要 URL 安全的 Base64 且不包含换行符
+    return base64Url
+        .encode(resultBytes); // 对应 URL_SAFE 且通常去掉填充
+  }
+}
+
+class authkeyEncry {
+  static Uint8List? encryptToBytes(String plainText, String pemKey) {
+    try {
+      // 1. 处理公钥：Java 的 X509EncodedKeySpec 对应 PEM 格式
+      // 注意：encrypt 库通常需要标准的 PEM 格式（带 Header/Footer）
+      final parser = RSAKeyParser();
+      final RSAPublicKey publicKey = parser.parse(pemKey) as RSAPublicKey;
+
+      // 2. 初始化 Cipher，对应 "RSA/ECB/PKCS1PADDING"
+      final encrypter =
+          Encrypter(RSA(publicKey: publicKey, encoding: RSAEncoding.PKCS1));
+
+      // 3. 加密
+      final encrypted = encrypter.encrypt(plainText);
+      return encrypted.bytes;
+    } catch (e) {
+      print("RSA加密失败: $e");
+      return null;
+    }
+  }
+
+  /// 对应 Java 中的 b 方法：执行加密并返回 Base64 字符串
+  static String? encryptToBase64(String plainText, String pemKey) {
+    final Uint8List? encryptedBytes = encryptToBytes(plainText, pemKey);
+    if (encryptedBytes != null) {
+      return base64Encode(encryptedBytes);
+    }
+    return null;
+  }
 }

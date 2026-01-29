@@ -105,4 +105,12 @@ class Id {
   static String traceid() {
     return TraceId.genTraceId();
   }
+
+  static String loginSessionId() {
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final input = '${buvid()}$timestamp'; // 拼接字符串
+    final bytes = utf8.encode(input); // 转为 UTF-8 字节
+    final md5Hash = md5.convert(bytes); // 计算 MD5
+    return md5Hash.toString(); // 返回十六进制字符串（32位）
+  }
 }

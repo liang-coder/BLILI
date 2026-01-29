@@ -84,8 +84,8 @@ Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
     };
 
 ToastClass _$ToastClassFromJson(Map<String, dynamic> json) => ToastClass(
-      hasToast: json['has_toast'] as bool,
-      toastMessage: json['toast_message'] as String,
+      hasToast: json['has_toast'] as bool?,
+      toastMessage: json['toast_message'] as String?,
     );
 
 Map<String, dynamic> _$ToastClassToJson(ToastClass instance) =>

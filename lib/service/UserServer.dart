@@ -3,6 +3,7 @@ import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:blili/modules/token/token.dart';
+import 'package:blili/command/utils/encrypt/basic.dart';
 
 class Userserver extends GetxService {
   Rxn<Token> _token = Rxn<Token>();
@@ -18,6 +19,7 @@ class Userserver extends GetxService {
 
   RxBool get loginStatus => _isLogin;
   RxString get jwt => _jwt;
+
 
   void _initData() {
     _jwt.value = Shareperference.getString('jwt') ?? '';
@@ -41,6 +43,27 @@ class Userserver extends GetxService {
     _isLogin.value = true;
     Shareperference.setString('token', jsonEncode(_token.toJson()));
     Shareperference.setInt('issuedAt', DateTime.now().millisecondsSinceEpoch);
+  }
+
+  String mid() {
+    if (_token.value != null) {
+      return _token.value!.mid.toString();
+    }
+    return '';
+  }
+
+  String accessKey() {
+    if (_token.value != null) {
+      return _token.value!.accessToken;
+    }
+    return '';
+  }
+
+  String auroraeId() {
+    if (_token.value != null) {
+      return BasicCrypt.auroraeId(_token.value!.mid.toString());
+    }
+    return '';
   }
 }
 

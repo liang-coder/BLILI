@@ -24,9 +24,14 @@ class PlayConfig {
     'Hi-Res无损': 30251,
   };
 
-  static void init() {
-    _audioQuality = Shareperference.getString('audioQuality') ?? '192K';
+  static Map _allCodec = {
+    'AVC': 7,
+    'HEVC': 12,
+  };
+
+  static void init() async {
     _videoQuality = Shareperference.getString('videoQuality') ?? '720P';
+    _audioQuality = Shareperference.getString('audioQuality') ?? '192K';
     _playSpeed = Shareperference.getDouble('playSpeed') ?? 1.0;
     _SeekTime = Shareperference.getDouble('SeekTime') ?? 4;
     _Volume = Shareperference.getDouble('Volume') ?? 50.0;
@@ -39,6 +44,7 @@ class PlayConfig {
   static double get Volume => _Volume;
   static Map get allVideoQuality => _allVideoQuality;
   static Map get allAudioQuality => _allAudioQuality;
+  static Map get allCodec => _allCodec;
 
   static void setaudioQuality(String v) {
     _audioQuality = v;
@@ -70,6 +76,14 @@ class PlayConfig {
     if (l.contains(v)) return true;
     return false;
   }
+
+  // static int videoQn(String v) {
+  //   return _allVideoQuality[v];
+  // }
+  //
+  // static int audioQn(String v) {
+  //   return _allAudioQuality[v];
+  // }
 
   static bool vipvideoQuality(String v) {
     final List<String> l = ['1080P+', '1080P60', '4K'];

@@ -61,6 +61,7 @@ dependencies:
   json_annotation: ^4.9.0
   lottie: ^3.3.0
   easy_debounce: ^2.0.3
+  qr_flutter: ^4.1.0
   mix_player:
     path: lib/plugin/mix_player
 

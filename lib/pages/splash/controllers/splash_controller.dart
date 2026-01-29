@@ -61,7 +61,7 @@ class SplashController extends GetxController {
     Shareperference.setString('fpremote', httpresult.data['bili_deviceId']);
   }
 
-  Future<void> _getip()async{
+  Future<void> _getip() async {
     final httpresult = await ApiRe.ip();
     DeviceInfo.setip(Ip.fromJson(httpresult.data));
   }

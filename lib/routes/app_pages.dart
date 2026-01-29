@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-
+import 'Middleware/loginMiddleware.dart';
 import '../pages/category/bindings/category_binding.dart';
 import '../pages/category/views/category_view.dart';
 import '../pages/home/bindings/home_binding.dart';
@@ -71,10 +71,10 @@ class AppPages {
       binding: SettingBinding(),
     ),
     GetPage(
-      name: _Paths.USER,
-      page: () => const UserView(),
-      binding: UserBinding(),
-    ),
+        name: _Paths.USER,
+        page: () => const UserView(),
+        binding: UserBinding(),
+        middlewares: [LoginMiddleware()]),
     GetPage(
       name: _Paths.SPLASH,
       page: () => const SplashView(),

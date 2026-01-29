@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:blili/command/utils/dataconverter/dataconverter.dart';
+import 'package:blili/data/playconfig/config.dart';
 import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
 import 'package:blili/command/http/api.dart';
 import 'package:blili/command/http/params.dart';
@@ -7,6 +8,7 @@ import 'package:blili/command/http/protobuf/response/hotIndexReply.dart';
 import 'package:blili/command/utils/date/Date.dart';
 import 'package:blili/command/utils/device/deviceinfo.dart';
 import 'package:blili/command/utils/encrypt/basic.dart';
+import 'package:blili/service/UserServer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:blili/command/http/apiRe.dart';
@@ -102,12 +104,12 @@ class HomeController extends GetxController
       "inline_sound": "1",
       "inline_sound_cold_state": "2",
       "interest_id": "0",
-      "login_event": "1",
+      "login_event": Get.context!.userserver.loginStatus.value ? '0' : '1',
       "network": "wifi",
       "open_event": "cold",
       "player_net": "1",
       "pull": _pull.toString(),
-      "qn": "32",
+      "qn": '32',
       "qn_policy": "1",
       "recsys_mode": "0",
       "splash_id": "",
@@ -142,7 +144,9 @@ class HomeController extends GetxController
     _hot.forEach((e) => idx += e.items.length);
 
     final Response httpresult = await ApiRe.hotIndex(
-        data: hotIndexRe().result(idx: idx, last_param: last_param),
+        data: hotIndexRe().result(
+            idx: idx,
+            last_param: last_param),
         option: Options(responseType: ResponseType.bytes));
 
     try {

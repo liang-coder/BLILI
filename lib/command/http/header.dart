@@ -21,8 +21,8 @@ class bliliHeader {
   static Map<String, String> xbiliHeader() {
     final Map<String, String> xbiliHeader = {
       "x-bili-trace-id": Id.traceid(),
-      'x-bili-aurora-eid': '',
-      'x-bili-mid': '',
+      'x-bili-aurora-eid': Get.context!.userserver.auroraeId(),
+      'x-bili-mid': Get.context!.userserver.mid(),
       'x-bili-aurora-zone': '',
       'x-bili-gaia-vtoken': '',
     };

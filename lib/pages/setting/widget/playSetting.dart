@@ -188,7 +188,7 @@ class Playsetting extends StatelessWidget {
     return MaterialButton(
       padding: EdgeInsets.zero,
       onPressed: () {
-        settingController.setVideoQuality(v);
+        settingController.setAudioQuality(v);
         Get.back();
       },
       child: Obx(() => BText(
