@@ -3,10 +3,12 @@ import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:blili/modules/token/token.dart';
+import 'package:blili/modules/user/user.dart';
 import 'package:blili/command/utils/encrypt/basic.dart';
 
 class Userserver extends GetxService {
   Rxn<Token> _token = Rxn<Token>();
+  Rxn<User> _user = Rxn<User>();
   RxBool _isLogin = false.obs;
   RxString _jwt = ''.obs;
 
@@ -19,7 +21,7 @@ class Userserver extends GetxService {
 
   RxBool get loginStatus => _isLogin;
   RxString get jwt => _jwt;
-
+  void setUser(User v) => _user.value = v;
 
   void _initData() {
     _jwt.value = Shareperference.getString('jwt') ?? '';
@@ -36,6 +38,12 @@ class Userserver extends GetxService {
         _isLogin.value = true;
       }
     }
+  }
+
+  void quit() {
+    _isLogin.value = false;
+    _token.value = null;
+    Shareperference.remove('token');
   }
 
   void login(Token token) {

@@ -21,6 +21,7 @@ class Api {
   static final String qrcode = '/x/passport-tv-login/qrcode/auth_code';
   static final String qrcodePoll = '/x/passport-tv-login/qrcode/poll';
   static final String webKey = '/x/passport-login/web/key';
+  static final String myinfo = '/x/v2/account/myinfo';
 }
 
 class domainMap {
@@ -46,6 +47,7 @@ class domainMap {
     Api.qrcode: 'https://passport.bilibili.com',
     Api.qrcodePoll: 'https://passport.bilibili.com',
     Api.webKey: 'https://passport.bilibili.com',
+    Api.myinfo: 'https://app.bilibili.com',
   };
 
   static String getDomain(String key) {

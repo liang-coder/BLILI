@@ -3,7 +3,9 @@ import 'dart:typed_data';
 import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:blili/command/utils/date/Date.dart';
 import 'package:blili/command/utils/device/deviceinfo.dart';
+import 'package:blili/command/utils/device/id.dart';
 import 'package:blili/modules/ip/ip.dart';
+import 'package:blili/modules/user/user.dart';
 import 'package:blili/protos/dart/ticket/ticket.pb.dart';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:blili/service/UserServer.dart';
@@ -28,6 +30,7 @@ class SplashController extends GetxController {
     if (!Shareperference.checkKey('fpremote')) await _fingerprint();
     await _getticket();
     await _getip();
+    await _myInfo();
   }
 
   @override
@@ -83,5 +86,20 @@ class SplashController extends GetxController {
     final ticket t =
         ticket.fromBuffer(DataConverter.byteGzipconvertbyte(ticketbyte)!);
     Shareperference.setString('jwt', t.jwt);
+  }
+
+  Future<void> _myInfo() async {
+    final Map<String, dynamic> parame = {
+      'buvid': Id.buvid(),
+      'local_id': Id.buvid()
+    };
+
+    try {
+      final httpresult =
+          await ApiRe.myInfo(queryParameters: Params.add(Newparams: parame));
+      Get.context!.userserver.setUser(User.fromJson(httpresult.data));
+    } catch (e) {
+      Get.context!.userserver.quit();
+    }
   }
 }

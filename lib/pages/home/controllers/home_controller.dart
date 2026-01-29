@@ -109,7 +109,7 @@ class HomeController extends GetxController
       "open_event": "cold",
       "player_net": "1",
       "pull": _pull.toString(),
-      "qn": '32',
+      "qn": '80',
       "qn_policy": "1",
       "recsys_mode": "0",
       "splash_id": "",

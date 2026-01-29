@@ -39,6 +39,10 @@ class Shareperference {
     return _prefs.getDouble(key);
   }
 
+  static void remove(String key){
+    _prefs.remove(key);
+  }
+
   static bool checkKey(String key) {
     return _prefs.containsKey(key);
   }

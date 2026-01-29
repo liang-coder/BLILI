@@ -19,10 +19,9 @@ class Params {
       "ts": Date.UnixTimestamp().toString(),
     };
 
-    if(Get.context!.userserver.loginStatus.value){
-      params.addAll({'accessKey':Get.context!.userserver.accessKey()});
+    if (Get.context!.userserver.loginStatus.value) {
+      params.addAll({'access_key': Get.context!.userserver.accessKey()});
     }
-
 
     return params;
   }

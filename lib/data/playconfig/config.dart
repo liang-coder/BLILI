@@ -92,7 +92,7 @@ class PlayConfig {
   }
 
   static bool loginvideoQuality(String v) {
-    final List<String> l = ['720P60', '1080P'];
+    final List<String> l = ['720P60', '1080P', '720P'];
     if (l.contains(v)) return true;
     return false;
   }

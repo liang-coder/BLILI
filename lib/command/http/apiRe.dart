@@ -238,4 +238,14 @@ class ApiRe {
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }
+
+  static Future<Response> myInfo(
+      {Map<String, dynamic>? queryParameters,
+        Options? option,
+        Object? data}) async {
+    final result = await DioClient.dio.get(Api.myinfo,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
 }
