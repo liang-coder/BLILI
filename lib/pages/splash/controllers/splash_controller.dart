@@ -31,12 +31,12 @@ class SplashController extends GetxController {
     await _getticket();
     await _getip();
     await _myInfo();
+    Get.offNamed('/index');
   }
 
   @override
   void onReady() {
     super.onReady();
-    Get.offNamed('/index');
   }
 
   @override
@@ -49,7 +49,7 @@ class SplashController extends GetxController {
   Future<void> _initdata() async {
     await BiliFingerprintDataInit().init();
     await BliliFingerprintData2().result();
-    PlayConfig.init();
+    await PlayConfig.init();
   }
 
   Future<void> _fingerprint() async {

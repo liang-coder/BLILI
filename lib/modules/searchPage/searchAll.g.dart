@@ -815,7 +815,7 @@ Movie2 _$Movie2FromJson(Map<String, dynamic> json) => Movie2(
       seasonType: (json['season_type'] as num).toInt(),
       seasonTypeName: json['season_type_name'] as String,
       mediaType: (json['media_type'] as num).toInt(),
-      style: json['style'] as String,
+      style: json['style'] as String?,
       styles: json['styles'] as String,
       stylesV2: json['styles_v2'] as String,
       styleLabel: json['style_label'] == null

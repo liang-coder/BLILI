@@ -16,7 +16,14 @@ class SearchView extends GetView<SearchController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: PopScope(canPop: false,onPopInvoked:(_){
+        if(controller.seaching.value){
+          controller.backResult();
+        }else{
+          Get.back();
+        }
+      } ,
+          child: Padding(
         padding: EdgeInsets.only(top: 40.h, left: 30.w, right: 30.w),
         child: Column(
           children: [
@@ -31,7 +38,7 @@ class SearchView extends GetView<SearchController> {
                 : _search(context))
           ],
         ),
-      ),
+      )),
     );
   }
 
@@ -158,7 +165,8 @@ class SearchView extends GetView<SearchController> {
       child: ListView.separated(
           itemBuilder: (context, index) {
             return tipWidget(
-              keyword: controller.history[controller.history.length-1-index],
+              keyword:
+                  controller.history[controller.history.length - 1 - index],
               function: (v) => controller.search(v),
             );
           },

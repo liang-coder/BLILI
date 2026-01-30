@@ -6,6 +6,7 @@ import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:blili/command/utils/device/id.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
+import 'package:blili/data/playconfig/config.dart';
 import 'package:blili/routes/app_pages.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -165,7 +166,7 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
       'player_net': '1',
       'pn': _allPage.toString(),
       'ps': '20',
-      'qn': '32',
+      'qn': PlayConfig.videoQn().toString(),
       'qn_policy': '1',
       'qv_id': _qvid,
       'recommend': '1',
@@ -282,6 +283,16 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
+  void backResult() {
+    _Searching.value = false;
+    _allPage = 1;
+    _bangumiPage = 1;
+    _videoPage = 1;
+    _textEditingController.clear();
+    _searchAll.clear();
+    _httploadingController2.enable();
+  }
+
   bool _KeyEvenhandel(KeyEvent event) {
     appLogger.LoggerI('$event');
 
@@ -297,19 +308,6 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
           }
         }
         return false;
-      }
-
-      if (event is KeyUpEvent) {
-        if (_Searching.value) {
-          _Searching.value = false;
-          _allPage = 1;
-          _bangumiPage = 1;
-          _videoPage = 1;
-          _textEditingController.clear();
-          _searchAll.clear();
-          _httploadingController2.enable();
-          return true;
-        }
       }
     }
 

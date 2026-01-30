@@ -1191,7 +1191,7 @@ class Movie2 {
   @JsonKey(name: "media_type")
   int mediaType;
   @JsonKey(name: "style")
-  String style;
+  String? style;
   @JsonKey(name: "styles")
   String styles;
   @JsonKey(name: "styles_v2")
@@ -1292,7 +1292,7 @@ class Movie2 {
     required this.seasonType,
     required this.seasonTypeName,
     required this.mediaType,
-    required this.style,
+     this.style,
     required this.styles,
     required this.stylesV2,
     this.styleLabel,

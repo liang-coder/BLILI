@@ -1,10 +1,13 @@
 import 'dart:developer';
 
 import 'package:blili/command/images/images.dart';
+import 'package:blili/modules/player/BiliVideoUrlModel.dart';
+import 'package:blili/routes/app_pages.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart';
 import 'package:blili/modules/searchPage/searchAll.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class Videocard extends StatelessWidget {
   final Archive archive;
@@ -12,10 +15,12 @@ class Videocard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(archive.toJson().toString());
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => Get.toNamed(Routes.PLAYER, arguments: {
+        'biliVideoUrlModel':
+        BiliVideoUrlModel.fromUri(archive.uri!)
+      }),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: Column(

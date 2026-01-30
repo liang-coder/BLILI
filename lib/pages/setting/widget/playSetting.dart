@@ -27,6 +27,10 @@ class Playsetting extends StatelessWidget {
             label: settingController.audioQuality.value,
             onPressed: () => Dialog.show(child: _audioQualitySelect()))),
         Obx(() => Option(
+            title: '视频编码',
+            label: settingController.videoCode.value,
+            onPressed: () => Dialog.show(child: _videoCodeSelect()))),
+        Obx(() => Option(
             title: '预设播放速率',
             label: settingController.playSpeed.value.toString(),
             onPressed: () => Dialog.show(child: _playSpeedSelect()))),
@@ -104,6 +108,34 @@ class Playsetting extends StatelessWidget {
     ));
   }
 
+  Widget _videoCodeSelect() {
+    return _container(Column(
+      children: [
+        Obx(() => BText(
+              '视频编码',
+              style: TextStyle(
+                  color: Get.context!.themeService.theme.value.themeData
+                      .textTheme.bodyMedium!.color),
+            )),
+        SizedBox(
+          height: 20.w,
+        ),
+        Obx(() => Divider(
+              height: 2,
+              color: Get.context!.themeService.theme.value.themeData
+                  .dividerTheme.color,
+            )),
+        Expanded(
+            child: ListView(
+          padding: EdgeInsets.only(left: 20.w, right: 20.w),
+          children: PlayConfig.allCode.entries
+              .map((e) => _VideoCodeSelectWidget(e.key))
+              .toList(),
+        )),
+      ],
+    ));
+  }
+
   Widget _playSpeedSelect() {
     return _container(Column(
       children: [
@@ -160,6 +192,22 @@ class Playsetting extends StatelessWidget {
         )),
       ],
     ));
+  }
+
+  Widget _VideoCodeSelectWidget(String v) {
+    return MaterialButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        settingController.setVideoCode(v);
+        Get.back();
+      },
+      child: Obx(() => BText(
+            v,
+            style: TextStyle(
+                color: Get.context!.themeService.theme.value.themeData.textTheme
+                    .bodyMedium!.color),
+          )),
+    );
   }
 
   Widget _doubleSelectWidget(

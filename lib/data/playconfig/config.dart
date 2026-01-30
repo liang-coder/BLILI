@@ -3,6 +3,7 @@ import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 class PlayConfig {
   static String _videoQuality = '';
   static String _audioQuality = '';
+  static String _videoCode = '';
   static double _playSpeed = 1.0;
   static double _SeekTime = 4;
   static double _Volume = 50.0;
@@ -24,14 +25,15 @@ class PlayConfig {
     'Hi-Res无损': 30251,
   };
 
-  static Map _allCodec = {
+  static Map _allCode = {
     'AVC': 7,
     'HEVC': 12,
   };
 
-  static void init() async {
-    _videoQuality = Shareperference.getString('videoQuality') ?? '720P';
+  static Future<void> init() async {
+    _videoQuality = await Shareperference.getString('videoQuality') ?? '720P';
     _audioQuality = Shareperference.getString('audioQuality') ?? '192K';
+    _videoCode = Shareperference.getString('videoCode') ?? 'HEVC';
     _playSpeed = Shareperference.getDouble('playSpeed') ?? 1.0;
     _SeekTime = Shareperference.getDouble('SeekTime') ?? 4;
     _Volume = Shareperference.getDouble('Volume') ?? 50.0;
@@ -42,9 +44,10 @@ class PlayConfig {
   static double get playSpeed => _playSpeed;
   static double get SeekTime => _SeekTime;
   static double get Volume => _Volume;
+  static String get videoCodeString => _videoCode;
   static Map get allVideoQuality => _allVideoQuality;
   static Map get allAudioQuality => _allAudioQuality;
-  static Map get allCodec => _allCodec;
+  static Map get allCode => _allCode;
 
   static void setaudioQuality(String v) {
     _audioQuality = v;
@@ -71,19 +74,28 @@ class PlayConfig {
     Shareperference.setDouble('Volume', v);
   }
 
+  static void setVideoCode(String v) {
+    _videoCode = v;
+    Shareperference.setString('videoCode', v);
+  }
+
   static bool vipaudioQuality(String v) {
     final List<String> l = ['杜比全景声', 'Hi-Res无损'];
     if (l.contains(v)) return true;
     return false;
   }
 
-  // static int videoQn(String v) {
-  //   return _allVideoQuality[v];
-  // }
-  //
-  // static int audioQn(String v) {
-  //   return _allAudioQuality[v];
-  // }
+  static int videoQn() {
+    return _allVideoQuality[_videoQuality];
+  }
+
+  static int audioQn() {
+    return _allAudioQuality[_audioQuality];
+  }
+
+  static int videoCode() {
+    return _allCode[videoCodeString];
+  }
 
   static bool vipvideoQuality(String v) {
     final List<String> l = ['1080P+', '1080P60', '4K'];

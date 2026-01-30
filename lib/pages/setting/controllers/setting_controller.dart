@@ -24,6 +24,7 @@ class SettingController extends GetxController {
   final RxString _audioQuality = PlayConfig.audioQuality.obs;
   final RxDouble _playSpeed = PlayConfig.playSpeed.obs;
   final RxDouble _SeekTime = PlayConfig.SeekTime.obs;
+  final RxString _videoCode = PlayConfig.videoCodeString.obs;
   RxString _cache = ''.obs;
 
   late final List<Widget> _LeftNavigationPages;
@@ -91,6 +92,7 @@ class SettingController extends GetxController {
   //播放设置
   RxString get videoQuality => _videoQuality;
   RxString get audioQuality => _audioQuality;
+  RxString get videoCode => _videoCode;
   RxDouble get playSpeed => _playSpeed;
   RxDouble get SeekTime => _SeekTime;
 
@@ -124,6 +126,11 @@ class SettingController extends GetxController {
   void setSeekTime(double v) {
     _SeekTime.value = v;
     PlayConfig.setSeekTime(v);
+  }
+
+  void setVideoCode(String v) {
+    _videoCode.value = v;
+    PlayConfig.setVideoCode(v);
   }
 
   void clearCache() async {

@@ -109,7 +109,7 @@ class HomeController extends GetxController
       "open_event": "cold",
       "player_net": "1",
       "pull": _pull.toString(),
-      "qn": '80',
+      "qn": PlayConfig.videoQn().toString(),
       "qn_policy": "1",
       "recsys_mode": "0",
       "splash_id": "",
@@ -145,6 +145,7 @@ class HomeController extends GetxController
 
     final Response httpresult = await ApiRe.hotIndex(
         data: hotIndexRe().result(
+            qn: PlayConfig.videoQn(),
             idx: idx,
             last_param: last_param),
         option: Options(responseType: ResponseType.bytes));

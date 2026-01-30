@@ -2,7 +2,9 @@ import 'package:blili/command/utils/device/id.dart';
 import 'package:blili/command/utils/encrypt/basic.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/toast/BliliToast.dart';
+import 'package:blili/service/UserServer.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide Response;
 import 'header.dart';
 import 'package:blili/widget/HttpLoading.dart';
 import 'api.dart';
@@ -12,7 +14,7 @@ class BInterceptorsWrapper {
   final Singer _singer = Singer();
   final List<String> _requestList = [];
   final List<String> _MapReKeys = ['result', 'data'];
-  final List<String> _NotParameUrl = [Api.qrcode,Api.qrcodePoll];
+  final List<String> _NotParameUrl = [Api.qrcode, Api.qrcodePoll];
 
   BInterceptorsWrapper() {
     _interceptorsWrapper = InterceptorsWrapper(
@@ -50,8 +52,7 @@ class BInterceptorsWrapper {
     final ResponseType responsetype = response.requestOptions.responseType;
     final int status = response.statusCode!;
 
-
-    if(path == Api.qrcodePoll)return response;
+    if (path == Api.qrcodePoll) return response;
 
     if (responsetype == ResponseType.json &&
         status == 200 &&
@@ -63,7 +64,8 @@ class BInterceptorsWrapper {
           (response.data[key] is List &&
               (response.data[key] as List).isNotEmpty)) {
         response.data = response.data[key];
-        HttploadingMap.getHttploadingController(path).success();
+        Future.delayed(const Duration(milliseconds: 500),
+            () => HttploadingMap.getHttploadingController(path).success());
       } else {
         BliliToast.show('加载失败');
       }
@@ -111,6 +113,10 @@ class BInterceptorsWrapper {
         "grpc-encoding": "gzip",
         "grpc-accept-encoding": "identity, gzip",
       });
+      if (Get.context!.userserver.loginStatus.value) {
+        options.headers['authorization'] =
+            'identify_v1 ${Get.context!.userserver.accessKey()}';
+      }
     } else {
       options.headers.addAll(bliliHeader.idHeader());
       options.headers
