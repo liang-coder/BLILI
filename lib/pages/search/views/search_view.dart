@@ -16,14 +16,7 @@ class SearchView extends GetView<SearchController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PopScope(canPop: false,onPopInvoked:(_){
-        if(controller.seaching.value){
-          controller.backResult();
-        }else{
-          Get.back();
-        }
-      } ,
-          child: Padding(
+      body: Padding(
         padding: EdgeInsets.only(top: 40.h, left: 30.w, right: 30.w),
         child: Column(
           children: [
@@ -38,7 +31,7 @@ class SearchView extends GetView<SearchController> {
                 : _search(context))
           ],
         ),
-      )),
+      ),
     );
   }
 

@@ -38,8 +38,8 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     _timer.cancel();
+    super.onClose();
   }
 
   void increment() => count.value++;

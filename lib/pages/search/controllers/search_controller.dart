@@ -283,7 +283,7 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
-  void backResult() {
+  void _backResult() {
     _Searching.value = false;
     _allPage = 1;
     _bangumiPage = 1;
@@ -296,8 +296,8 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
   bool _KeyEvenhandel(KeyEvent event) {
     appLogger.LoggerI('$event');
 
-    if (Get.routing.current == Routes.SEARCH) {
-      if (event is KeyDownEvent) {
+    if (Get.routing.current == Routes.SEARCH && event is KeyUpEvent) {
+      if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
         if (_focusNode.hasFocus) {
           if (seaching.value) {
             _typeFocusNode.requestFocus();
@@ -306,6 +306,13 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
             _clearFocusNode.requestFocus();
             return true;
           }
+        }
+        return false;
+      }
+      if (event.logicalKey == LogicalKeyboardKey.goBack) {
+        if (seaching.value) {
+          _backResult();
+          return true;
         }
         return false;
       }

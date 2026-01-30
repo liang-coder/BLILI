@@ -1,8 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:blili/command/utils/logger/logger.dart';
+import 'package:blili/command/utils/toast/BliliToast.dart';
 import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/routes/app_pages.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mix_player/mix_player.dart';
 import 'package:blili/modules/player/BiliVideoUrlModel.dart';
@@ -23,7 +26,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   RxString _currentTime = ''.obs;
   int? _playVideoQn;
   int? _playAudioQn;
-  late Timer _timer;
+
 //
   Rxn<Duration> _duration = Rxn<Duration>(Duration(seconds: 0));
   Rxn<Duration> _position = Rxn<Duration>(Duration(seconds: 0));
@@ -31,7 +34,8 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   RxBool _buffering = true.obs;
   RxBool _playing = false.obs;
   RxBool _completed = false.obs;
-  RxBool _showController = false.obs;
+  RxBool _showController = true.obs;
+  bool _identifyBackPage = false;
 
   //数据流
   late StreamSubscription _durationStream;
@@ -48,6 +52,10 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> _playControlleranimation;
   late AnimationController _playController_controller;
 
+  //计时操作
+  late Timer _timer;
+  late Timer _timer2;
+
   @override
   void onInit() {
     super.onInit();
@@ -61,6 +69,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
           Timer.periodic(const Duration(seconds: 60), (_) => _updateTime());
     });
     _setAnimation();
+    HardwareKeyboard.instance.addHandler(_KeyEvenhandel);
   }
 
   @override
@@ -70,6 +79,8 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
 
   @override
   void onClose() {
+    _playController_controller.dispose();
+    _timercontroller.dispose();
     super.onClose();
     _timer.cancel();
     _positionStream.cancel();
@@ -79,6 +90,8 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _completedStream.cancel();
     _durationStream.cancel();
     _mixPlayerController.dispose();
+    _timer2?.cancel();
+    HardwareKeyboard.instance.removeHandler(_KeyEvenhandel);
   }
 
   void increment() => count.value++;
@@ -192,29 +205,36 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _mixPlayerController.seek(seek);
   }
 
+  void _animationReforward() {
+    _showController.value = true;
+    _timercontroller.reverse();
+    _playController_controller.reverse();
+  }
+
+  void _animationForward() {
+    _timercontroller.forward();
+    _playController_controller.forward();
+    _showController.value = false;
+  }
+
   void _setAnimation() {
     _timercontroller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
-    _timeranimation = Tween(begin: 1.0, end: 0.0).animate(_timercontroller);
+    _timeranimation = Tween(begin: 1.0, end: 0.0).animate(
+        CurvedAnimation(parent: _timercontroller, curve: Curves.easeOutQuint));
 
     _playController_controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
-    _playControlleranimation =
-        Tween(begin: 0.0, end: 100.0).animate(_timercontroller);
-
-    Future.delayed(
-        Duration(seconds: _hidetime), () => _timercontroller.forward());
-    Future.delayed(Duration(seconds: _hidetime),
-        (){
-          _playController_controller.forward();
-          _showController.value = true;
-        });
+    _playControlleranimation = Tween(begin: 0.0, end: 100.0).animate(
+        CurvedAnimation(
+            parent: _playController_controller, curve: Curves.easeOutQuint));
+    setTimer2();
   }
 
   void _durationStreamInit() {
@@ -252,10 +272,54 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
+  void playOrPause(){
+    if (_playing.value) {
+      _mixPlayerController.pause();
+    } else {
+      _mixPlayerController.play();
+    }
+  }
+
   void _completedStreamInit() {
     _completedStream =
         _mixPlayerController.player.stream.completed.listen((bool completed) {
       _completed.value = completed;
     });
+  }
+
+  void setTimer2() {
+    _timer2 = Timer(Duration(seconds: _hidetime), _animationForward);
+  }
+
+  bool _KeyEvenhandel(KeyEvent event) {
+    appLogger.LoggerI('$event');
+
+    if (Get.routing.current == Routes.PLAYER && event is KeyUpEvent) {
+      _timer2.cancel();
+      setTimer2();
+      if (event.logicalKey == LogicalKeyboardKey.goBack) {
+        if (!_showController.value) {
+          _animationReforward();
+          return true;
+        } else {
+          if (!_identifyBackPage) {
+            BliliToast.show('再次按下返回退出');
+            _identifyBackPage = true;
+            Future.delayed(
+                Duration(seconds: 3), () => _identifyBackPage = false);
+            return true;
+          }
+        }
+      }
+
+      if (event.logicalKey == LogicalKeyboardKey.select) {
+        if (!_showController.value) {
+          playOrPause();
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

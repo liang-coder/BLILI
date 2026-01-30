@@ -29,12 +29,12 @@ class PlayerView extends GetView<PlayerController> {
                   );
                 },
                 child: Obx(() => Text(
-                      controller.currentTime.value,
-                      style: TextStyle(
-                          fontSize: 40.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    )),
+                  controller.currentTime.value,
+                  style: TextStyle(
+                      fontSize: 40.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                )),
               )),
           AnimatedBuilder(
             animation: controller.playControlleranimation,
@@ -43,8 +43,9 @@ class PlayerView extends GetView<PlayerController> {
                 offset: Offset(0, controller.playControlleranimation.value),
                 child: Opacity(
                   opacity:
-                      ((100 - controller.playControlleranimation.value) / 100)
-                          .clamp(0.0, 1.0),
+                  ((100 - controller.playControlleranimation.value) /
+                      100)
+                      .clamp(0.0, 1.0),
                   child: child,
                 ),
               );
