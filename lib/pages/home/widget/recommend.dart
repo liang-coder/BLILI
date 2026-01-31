@@ -15,6 +15,7 @@ class Recommend extends StatefulWidget {
 
 class _RecommendState extends State<Recommend>
     with AutomaticKeepAliveClientMixin {
+
   @override
   Widget build(BuildContext context) {
     super.build(context);

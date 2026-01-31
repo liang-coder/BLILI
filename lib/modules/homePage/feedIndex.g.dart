@@ -170,7 +170,7 @@ const _$CardGotoEnumMap = {
 Args _$ArgsFromJson(Map<String, dynamic> json) => Args(
       upId: (json['up_id'] as num).toInt(),
       upName: json['up_name'] as String,
-      tid: (json['tid'] as num).toInt(),
+      tid: (json['tid'] as num?)?.toInt(),
       tname: json['tname'] as String,
       aid: (json['aid'] as num).toInt(),
     );

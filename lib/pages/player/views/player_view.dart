@@ -1,12 +1,14 @@
 import 'package:blili/command/icons/icons.dart';
 import 'package:blili/command/utils/date/Date.dart';
 import 'package:blili/data/playconfig/config.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mix_player/mix_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import '../controllers/player_controller.dart';
+import '../widget/recommand.dart';
 
 class PlayerView extends GetView<PlayerController> {
   const PlayerView({super.key});
@@ -104,7 +106,21 @@ class PlayerView extends GetView<PlayerController> {
               );
             },
             child: _controller(),
-          )
+          ),
+          Positioned(
+              bottom: 0,
+              child: AnimatedBuilder(
+                animation: controller.RecomandListanimation,
+                builder: (context, child) {
+                  return Opacity(
+                    opacity: controller.RecomandListanimation.value,
+                    child: child,
+                  );
+                },
+                child: Obx(() => Visibility(
+                    visible: controller.showRecomandList.value,
+                    child: _recommandList())),
+              ))
         ],
       ),
     );
@@ -134,10 +150,10 @@ class PlayerView extends GetView<PlayerController> {
                     )),
                 Transform.translate(
                   offset: Offset(0, -6.h),
-                  child: Text(
-                    '${controller.upName.value} • ${controller.playTotal.value}',
-                    style: TextStyle(fontSize: 30.sp, color: Colors.white),
-                  ),
+                  child: Obx(() => Text(
+                        '${controller.upName.value} • ${controller.playTotal.value}',
+                        style: TextStyle(fontSize: 30.sp, color: Colors.white),
+                      )),
                 ),
                 Obx(() => ProgressBar(
                       progressBarColor: Color(0xFF45B1FA),
@@ -166,16 +182,19 @@ class PlayerView extends GetView<PlayerController> {
                               controller.playing.value
                                   ? AppIcons.play
                                   : AppIcons.pause,
-                              controller.playOrPause)),
+                              controller.playOrPause,
+                              autofocus: true)),
                           // _button(AppIcons.readjust, () => print('object')),
                           Builder(builder: (context) {
                             return _button(AppIcons.more, () {
+                              controller.animationForward();
                               controller.setDrawerCOntext(_SelectVideoDrawer());
                               Scaffold.of(context).openEndDrawer();
                             });
                           }),
                           // _button(AppIcons.user, () => print('object')),
-                          _button(AppIcons.arrowDown, () => print('object')),
+                          _button(
+                              AppIcons.arrowDown, controller.openRecommandList),
                           Obx(() => _button(
                               controller.playMode.value == PlayMode.order
                                   ? AppIcons.order
@@ -215,11 +234,12 @@ class PlayerView extends GetView<PlayerController> {
     );
   }
 
-  Widget _button(IconData icon, VoidCallback func) {
+  Widget _button(IconData icon, VoidCallback func, {bool? autofocus = false}) {
     return SizedBox(
       width: 70.w,
       height: 70.w,
       child: MaterialButton(
+          autofocus: autofocus!,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           elevation: 0,
           padding: EdgeInsets.zero,
@@ -257,5 +277,23 @@ class PlayerView extends GetView<PlayerController> {
 
   Widget _SelectVideoDrawer() {
     return _darwerContianer(title: '选集', child: ListView());
+  }
+
+  Widget _recommandList() {
+    return SizedBox(
+      width: ScreenUtil().screenWidth,
+      height: 284.w,
+      child: Obx(
+        () => ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Recommand(
+              relateCard: controller.recommand[index],
+            );
+          },
+          itemCount: controller.recommand.length,
+        ),
+      ),
+    );
   }
 }

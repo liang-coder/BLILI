@@ -71,10 +71,8 @@ class TvDetailsController extends GetxController {
     final httpresult = await ApiRe.View(
         option: Options(responseType: ResponseType.bytes),
         data: DataConverter.gzipCompress(viewReq().result(
-          from: from,
-          spmid: 'nited.player-video-detail.0.0',
           from_spmid: 'search.search-result.0.0',
-          epid: epid,
+          season_id: epid,
         )));
 
     _viewReply.value = ViewReply.fromBuffer(

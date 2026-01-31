@@ -225,7 +225,7 @@ class Args {
   @JsonKey(name: "up_name")
   String upName;
   @JsonKey(name: "tid")
-  int tid;
+  int? tid;
   @JsonKey(name: "tname")
   String tname;
   @JsonKey(name: "aid")
@@ -234,7 +234,7 @@ class Args {
   Args({
     required this.upId,
     required this.upName,
-    required this.tid,
+     this.tid,
     required this.tname,
     required this.aid,
   });

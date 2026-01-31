@@ -8,7 +8,9 @@ class Videogridview extends StatelessWidget {
   final List<dynamic> videoData;
   final VoidCallback request;
   const Videogridview(
-      {super.key, required this.videoData, required this.request});
+      {super.key,
+      required this.videoData,
+      required this.request,});
 
   @override
   Widget build(BuildContext context) {

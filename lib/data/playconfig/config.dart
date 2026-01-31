@@ -43,8 +43,9 @@ class PlayConfig {
     _SeekTime = Shareperference.getDouble('SeekTime') ?? 4;
     _Volume = Shareperference.getDouble('Volume') ?? 50.0;
     final String? playModeString = await Shareperference.getString('playMode');
-    _playMode =
-        playModeString == null ? PlayMode.order : jsonDecode(playModeString);
+    _playMode = playModeString == null
+        ? PlayMode.order
+        : PlayMode.values.firstWhere((e) => e.name == playModeString);
   }
 
   static String get videoQuality => _videoQuality;
@@ -90,7 +91,7 @@ class PlayConfig {
 
   static void setplayMode(PlayMode v) {
     _playMode = v;
-    Shareperference.setString('playMode', jsonEncode(v));
+    Shareperference.setString('playMode', v.name);
   }
 
   static bool vipaudioQuality(String v) {

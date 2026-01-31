@@ -20,6 +20,7 @@ import 'package:blili/command/http/protobuf/request/hotIndex.dart';
 import 'package:blili/modules/homePage/bangumi.dart';
 import 'package:blili/modules/homePage/cinema.dart';
 import 'package:blili/modules/homePage/basicModel.dart';
+import 'spmid.dart';
 
 class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -144,10 +145,7 @@ class HomeController extends GetxController
     _hot.forEach((e) => idx += e.items.length);
 
     final Response httpresult = await ApiRe.hotIndex(
-        data: hotIndexRe().result(
-            qn: PlayConfig.videoQn(),
-            idx: idx,
-            last_param: last_param),
+        data: hotIndexRe().result(idx: idx, last_param: last_param),
         option: Options(responseType: ResponseType.bytes));
 
     try {
@@ -226,8 +224,10 @@ class HomeController extends GetxController
     _httploadingController4.unenable();
   }
 
+
   void _tabListener() {
     _tabController.addListener(() {
+      Spmid.setspmid(_tabController.index);
       if (_tabController.indexIsChanging &&
           _tabController.index == 1 &&
           _hot.isEmpty) {

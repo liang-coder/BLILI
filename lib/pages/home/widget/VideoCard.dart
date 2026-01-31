@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:blili/command/utils/GetInfo/getinfo.dart';
 import 'package:blili/modules/player/BiliVideoUrlModel.dart';
 import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
 import 'package:blili/widget/NetImage.dart';
@@ -8,6 +9,7 @@ import 'package:blili/modules/homePage/feedIndex.dart';
 import 'package:blili/command/images/images.dart';
 import 'package:get/get.dart';
 import 'package:blili/routes/app_pages.dart';
+import '../controllers/spmid.dart';
 
 class Videocard extends StatelessWidget {
   final Item item;
@@ -18,10 +20,10 @@ class Videocard extends StatelessWidget {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => Get.toNamed(Routes.PLAYER, arguments: {
-        'biliVideoUrlModel': BiliVideoUrlModel.fromUri(item.uri),
-        'title':item.title,
-        'upName':item.args.upName,
-        'playTotal':item.coverLeft1ContentDescription
+        'aid': item.playerArgs!.aid,
+        'cid': item.playerArgs!.cid,
+        'spmid': Spmid.spmid,
+        'trackid': item.trackId,
       }),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
@@ -85,8 +87,10 @@ class Videocard2 extends StatelessWidget {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => Get.toNamed(Routes.PLAYER, arguments: {
-        'biliVideoUrlModel':
-            BiliVideoUrlModel.fromUri(card.cardcontext.videoinfo.uri)
+        'aid': int.parse(card.cardcontext.videoinfo.param),
+        'cid': int.parse(GetInfo.UrltoCid(card.cardcontext.videoinfo.uri)),
+        'spmid': Spmid.spmid,
+        'trackid': card.cardcontext.videoinfo.trackId,
       }),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
