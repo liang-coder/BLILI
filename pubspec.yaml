@@ -140,6 +140,9 @@ flutter:
     - family: SettingIcon
       fonts:
         - asset: assets/icons/SettingIcon.ttf
+    - family: PlayerIcon
+      fonts:
+        - asset: assets/icons/PlayerIcon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

@@ -31,10 +31,14 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   Rxn<Duration> _duration = Rxn<Duration>(Duration(seconds: 0));
   Rxn<Duration> _position = Rxn<Duration>(Duration(seconds: 0));
   Rxn<Duration> _buffer = Rxn<Duration>(Duration(seconds: 0));
+  Rxn<PlayMode> _playMode = Rxn<PlayMode>(PlayConfig.playMode);
+  Rxn<Widget> _drawerCOntext = Rxn(SizedBox());
+  RxDouble _volume = PlayConfig.Volume.obs;
   RxBool _buffering = true.obs;
   RxBool _playing = false.obs;
   RxBool _completed = false.obs;
   RxBool _showController = true.obs;
+  bool _showDrawer = false;
   bool _identifyBackPage = false;
 
   //数据流
@@ -46,8 +50,8 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   late StreamSubscription _completedStream;
 
   //动画控制器
-  late Animation<double> _timeranimation;
-  late AnimationController _timercontroller;
+  // late Animation<double> _timeranimation;
+  // late AnimationController _timercontroller;
   //
   late Animation<double> _playControlleranimation;
   late AnimationController _playController_controller;
@@ -80,7 +84,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   @override
   void onClose() {
     _playController_controller.dispose();
-    _timercontroller.dispose();
+    // _timercontroller.dispose();
     super.onClose();
     _timer.cancel();
     _positionStream.cancel();
@@ -107,8 +111,10 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   RxBool get playing => _playing;
   RxBool get completed => _completed;
   RxBool get showController => _showController;
-  Animation get timeranimation => _timeranimation;
+  // Animation get timeranimation => _timeranimation;
   Animation get playControlleranimation => _playControlleranimation;
+  Rxn<PlayMode> get playMode => _playMode;
+  Rxn<Widget> get drawerCOntext => _drawerCOntext;
 
   MixPlayerController get mixPlayerController => _mixPlayerController;
 
@@ -181,6 +187,9 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _completedStreamInit();
   }
 
+  void setDrawerCOntext(Widget v) => _drawerCOntext.value = v;
+  void setShowDrawer(bool v) => _showDrawer = v;
+
   void setRate(double v) {
     _mixPlayerController.setRate(v);
   }
@@ -197,34 +206,84 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _mixPlayerController.pause();
   }
 
-  void setVolume(double v) {
-    _mixPlayerController.setVolume(v);
+  void _setVolume(double v) {
+    if (v <= 100.0 && v >= 0.0) {
+      _volume.value = v;
+      PlayConfig.setVolume(v);
+      _mixPlayerController.setVolume(v);
+      BliliToast.show('音量当前值: ${v.toInt()}');
+    } else {
+      BliliToast.show('音量到达最大值或最小值');
+    }
+  }
+
+  void addVolume() {
+    _setVolume(_volume.value + 5);
+  }
+
+  void subtractVolume() {
+    _setVolume(_volume.value - 5);
   }
 
   void seek(Duration seek) {
     _mixPlayerController.seek(seek);
   }
 
+  void _forwardPosition() {
+    final Duration result =
+        _position.value! + Duration(seconds: PlayConfig.SeekTime.toInt());
+
+    if (result > _duration.value!) {
+      seek(_duration.value!);
+    } else {
+      seek(result);
+      BliliToast.show('前进${PlayConfig.SeekTime.toInt()}s');
+    }
+  }
+
+  void _backPosition() {
+    final Duration result =
+        _position.value! - Duration(seconds: PlayConfig.SeekTime.toInt());
+
+    if (result < Duration(seconds: 0)) {
+      seek(Duration(seconds: 0));
+    } else {
+      seek(result);
+      BliliToast.show('后退${PlayConfig.SeekTime.toInt()}s');
+    }
+  }
+
+  void setPlayMode() {
+    PlayMode v;
+    if (_playMode.value == PlayMode.order) {
+      v = PlayMode.repeatOnce;
+    } else {
+      v = PlayMode.order;
+    }
+    _playMode.value = v;
+    PlayConfig.setplayMode(v);
+  }
+
   void _animationReforward() {
     _showController.value = true;
-    _timercontroller.reverse();
+    // _timercontroller.reverse();
     _playController_controller.reverse();
   }
 
   void _animationForward() {
-    _timercontroller.forward();
+    // _timercontroller.forward();
     _playController_controller.forward();
     _showController.value = false;
   }
 
   void _setAnimation() {
-    _timercontroller = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    );
-
-    _timeranimation = Tween(begin: 1.0, end: 0.0).animate(
-        CurvedAnimation(parent: _timercontroller, curve: Curves.easeOutQuint));
+    // _timercontroller = AnimationController(
+    //   duration: const Duration(milliseconds: 1500),
+    //   vsync: this,
+    // );
+    //
+    // _timeranimation = Tween(begin: 1.0, end: 0.0).animate(
+    //     CurvedAnimation(parent: _timercontroller, curve: Curves.easeOutQuint));
 
     _playController_controller = AnimationController(
       duration: const Duration(milliseconds: 1500),
@@ -272,7 +331,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
-  void playOrPause(){
+  void playOrPause() {
     if (_playing.value) {
       _mixPlayerController.pause();
     } else {
@@ -298,6 +357,10 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
       _timer2.cancel();
       setTimer2();
       if (event.logicalKey == LogicalKeyboardKey.goBack) {
+        if (_showDrawer) {
+          Get.back();
+          return true;
+        }
         if (!_showController.value) {
           _animationReforward();
           return true;
@@ -315,6 +378,34 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
       if (event.logicalKey == LogicalKeyboardKey.select) {
         if (!_showController.value) {
           playOrPause();
+          return true;
+        }
+      }
+
+      if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+        if (!_showController.value) {
+          addVolume();
+          return true;
+        }
+      }
+
+      if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+        if (!_showController.value) {
+          _backPosition();
+          return true;
+        }
+      }
+
+      if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+        if (!_showController.value) {
+          _forwardPosition();
+          return true;
+        }
+      }
+
+      if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
+        if (!_showController.value) {
+          subtractVolume();
           return true;
         }
       }

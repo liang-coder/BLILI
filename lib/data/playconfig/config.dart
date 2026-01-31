@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
+
+enum PlayMode { repeatOnce, order }
 
 class PlayConfig {
   static String _videoQuality = '';
@@ -7,6 +11,7 @@ class PlayConfig {
   static double _playSpeed = 1.0;
   static double _SeekTime = 4;
   static double _Volume = 50.0;
+  static PlayMode _playMode = PlayMode.order;
   static Map _allVideoQuality = {
     '480P': 32,
     '720P': 64,
@@ -37,6 +42,9 @@ class PlayConfig {
     _playSpeed = Shareperference.getDouble('playSpeed') ?? 1.0;
     _SeekTime = Shareperference.getDouble('SeekTime') ?? 4;
     _Volume = Shareperference.getDouble('Volume') ?? 50.0;
+    final String? playModeString = await Shareperference.getString('playMode');
+    _playMode =
+        playModeString == null ? PlayMode.order : jsonDecode(playModeString);
   }
 
   static String get videoQuality => _videoQuality;
@@ -44,6 +52,7 @@ class PlayConfig {
   static double get playSpeed => _playSpeed;
   static double get SeekTime => _SeekTime;
   static double get Volume => _Volume;
+  static PlayMode get playMode => _playMode;
   static String get videoCodeString => _videoCode;
   static Map get allVideoQuality => _allVideoQuality;
   static Map get allAudioQuality => _allAudioQuality;
@@ -77,6 +86,11 @@ class PlayConfig {
   static void setVideoCode(String v) {
     _videoCode = v;
     Shareperference.setString('videoCode', v);
+  }
+
+  static void setplayMode(PlayMode v) {
+    _playMode = v;
+    Shareperference.setString('playMode', jsonEncode(v));
   }
 
   static bool vipaudioQuality(String v) {
