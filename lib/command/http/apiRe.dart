@@ -230,6 +230,15 @@ class ApiRe {
     return result;
   }
 
+  static Future<Response> historyReport(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.post(Api.historyReport,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
   static Future<Response> webKey(
       {Map<String, dynamic>? queryParameters,
       Options? option,
@@ -241,11 +250,10 @@ class ApiRe {
 
   static Future<Response> myInfo(
       {Map<String, dynamic>? queryParameters,
-        Options? option,
-        Object? data}) async {
+      Options? option,
+      Object? data}) async {
     final result = await DioClient.dio.get(Api.myinfo,
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }
-
 }

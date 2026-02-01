@@ -1,19 +1,29 @@
+import 'dart:developer';
+
 import 'package:blili/command/images/images.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:blili/widget/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../controllers/player_controller.dart';
 
 class Recommand extends StatelessWidget {
   final RelateCard relateCard;
-  const Recommand({super.key, required this.relateCard});
+  final PlayerController playerController;
+  const Recommand(
+      {super.key, required this.relateCard, required this.playerController});
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => playerController.changeVideo(
+          aid: relateCard.basicInfo.id.toInt(),
+          cid: relateCard.av.cid.toInt(),
+          trackid: relateCard.basicInfo.trackId,
+          spmid: 'united.player-video-detail.relatedvideo.0'),
+      focusColor: Colors.blue.withAlpha(80),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: Column(

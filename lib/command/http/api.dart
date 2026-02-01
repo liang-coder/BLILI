@@ -22,12 +22,14 @@ class Api {
   static final String qrcodePoll = '/x/passport-tv-login/qrcode/poll';
   static final String webKey = '/x/passport-login/web/key';
   static final String myinfo = '/x/v2/account/myinfo';
+  static final String historyReport = '/x/v2/history/report';
 }
 
 class domainMap {
   static final Map<String, String> _serviceDomainMap = {
     Api.bangumi: 'https://api.bilibili.com',
     Api.cinema: 'https://api.bilibili.com',
+    Api.historyReport: 'https://api.bilibili.com',
     Api.hotIndex: 'https://app.bilibili.com',
     Api.feedIndex: 'https://app.bilibili.com',
     Api.fingerprint: 'https://app.bilibili.com',

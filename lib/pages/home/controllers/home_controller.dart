@@ -20,7 +20,7 @@ import 'package:blili/command/http/protobuf/request/hotIndex.dart';
 import 'package:blili/modules/homePage/bangumi.dart';
 import 'package:blili/modules/homePage/cinema.dart';
 import 'package:blili/modules/homePage/basicModel.dart';
-import 'spmid.dart';
+import '../spmid.dart';
 
 class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -124,7 +124,6 @@ class HomeController extends GetxController
 
     final Map<String, dynamic> data = httpresult.data;
     _recommand.add(FeedIndex.fromJson(data));
-
     // try {
     //   _recommand.add(FeedIndex.fromJson(data));
     // } catch (e) {

@@ -1,7 +1,9 @@
 import 'package:blili/command/icons/icons.dart';
 import 'package:blili/command/utils/date/Date.dart';
+import 'package:blili/command/utils/toast/BliliToast.dart';
 import 'package:blili/data/playconfig/config.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mix_player/mix_player.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import '../controllers/player_controller.dart';
 import '../widget/recommand.dart';
+import '../widget/select.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class PlayerView extends GetView<PlayerController> {
   const PlayerView({super.key});
@@ -19,8 +23,9 @@ class PlayerView extends GetView<PlayerController> {
       endDrawer: Drawer(
         elevation: 0,
         backgroundColor: Color(0xFF353535),
-        width: 390.w,
-        shape: RoundedRectangleBorder(),
+        width: 600.w,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
         child: Obx(() => controller.drawerCOntext.value!),
       ),
       onDrawerChanged: (bool) => controller.setShowDrawer(bool),
@@ -105,7 +110,10 @@ class PlayerView extends GetView<PlayerController> {
                 ),
               );
             },
-            child: _controller(),
+            child: Obx(() => ExcludeFocus(
+                  child: _controller(),
+                  excluding: !controller.showController.value,
+                )),
           ),
           Positioned(
               bottom: 0,
@@ -187,9 +195,7 @@ class PlayerView extends GetView<PlayerController> {
                           // _button(AppIcons.readjust, () => print('object')),
                           Builder(builder: (context) {
                             return _button(AppIcons.more, () {
-                              controller.animationForward();
-                              controller.setDrawerCOntext(_SelectVideoDrawer());
-                              Scaffold.of(context).openEndDrawer();
+                              _openDrawer(context);
                             });
                           }),
                           // _button(AppIcons.user, () => print('object')),
@@ -234,6 +240,19 @@ class PlayerView extends GetView<PlayerController> {
     );
   }
 
+  void _openDrawer(BuildContext context) {
+    if (controller.videoSelct.isEmpty) {
+      BliliToast.show('暂无合集视频');
+      return;
+    }
+    controller.animationForward();
+    controller.setDrawerCOntext(_SelectVideoDrawer());
+    Scaffold.of(context).openEndDrawer();
+    controller.darwerAutoScrollController.scrollToIndex(
+        controller.SelectPlayIndex.value,
+        preferPosition: AutoScrollPosition.middle);
+  }
+
   Widget _button(IconData icon, VoidCallback func, {bool? autofocus = false}) {
     return SizedBox(
       width: 70.w,
@@ -255,7 +274,7 @@ class PlayerView extends GetView<PlayerController> {
 
   Widget _darwerContianer({String? title = '', required Widget child}) {
     return SizedBox(
-      height: double.infinity,
+      height: ScreenUtil().screenHeight,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
         child: Column(
@@ -276,7 +295,21 @@ class PlayerView extends GetView<PlayerController> {
   }
 
   Widget _SelectVideoDrawer() {
-    return _darwerContianer(title: '选集', child: ListView());
+    return _darwerContianer(
+        title: '选集',
+        child: Obx(() => ListView.builder(
+            controller: controller.darwerAutoScrollController,
+            itemBuilder: (BuildContext context, int index) => AutoScrollTag(
+                  key: ValueKey(index),
+                  controller: controller.darwerAutoScrollController,
+                  index: index,
+                  child: Select(
+                    ugcEpisode: controller.videoSelct[index],
+                    playerController: controller,
+                    index: index,
+                  ),
+                ),
+            itemCount: controller.videoSelct.length)));
   }
 
   Widget _recommandList() {
@@ -289,6 +322,7 @@ class PlayerView extends GetView<PlayerController> {
           itemBuilder: (context, index) {
             return Recommand(
               relateCard: controller.recommand[index],
+              playerController: controller,
             );
           },
           itemCount: controller.recommand.length,

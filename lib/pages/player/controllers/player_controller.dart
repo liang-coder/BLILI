@@ -1,14 +1,17 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:blili/command/http/apiRe.dart';
+import 'package:blili/command/http/params.dart';
 import 'package:blili/command/http/protobuf/request/playViewUniteReq.dart';
 import 'package:blili/command/http/protobuf/request/viewReq.dart';
 import 'package:blili/command/utils/dataconverter/dataconverter.dart';
+import 'package:blili/command/utils/date/Date.dart';
+import 'package:blili/command/utils/encrypt/basic.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/toast/BliliToast.dart';
 import 'package:blili/data/playconfig/config.dart';
 import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart';
 import 'package:blili/routes/app_pages.dart';
+import 'package:blili/service/UserServer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,17 +22,18 @@ import 'package:mix_player/mix_player.dart';
 import 'package:blili/protos/dart/PlayViewUnite/playViewUniteReply.pb.dart';
 import 'package:blili/protos/dart/tvDetails/tvViewReply/tvViewReply.pb.dart'
     hide ViewReq;
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class PlayerController extends GetxController with GetTickerProviderStateMixin {
   //TODO: Implement PlayerController
 
   // final BiliVideoUrlModel _biliVideoUrlModel =
   //     Get.arguments['biliVideoUrlModel'];
-  final int? _cid = Get.arguments['cid'];
-  final int? _aid = Get.arguments['aid'];
-  final String? _epid = Get.arguments['epid'];
-  final String _spmid = Get.arguments['spmid'];
-  final String? _trackid = Get.arguments['trackid'];
+  int? _cid = Get.arguments['cid'];
+  int? _aid = Get.arguments['aid'];
+  String? _epid = Get.arguments['epid'];
+  String _spmid = Get.arguments['spmid'];
+  String? _trackid = Get.arguments['trackid'];
   RxString _videoTitle = ''.obs;
   RxString _upName = ''.obs;
   RxString _playTotal = ''.obs;
@@ -38,6 +42,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   final count = 0.obs;
   final int _hidetime = 5;
   RxString _currentTime = ''.obs;
+  RxInt _SelectPlayIndex = (-1).obs;
   int? _playVideoQn;
   int? _playAudioQn;
   //
@@ -45,6 +50,8 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   late ViewReply _ViewReply;
   //
   final MixPlayerController _mixPlayerController = MixPlayerController();
+  final AutoScrollController _darwerAutoScrollController =
+      AutoScrollController();
 
 //
   Rxn<Duration> _duration = Rxn<Duration>(Duration(seconds: 0));
@@ -53,7 +60,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   Rxn<PlayMode> _playMode = Rxn<PlayMode>(PlayConfig.playMode);
   Rxn<Widget> _drawerCOntext = Rxn(SizedBox());
   RxList<RelateCard> _recommand = <RelateCard>[].obs;
-  RxList<RelateCard> _videoSelct = <RelateCard>[].obs;
+  RxList<UgcEpisode> _videoSelct = <UgcEpisode>[].obs;
   RxDouble _volume = PlayConfig.Volume.obs;
   RxBool _buffering = true.obs;
   RxBool _playing = false.obs;
@@ -61,6 +68,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   RxBool _showController = true.obs;
   bool _showDrawer = false;
   bool _identifyBackPage = false;
+  bool _ContinuePlaying = false;
   RxBool _showRecomandList = false.obs;
 
   //数据流
@@ -106,8 +114,8 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
 
   @override
   void onClose() {
+    _historyReport();
     _playController_controller.dispose();
-    // _timercontroller.dispose();
     super.onClose();
     _timer.cancel();
     _positionStream.cancel();
@@ -117,7 +125,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _completedStream.cancel();
     _durationStream.cancel();
     _mixPlayerController.dispose();
-    _timer2?.cancel();
+    _timer2.cancel();
     HardwareKeyboard.instance.removeHandler(_KeyEvenhandel);
   }
 
@@ -149,16 +157,55 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _playTotal.value = _ViewReply.arc.stat.vt.pureText;
 
     _recommand.clear();
+    _videoSelct.clear();
     _recommand.addAll(
         _ViewReply.tab.tabModule[0].introduction.modules.last.relates.cards);
-    // _videoSelct.addAll(
-    //     _ViewReply.tab.tabModule[1].introduction.modules[2].relates.cards);
+    if (_ViewReply
+        .tab
+        .tabModule[0]
+        .introduction
+        .modules[_ViewReply.tab.tabModule[0].introduction.modules.length - 2]
+        .ugcSeason
+        .section
+        .isNotEmpty)
+      _videoSelct.addAll(_ViewReply
+          .tab
+          .tabModule[0]
+          .introduction
+          .modules[_ViewReply.tab.tabModule[0].introduction.modules.length - 2]
+          .ugcSeason
+          .section
+          .first
+          .episodes);
+  }
 
-    log(_ViewReply.toString());
+  void _historyReport() async {
+    if (_ViewReply.tab.tabModule.isEmpty) return;
+    final Map<String, dynamic> data = {
+      'access_key': Get.context!.userserver.accessKey(),
+      'aid': _aid.toString(),
+      'cid': _cid.toString(),
+      'device_ts': Date.UnixTimestamp().toString(),
+      'duration': _duration.value!.inSeconds.toString(),
+      'progress': _position.value!.inSeconds.toString(),
+      'scene': 'front',
+      'source': 'player-old',
+      'start_ts': Date.UnixTimestamp().toString(),
+      // 'type': '3'
+    };
+
+    if (_epid != null) data['epid'] = _epid.toString();
+    await ApiRe.historyReport(
+        option: Options(headers: {
+          'content-type': 'application/x-www-form-urlencoded; charset=utf-8'
+        }),
+        data: Singer().sign(Params.add(Newparams: data)));
   }
 
   void increment() => count.value++;
-
+  //
+  //
+  RxInt get SelectPlayIndex => _SelectPlayIndex;
   RxString get currentTime => _currentTime;
   RxString get videoTitle => _videoTitle;
   RxString get upName => _upName;
@@ -176,7 +223,10 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   Rxn<PlayMode> get playMode => _playMode;
   Rxn<Widget> get drawerCOntext => _drawerCOntext;
   RxList<RelateCard> get recommand => _recommand;
+  RxList<UgcEpisode> get videoSelct => _videoSelct;
   MixPlayerController get mixPlayerController => _mixPlayerController;
+  AutoScrollController get darwerAutoScrollController =>
+      _darwerAutoScrollController;
 
   Duration _nextMinute() {
     final now = DateTime.now();
@@ -230,9 +280,56 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
 
     _mixPlayerController.setVolume(PlayConfig.Volume);
     _mixPlayerController.setRate(PlayConfig.playSpeed);
+    _setSelectPlayIndex();
     _mixPlayerController.open(videoSource: videoUrl!, audioSource: audioUrl!);
+    //
 
     appLogger.LoggerI('播放的视频质量: $_playVideoQn ,音频质量: $_playAudioQn');
+  }
+
+  void _historyPlay() {
+    _ContinuePlaying = true;
+    if (_playViewUniteReply.history.currentVideo.progress != 0) {
+      final Duration postion = Duration(
+          seconds: _playViewUniteReply.history.currentVideo.progress.toInt());
+      if (_duration.value!.inSeconds == postion.inSeconds) {
+        seek(Duration(minutes: 0, seconds: 0));
+        play();
+      } else {
+        seek(postion);
+        BliliToast.show('续播当前视频');
+      }
+    }
+  }
+
+  void _modePlay() {
+    if (_playMode.value == PlayMode.repeatOnce) {
+      seek(Duration(minutes: 0, seconds: 0));
+      play();
+    } else {
+      if (_videoSelct.isNotEmpty &&
+          _SelectPlayIndex.value < _videoSelct.length - 1) {
+        selectPlay(
+            spmid: 'united.player-video-detail.relatedvideo.0',
+            aid: _videoSelct[_SelectPlayIndex.value + 1].aid.toInt(),
+            cid: _videoSelct[_SelectPlayIndex.value + 1].cid.toInt(),
+            trackid: '',
+            postHistory: false);
+      } else {
+        changeVideo(
+            spmid: 'united.player-video-detail.relatedvideo.0',
+            aid: _recommand.first.basicInfo.id.toInt(),
+            cid: _recommand.first.av.cid.toInt(),
+            trackid: _recommand.first.basicInfo.trackId,
+            postHistory: false);
+      }
+    }
+  }
+
+  void _setSelectPlayIndex() {
+    if (_videoSelct.isEmpty) return;
+    _SelectPlayIndex.value =
+        _videoSelct.indexWhere((UgcEpisode e) => e.aid.toInt() == _aid);
   }
 
   void _initStream() {
@@ -310,6 +407,46 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
+  Future<void> changeVideo(
+      {int? aid,
+      int? cid,
+      String? epid,
+      required String spmid,
+      String? trackid,
+      bool? postHistory = true}) async {
+    _ContinuePlaying = false;
+    if (postHistory!) _historyReport();
+    _aid = aid;
+    _cid = cid;
+    _epid = epid;
+    _spmid = spmid;
+    _trackid = trackid;
+    closeRecommandList();
+    await _View();
+    await _PlayViewUnite();
+    _setSource();
+  }
+
+  void selectPlay(
+      {int? aid,
+      int? cid,
+      String? epid,
+      required String spmid,
+      String? trackid,
+      bool? postHistory = true}) async {
+    _ContinuePlaying = false;
+    if (postHistory!) _historyReport();
+    _aid = aid;
+    _cid = cid;
+    _epid = epid;
+    _spmid = spmid;
+    _trackid = trackid;
+    await _PlayViewUnite();
+    _setSource();
+    _videoTitle.value = _videoSelct[_SelectPlayIndex.value].title;
+    _playTotal.value = _videoSelct[_SelectPlayIndex.value].vt.text + '播放';
+  }
+
   void setPlayMode() {
     PlayMode v;
     if (_playMode.value == PlayMode.order) {
@@ -334,6 +471,10 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void openRecommandList() {
+    if (_recommand.isEmpty) {
+      BliliToast.show('暂无推荐视频');
+      return;
+    }
     animationForward();
     _RecomandListcontroller.forward();
     _showRecomandList.value = true;
@@ -369,6 +510,11 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _durationStream =
         _mixPlayerController.player.stream.duration.listen((Duration duration) {
       _duration.value = duration;
+      if (duration.inSeconds != 0 &&
+          !_ContinuePlaying &&
+          _position.value!.inSeconds == duration.inSeconds) {
+        _historyPlay();
+      }
     });
   }
 
@@ -412,6 +558,10 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _completedStream =
         _mixPlayerController.player.stream.completed.listen((bool completed) {
       _completed.value = completed;
+      if (completed) {
+        _historyReport();
+        _modePlay();
+      }
     });
   }
 
@@ -450,35 +600,45 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
       }
 
       if (event.logicalKey == LogicalKeyboardKey.select) {
-        if (!_showController.value) {
+        if (!_showController.value &&
+            !_showRecomandList.value &&
+            !_showDrawer) {
           playOrPause();
           return true;
         }
       }
 
       if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
-        if (!_showController.value) {
+        if (!_showController.value &&
+            !_showRecomandList.value &&
+            !_showDrawer) {
           addVolume();
           return true;
         }
       }
 
       if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-        if (!_showController.value) {
+        if (!_showController.value &&
+            !_showRecomandList.value &&
+            !_showDrawer) {
           _backPosition();
           return true;
         }
       }
 
       if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
-        if (!_showController.value) {
+        if (!_showController.value &&
+            !_showRecomandList.value &&
+            !_showDrawer) {
           _forwardPosition();
           return true;
         }
       }
 
       if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
-        if (!_showController.value) {
+        if (!_showController.value &&
+            !_showRecomandList.value &&
+            !_showDrawer) {
           subtractVolume();
           return true;
         }

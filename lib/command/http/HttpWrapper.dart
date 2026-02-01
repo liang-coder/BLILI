@@ -14,7 +14,12 @@ class BInterceptorsWrapper {
   final Singer _singer = Singer();
   final List<String> _requestList = [];
   final List<String> _MapReKeys = ['result', 'data'];
-  final List<String> _NotParameUrl = [Api.qrcode, Api.qrcodePoll];
+  final List<String> _NotParameUrl = [
+    Api.qrcode,
+    Api.qrcodePoll,
+    Api.historyReport
+  ];
+  final List<String> _NotDataUrl = [Api.qrcodePoll, Api.historyReport];
 
   BInterceptorsWrapper() {
     _interceptorsWrapper = InterceptorsWrapper(
@@ -52,7 +57,7 @@ class BInterceptorsWrapper {
     final ResponseType responsetype = response.requestOptions.responseType;
     final int status = response.statusCode!;
 
-    if (path == Api.qrcodePoll) return response;
+    if (_NotDataUrl.contains(path)) return response;
 
     if (responsetype == ResponseType.json &&
         status == 200 &&
@@ -85,6 +90,7 @@ class BInterceptorsWrapper {
     final String path = error.requestOptions.path;
     _requestList.remove(path);
     final String errorMessage = _onErrorMessage(error);
+    appLogger.LoggerI('接口: $path发生错误');
     if (errorMessage != '未知错误') BliliToast.show(errorMessage);
     HttploadingMap.getHttploadingController(path).error();
     return error;
