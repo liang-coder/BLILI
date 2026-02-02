@@ -40,7 +40,7 @@ class Tv extends StatelessWidget {
               index_show: '',
               badge: isSeason2!
                   ? season2!.styleLabel ==null?'':season2!.styleLabel!.text
-                  : item!.styleLabel.text,
+                  : item!.styleLabel!.text,
             ),
             Text(
               isSeason2!

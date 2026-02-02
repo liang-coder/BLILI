@@ -205,22 +205,34 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
     final httpresult =
         await ApiRe.SearchType(queryParameters: Params.add(Newparams: parame));
 
-    try {
-      if (type == '7') {
-        final SearchType bangumi = SearchType.fromJson(httpresult.data);
-        if (bangumi.items != null) {
-          _searchBangumi.add(bangumi);
-        }
-      } else {
-        final SearchType video = SearchType.fromJson(httpresult.data);
-        if (video.items != null) {
-          _searchBangumi.add(video);
-        }
+    if (type == '7') {
+      final SearchType bangumi = SearchType.fromJson(httpresult.data);
+      if (bangumi.items != null) {
+        _searchBangumi.add(bangumi);
       }
-    } catch (e) {
-      _httploadingController3.error();
-      throw '数据出错$e';
+    } else {
+      final SearchType video = SearchType.fromJson(httpresult.data);
+      if (video.items != null) {
+        _searchVideo.add(video);
+      }
     }
+
+    // try {
+    //   if (type == '7') {
+    //     final SearchType bangumi = SearchType.fromJson(httpresult.data);
+    //     if (bangumi.items != null) {
+    //       _searchBangumi.add(bangumi);
+    //     }
+    //   } else {
+    //     final SearchType video = SearchType.fromJson(httpresult.data);
+    //     if (video.items != null) {
+    //       _searchBangumi.add(video);
+    //     }
+    //   }
+    // } catch (e) {
+    //   _httploadingController3.error();
+    //   throw '数据出错$e';
+    // }
 
     if (type == '7') {
       _bangumiPage += 1;

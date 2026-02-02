@@ -250,9 +250,10 @@ Extra _$ExtraFromJson(Map<String, dynamic> json) => Extra(
       layout: json['layout'] as String,
       macroReplacePriority: (json['macro_replace_priority'] as num).toInt(),
       ocpxTargetType: (json['ocpx_target_type'] as num).toInt(),
-      openWhitelist: (json['open_whitelist'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      openWhitelist: (json['open_whitelist'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       preloadLandingpage: (json['preload_landingpage'] as num).toInt(),
       productId: (json['product_id'] as num).toInt(),
       reportTime: (json['report_time'] as num).toInt(),

@@ -55,7 +55,7 @@ class Item {
   @JsonKey(name: "goto")
   String goto;
   @JsonKey(name: "ptime")
-  int ptime;
+  int? ptime;
   @JsonKey(name: "season_id")
   int seasonId;
   @JsonKey(name: "season_type")
@@ -67,25 +67,25 @@ class Item {
   @JsonKey(name: "style")
   String style;
   @JsonKey(name: "styles")
-  String styles;
+  String? styles;
   @JsonKey(name: "styles_v2")
   String stylesV2;
   @JsonKey(name: "style_label")
-  StyleLabel styleLabel;
+  StyleLabel? styleLabel;
   @JsonKey(name: "cv")
-  String cv;
+  String? cv;
   @JsonKey(name: "rating")
-  double rating;
+  double? rating;
   @JsonKey(name: "vote")
-  int vote;
+  int? vote;
   @JsonKey(name: "area")
   String area;
   @JsonKey(name: "staff")
-  String staff;
+  String? staff;
   @JsonKey(name: "author_prefix")
   String authorPrefix;
   @JsonKey(name: "is_selection")
-  int isSelection;
+  int? isSelection;
   @JsonKey(name: "pub_time")
   String pubTime;
   @JsonKey(name: "badge")
@@ -93,7 +93,7 @@ class Item {
   @JsonKey(name: "episodes")
   List<Episode> episodes;
   @JsonKey(name: "label")
-  String label;
+  String? label;
   @JsonKey(name: "watch_button")
   WatchButton watchButton;
   @JsonKey(name: "follow_button")
@@ -101,11 +101,11 @@ class Item {
   @JsonKey(name: "selection_style")
   String selectionStyle;
   @JsonKey(name: "episodes_new")
-  List<EpisodesNew> episodesNew;
+  List<EpisodesNew>? episodesNew;
   @JsonKey(name: "is_sug_style_exp")
   int isSugStyleExp;
   @JsonKey(name: "badges")
-  List<StyleLabel> badges;
+  List<StyleLabel>? badges;
   @JsonKey(name: "badges_v2")
   List<StyleLabel> badgesV2;
   @JsonKey(name: "more_search_type")
@@ -158,32 +158,32 @@ class Item {
     required this.uri,
     required this.param,
     required this.goto,
-    required this.ptime,
+    this.ptime,
     required this.seasonId,
     required this.seasonType,
     required this.seasonTypeName,
     required this.mediaType,
     required this.style,
-    required this.styles,
+    this.styles,
     required this.stylesV2,
-    required this.styleLabel,
-    required this.cv,
-    required this.rating,
-    required this.vote,
+    this.styleLabel,
+    this.cv,
+    this.rating,
+    this.vote,
     required this.area,
-    required this.staff,
+    this.staff,
     required this.authorPrefix,
-    required this.isSelection,
+    this.isSelection,
     required this.pubTime,
     required this.badge,
-    required this.episodes,
-    required this.label,
+    this.episodes = const [],
+    this.label,
     required this.watchButton,
     required this.followButton,
     required this.selectionStyle,
-    required this.episodesNew,
+    this.episodesNew = const [],
     required this.isSugStyleExp,
-    required this.badges,
+    this.badges = const [],
     required this.badgesV2,
     required this.moreSearchType,
     required this.shareFrom,

@@ -360,7 +360,7 @@ class Extra {
   @JsonKey(name: "ocpx_target_type")
   int ocpxTargetType;
   @JsonKey(name: "open_whitelist")
-  List<String> openWhitelist;
+  List<String>? openWhitelist;
   @JsonKey(name: "preload_landingpage")
   int preloadLandingpage;
   @JsonKey(name: "product_id")
@@ -425,7 +425,7 @@ class Extra {
     required this.layout,
     required this.macroReplacePriority,
     required this.ocpxTargetType,
-    required this.openWhitelist,
+     this.openWhitelist = const [],
     required this.preloadLandingpage,
     required this.productId,
     required this.reportTime,
