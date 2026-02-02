@@ -29,9 +29,9 @@ class viewReq {
       ExtraContentEntry(key: 'nature_ad', value: '')
     ]);
 
-    if (aid != null) {
-      viewReq.aid = Int64(aid);
-      viewReq.trackId = trackId!;
+    if (trackId != null) {
+      viewReq.aid = Int64(aid!);
+      viewReq.trackId = trackId;
     }
 
     viewReq.relate = relate;

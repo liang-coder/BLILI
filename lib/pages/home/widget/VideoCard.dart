@@ -5,14 +5,14 @@ import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart' hide Card;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:blili/modules/homePage/feedIndex.dart';
+import 'package:blili/modules/homePage/feedIndex.dart' as feedIndex;
 import 'package:blili/command/images/images.dart';
 import 'package:get/get.dart';
 import 'package:blili/routes/app_pages.dart';
 import '../spmid.dart';
 
 class Videocard extends StatelessWidget {
-  final Item item;
+  final feedIndex.Item item;
   const Videocard({super.key, required this.item});
 
   @override
@@ -61,7 +61,7 @@ class Videocard extends StatelessWidget {
                   height: 35.w,
                 ),
                 Text(
-                  item.args.upName,
+                  item.args.upName ?? '',
                   style: TextStyle(
                       fontSize: 24.sp,
                       color: Theme.of(context).textTheme.displayMedium!.color),

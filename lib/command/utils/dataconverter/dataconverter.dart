@@ -159,4 +159,7 @@ class DataConverter {
     }
   }
 
+  static String NumtoName(String text) {
+    return int.tryParse(text) != null ? '第$text集' : text;
+  }
 }

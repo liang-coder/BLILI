@@ -69,6 +69,9 @@ Module _$ModuleFromJson(Map<String, dynamic> json) => Module(
       wid: (json['wid'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList(),
+      follow: json['follow'] == null
+          ? null
+          : ModuleFollow.fromJson(json['follow'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ModuleToJson(Module instance) => <String, dynamic>{
@@ -88,6 +91,7 @@ Map<String, dynamic> _$ModuleToJson(Module instance) => <String, dynamic>{
       'title': instance.title,
       'type': instance.type,
       'wid': instance.wid,
+      'follow': instance.follow,
     };
 
 Attr _$AttrFromJson(Map<String, dynamic> json) => Attr(
@@ -106,19 +110,30 @@ Map<String, dynamic> _$AttrToJson(Attr instance) => <String, dynamic>{
       'show_timeline': instance.showTimeline,
     };
 
+ModuleFollow _$ModuleFollowFromJson(Map<String, dynamic> json) => ModuleFollow(
+      count: (json['count'] as num).toInt(),
+      update: (json['update'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$ModuleFollowToJson(ModuleFollow instance) =>
+    <String, dynamic>{
+      'count': instance.count,
+      'update': instance.update,
+    };
+
 Region _$RegionFromJson(Map<String, dynamic> json) => Region(
-      icon: json['icon'] as String,
       title: json['title'] as String,
       url: json['url'] as String,
+      icon: json['icon'] as String?,
       report: json['report'] == null
           ? null
           : RegionReport.fromJson(json['report'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RegionToJson(Region instance) => <String, dynamic>{
-      'icon': instance.icon,
       'title': instance.title,
       'url': instance.url,
+      'icon': instance.icon,
       'report': instance.report,
     };
 
@@ -139,7 +154,7 @@ Map<String, dynamic> _$RegionReportToJson(RegionReport instance) =>
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       aid: (json['aid'] as num?)?.toInt(),
-      badge: $enumDecodeNullable(_$BadgeEnumMap, json['badge']),
+      badge: json['badge'] as String?,
       badgeInfo: json['badge_info'] == null
           ? null
           : BadgeInfo.fromJson(json['badge_info'] as Map<String, dynamic>),
@@ -161,26 +176,38 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       newEp: json['new_ep'] == null
           ? null
           : NewEp.fromJson(json['new_ep'] as Map<String, dynamic>),
-      oid: (json['oid'] as num?)?.toInt(),
+      oid: (json['oid'] as num).toInt(),
       report: json['report'] == null
           ? null
           : ItemReport.fromJson(json['report'] as Map<String, dynamic>),
       score: (json['score'] as num).toInt(),
-      seasonId: (json['season_id'] as num?)?.toInt(),
+      seasonId: (json['season_id'] as num).toInt(),
       seasonStyles: json['season_styles'] as String?,
       seasonType: (json['season_type'] as num?)?.toInt(),
       stat: json['stat'] == null
           ? null
           : Stat.fromJson(json['stat'] as Map<String, dynamic>),
       title: json['title'] as String,
-      type: $enumDecodeNullable(_$TypeEnumEnumMap, json['type']),
+      type: json['type'] as String,
       wid: (json['wid'] as num?)?.toInt(),
+      descType: (json['desc_type'] as num?)?.toInt(),
+      follow: json['follow'] == null
+          ? null
+          : ItemFollow.fromJson(json['follow'] as Map<String, dynamic>),
+      fromSpmid: json['from_spmid'] as String?,
+      progress: json['progress'] == null
+          ? null
+          : Progress.fromJson(json['progress'] as Map<String, dynamic>),
+      canWatch: (json['can_watch'] as num?)?.toInt(),
       isAuto: (json['is_auto'] as num?)?.toInt(),
+      status: json['status'] == null
+          ? null
+          : Status.fromJson(json['status'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'aid': instance.aid,
-      'badge': _$BadgeEnumMap[instance.badge],
+      'badge': instance.badge,
       'badge_info': instance.badgeInfo,
       'badge_type': instance.badgeType,
       'blink': instance.blink,
@@ -206,51 +233,57 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'season_type': instance.seasonType,
       'stat': instance.stat,
       'title': instance.title,
-      'type': _$TypeEnumEnumMap[instance.type],
+      'type': instance.type,
       'wid': instance.wid,
+      'desc_type': instance.descType,
+      'follow': instance.follow,
+      'from_spmid': instance.fromSpmid,
+      'progress': instance.progress,
+      'can_watch': instance.canWatch,
       'is_auto': instance.isAuto,
+      'status': instance.status,
     };
 
-const _$BadgeEnumMap = {
-  Badge.BADGE: '独家',
-  Badge.EMPTY: '大会员',
-  Badge.FLUFFY: '出品',
-  Badge.PURPLE: '限时免费',
-  Badge.STICKY: '',
-  Badge.TENTACLED: '会员特价',
-};
-
-const _$TypeEnumEnumMap = {
-  TypeEnum.PGC: 'PGC',
-};
-
 BadgeInfo _$BadgeInfoFromJson(Map<String, dynamic> json) => BadgeInfo(
-      bgColor: $enumDecode(_$BgColorEnumMap, json['bg_color']),
-      bgColorNight: $enumDecode(_$BgColorNightEnumMap, json['bg_color_night']),
-      text: $enumDecode(_$BadgeEnumMap, json['text']),
+      bgColor: json['bg_color'] as String,
+      bgColorNight: json['bg_color_night'] as String,
+      text: json['text'] as String,
       textSize: (json['text_size'] as num).toInt(),
     );
 
 Map<String, dynamic> _$BadgeInfoToJson(BadgeInfo instance) => <String, dynamic>{
-      'bg_color': _$BgColorEnumMap[instance.bgColor]!,
-      'bg_color_night': _$BgColorNightEnumMap[instance.bgColorNight]!,
-      'text': _$BadgeEnumMap[instance.text]!,
+      'bg_color': instance.bgColor,
+      'bg_color_night': instance.bgColorNight,
+      'text': instance.text,
       'text_size': instance.textSize,
     };
 
-const _$BgColorEnumMap = {
-  BgColor.EMPTY: '',
-  BgColor.FB7299: '#FB7299',
-  BgColor.FF7_F24: '#FF7F24',
-  BgColor.THE_00_C0_FF: '#00C0FF',
-};
+ItemFollow _$ItemFollowFromJson(Map<String, dynamic> json) => ItemFollow(
+      desc: Desc.fromJson(json['desc'] as Map<String, dynamic>),
+      isFinish: (json['is_finish'] as num).toInt(),
+      isStarted: (json['is_started'] as num).toInt(),
+      newEp: NewEp.fromJson(json['new_ep'] as Map<String, dynamic>),
+      totalCount: (json['total_count'] as num).toInt(),
+    );
 
-const _$BgColorNightEnumMap = {
-  BgColorNight.D44_E7_D: '#D44E7D',
-  BgColorNight.D66011: '#D66011',
-  BgColorNight.EMPTY: '',
-  BgColorNight.THE_0_B91_BE: '#0B91BE',
-};
+Map<String, dynamic> _$ItemFollowToJson(ItemFollow instance) =>
+    <String, dynamic>{
+      'desc': instance.desc,
+      'is_finish': instance.isFinish,
+      'is_started': instance.isStarted,
+      'new_ep': instance.newEp,
+      'total_count': instance.totalCount,
+    };
+
+Desc _$DescFromJson(Map<String, dynamic> json) => Desc(
+      text: json['text'] as String,
+      type: (json['type'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$DescToJson(Desc instance) => <String, dynamic>{
+      'text': instance.text,
+      'type': instance.type,
+    };
 
 NewEp _$NewEpFromJson(Map<String, dynamic> json) => NewEp(
       cover: json['cover'] as String,
@@ -264,20 +297,36 @@ Map<String, dynamic> _$NewEpToJson(NewEp instance) => <String, dynamic>{
       'index_show': instance.indexShow,
     };
 
+Progress _$ProgressFromJson(Map<String, dynamic> json) => Progress(
+      bar: (json['bar'] as num).toInt(),
+      lastEpDesc: json['last_ep_desc'] as String,
+      lastEpId: (json['last_ep_id'] as num).toInt(),
+      lastEpIndex: json['last_ep_index'] as String,
+      lastTime: (json['last_time'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$ProgressToJson(Progress instance) => <String, dynamic>{
+      'bar': instance.bar,
+      'last_ep_desc': instance.lastEpDesc,
+      'last_ep_id': instance.lastEpId,
+      'last_ep_index': instance.lastEpIndex,
+      'last_time': instance.lastTime,
+    };
+
 ItemReport _$ItemReportFromJson(Map<String, dynamic> json) => ItemReport(
-      actionId: json['action_id'] as String,
-      avid: json['avid'] as String,
-      cardType: $enumDecode(_$TypeEnumMap, json['card_type']),
+      actionId: json['action_id'] as String?,
+      avid: json['avid'] as String?,
+      cardType: json['card_type'] as String?,
       contentType: json['content_type'] as String?,
       epid: json['epid'] as String,
       index: json['index'] as String,
-      itemId: json['item_id'] as String,
+      itemId: json['item_id'] as String?,
       moduleId: json['module_id'] as String,
-      moduleType: $enumDecode(_$TypeEnumMap, json['module_type']),
-      ogvSessionId: json['ogv_session_id'] as String,
-      oid: json['oid'] as String,
-      playlistId: json['playlist_id'] as String,
-      positionId: json['position_id'] as String,
+      moduleType: json['module_type'] as String,
+      ogvSessionId: json['ogv_session_id'] as String?,
+      oid: json['oid'] as String?,
+      playlistId: json['playlist_id'] as String?,
+      positionId: json['position_id'] as String?,
       seasonId: json['season_id'] as String,
       seasonType: json['season_type'] as String,
     );
@@ -286,13 +335,13 @@ Map<String, dynamic> _$ItemReportToJson(ItemReport instance) =>
     <String, dynamic>{
       'action_id': instance.actionId,
       'avid': instance.avid,
-      'card_type': _$TypeEnumMap[instance.cardType]!,
+      'card_type': instance.cardType,
       'content_type': instance.contentType,
       'epid': instance.epid,
       'index': instance.index,
       'item_id': instance.itemId,
       'module_id': instance.moduleId,
-      'module_type': _$TypeEnumMap[instance.moduleType]!,
+      'module_type': instance.moduleType,
       'ogv_session_id': instance.ogvSessionId,
       'oid': instance.oid,
       'playlist_id': instance.playlistId,
@@ -300,11 +349,6 @@ Map<String, dynamic> _$ItemReportToJson(ItemReport instance) =>
       'season_id': instance.seasonId,
       'season_type': instance.seasonType,
     };
-
-const _$TypeEnumMap = {
-  Type.BANNER_V3: 'banner_v3',
-  Type.CARD: 'card',
-};
 
 Stat _$StatFromJson(Map<String, dynamic> json) => Stat(
       danmaku: (json['danmaku'] as num).toInt(),
@@ -320,18 +364,30 @@ Map<String, dynamic> _$StatToJson(Stat instance) => <String, dynamic>{
       'view': instance.view,
     };
 
+Status _$StatusFromJson(Map<String, dynamic> json) => Status(
+      follow: (json['follow'] as num).toInt(),
+      followStatus: (json['follow_status'] as num).toInt(),
+      like: (json['like'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$StatusToJson(Status instance) => <String, dynamic>{
+      'follow': instance.follow,
+      'follow_status': instance.followStatus,
+      'like': instance.like,
+    };
+
 ModuleReport _$ModuleReportFromJson(Map<String, dynamic> json) => ModuleReport(
-      actionId: json['action_id'] as String,
+      actionId: json['action_id'] as String?,
       moduleId: json['module_id'] as String,
-      moduleType: $enumDecode(_$TypeEnumMap, json['module_type']),
-      ogvSessionId: json['ogv_session_id'] as String,
+      moduleType: json['module_type'] as String,
+      ogvSessionId: json['ogv_session_id'] as String?,
     );
 
 Map<String, dynamic> _$ModuleReportToJson(ModuleReport instance) =>
     <String, dynamic>{
       'action_id': instance.actionId,
       'module_id': instance.moduleId,
-      'module_type': _$TypeEnumMap[instance.moduleType]!,
+      'module_type': instance.moduleType,
       'ogv_session_id': instance.ogvSessionId,
     };
 

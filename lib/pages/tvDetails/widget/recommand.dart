@@ -3,16 +3,21 @@ import 'package:blili/widget/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../controllers/tv_details_controller.dart';
 
 class Recommand extends StatelessWidget {
   final RelateCard relateCard;
-  const Recommand({super.key, required this.relateCard});
+  final TvDetailsController tvDetailsController;
+  const Recommand(
+      {super.key, required this.relateCard, required this.tvDetailsController});
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => tvDetailsController.newTv(
+          cover: relateCard.bangumi.newEp.cover,
+          epid: relateCard.bangumi.seasonId.toString()),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: Column(

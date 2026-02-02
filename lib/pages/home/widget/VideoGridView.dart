@@ -1,7 +1,7 @@
 import 'package:blili/command/http/listViewRe.dart';
 import 'VideoCard.dart';
 import 'package:flutter/material.dart' hide Card;
-import 'package:blili/modules/homePage/feedIndex.dart';
+import 'package:blili/modules/homePage/feedIndex.dart' as feedIndex;
 import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
 
 class Videogridview extends StatelessWidget {
@@ -16,7 +16,7 @@ class Videogridview extends StatelessWidget {
   Widget build(BuildContext context) {
     final ScrollController _scrollController = ScrollController();
     ListViewRe().R(_scrollController, request);
-    final bool isItem = videoData[0] is Item;
+    final bool isItem = videoData[0] is feedIndex.Item;
     return GridView.builder(
         controller: _scrollController,
         // padding: EdgeInsets.only(top: 20.w),
@@ -25,7 +25,7 @@ class Videogridview extends StatelessWidget {
             crossAxisCount: 4, childAspectRatio: 1.2),
         itemBuilder: (context, index) {
           if (isItem) {
-            final Item video = videoData[index];
+            final feedIndex.Item video = videoData[index];
             return Videocard(
               item: video,
             );

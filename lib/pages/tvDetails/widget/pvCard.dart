@@ -1,19 +1,36 @@
+import 'dart:developer';
+
 import 'package:blili/command/utils/date/Date.dart';
+import 'package:blili/routes/app_pages.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart';
 import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import '../controllers/tv_details_controller.dart';
 
 class Pvcard extends StatelessWidget {
   final ViewEpisode viewEpisode;
-
-  const Pvcard({super.key, required this.viewEpisode});
+  final int modelIndex;
+  final TvDetailsController tvDetailsController;
+  const Pvcard(
+      {super.key,
+      required this.viewEpisode,
+      required this.tvDetailsController,
+      required this.modelIndex});
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => Get.toNamed(Routes.PLAYER, arguments: {
+        'aid': viewEpisode.aid.toInt(),
+        'cid': viewEpisode.cid.toInt(),
+        'spmid': tvDetailsController.spmid,
+        'epid': viewEpisode.epId.toString(),
+        'TvSelect': tvDetailsController.viewReply.value!.tab.tabModule[0]
+            .introduction.modules[modelIndex].sectionData.episodes,
+      }),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: Column(
@@ -36,18 +53,21 @@ class Pvcard extends StatelessWidget {
                     color: Theme.of(context).textTheme.displayMedium!.color),
               ),
             ),
-            SizedBox(width: 300.w,child:  Padding(
-              padding: EdgeInsets.only(top: 2.w),
-              child: Text(
-                viewEpisode.longTitle,
-                maxLines: 1,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontSize: 26.sp,
-                    color: Theme.of(context).textTheme.displayMedium!.color),
+            SizedBox(
+              width: 300.w,
+              child: Padding(
+                padding: EdgeInsets.only(top: 2.w),
+                child: Text(
+                  viewEpisode.longTitle,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: 26.sp,
+                      color: Theme.of(context).textTheme.displayMedium!.color),
+                ),
               ),
-            ),),
+            ),
           ],
         ),
       ),

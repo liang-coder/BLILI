@@ -1,6 +1,9 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'package:blili/command/http/params.dart';
+import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart'
+    as tvViewReply;
+import 'package:blili/protos/dart/tvDetails/viewPgcAny/viewPgcAny.pb.dart';
 import 'package:get/get.dart';
 import 'package:blili/command/http/api.dart';
 import 'package:blili/command/http/apiRe.dart';
@@ -15,21 +18,22 @@ class TvDetailsController extends GetxController {
   //TODO: Implement TvDetailsController
 
   final count = 0.obs;
-  final String _from = Get.arguments['from'];
-  final String _epid = Get.arguments['epid'];
-  final String _cover = Get.arguments['cover'];
-  final String _parame = Get.arguments['parame'];
-  // ViewReply? _viewReply;
+  final String _from = '23';
+  final String _spmid = Get.arguments['spmid'];
+  String _epid = Get.arguments['epid'];
+  String _cover = Get.arguments['cover'];
+  //
+  late String media_id;
   Rxn<ViewReply> _viewReply = Rxn<ViewReply>();
+  ViewPgcAny? _viewPgcAny;
   SynthesizeFeed? _synthesizeFeedData;
-  final String v = 's';
 
   final HttploadingController _httploadingController =
-      HttploadingController(api: Api.View);
+      HttploadingController(api: Api.synthesizeFeed);
   @override
   void onInit() {
     super.onInit();
-    _PlayView(from: _from, epid: _epid);
+    _synthesizeFeed();
   }
 
   @override
@@ -45,15 +49,21 @@ class TvDetailsController extends GetxController {
 
   void increment() => count.value++;
   String get cover => _cover;
+  String get spmid => _spmid;
   Rxn<ViewReply> get viewReply => _viewReply;
   HttploadingController get httploadingController => _httploadingController;
   VoidCallback get PlayView => () => _PlayView(from: _from, epid: _epid);
   SynthesizeFeed get synthesizeFeedData => _synthesizeFeedData!;
 
+  // type.googleapis.com/bilibili.app.viewunite.pgcanymodel.ViewPgcAny
+
+  // sectionId
+
   Future<void> _synthesizeFeed() async {
+    await _PlayView(from: _from, epid: _epid);
     final Map<String, dynamic> parame = {
       'cursor': '-1_-1',
-      'media_id': _parame,
+      'media_id': _viewPgcAny!.ogvData.mediaId.toString(),
       'oid': '0',
       'otype': '0',
       'ps': '20',
@@ -66,22 +76,37 @@ class TvDetailsController extends GetxController {
     _synthesizeFeedData = SynthesizeFeed.fromJson(httpresult.data);
   }
 
-  void _PlayView({required String from, required String epid}) async {
-    await _synthesizeFeed();
+  String getmore() {
+    String more = '';
+    if (_viewPgcAny!.ogvData.publish.updateInfoDesc == '') {
+      more = _viewPgcAny!.ogvData.publish.releaseDateShow;
+    } else {
+      more = _viewPgcAny!.ogvData.publish.updateInfoDesc;
+    }
+    return more;
+  }
+
+
+  void newTv({required String cover, required String epid}){
+    _cover = cover;
+    _epid = epid;
+    _synthesizeFeed();
+  }
+
+
+
+  Future<void> _PlayView({required String from, required String epid}) async {
     final httpresult = await ApiRe.View(
         option: Options(responseType: ResponseType.bytes),
         data: DataConverter.gzipCompress(viewReq().result(
-          from_spmid: 'search.search-result.0.0',
+          from_spmid: _spmid,
           season_id: epid,
         )));
 
     _viewReply.value = ViewReply.fromBuffer(
         DataConverter.byteGzipconvertbyte(httpresult.data)!);
 
-    print(_viewReply);
-
-    log(_viewReply.value!.writeToJson().toString());
-
-    // print()
+    final List<int> supplement = _viewReply.value!.supplement.value;
+    _viewPgcAny = ViewPgcAny.fromBuffer(supplement);
   }
 }

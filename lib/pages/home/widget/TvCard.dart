@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:blili/routes/app_pages.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:blili/widget/badge.dart';
 import 'package:flutter/material.dart' hide Badge;
@@ -5,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:blili/modules/homePage/bangumi.dart' as bangumi;
 import 'package:blili/modules/homePage/cinema.dart' as cinema;
 import 'package:get/get.dart';
+import '../spmid.dart';
 
 class Tvcard extends StatelessWidget {
   bangumi.Item? item;
@@ -16,7 +20,12 @@ class Tvcard extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => Get.toNamed(Routes.TV_DETAILS, arguments: {
+        'epid':
+            isbangumi! ? item!.seasonId.toString() : item2!.seasonId.toString(),
+        'cover': isbangumi! ? item!.cover : item2!.cover,
+        'spmid': Spmid.spmid
+      }),
       child: Padding(
         padding: EdgeInsets.only(top: 12.w, bottom: 12.w),
         child: Column(

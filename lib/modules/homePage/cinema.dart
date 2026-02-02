@@ -90,6 +90,8 @@ class Module {
   int type;
   @JsonKey(name: "wid")
   List<int> wid;
+  @JsonKey(name: "follow")
+  ModuleFollow? follow;
 
   Module({
     required this.attr,
@@ -108,6 +110,7 @@ class Module {
     required this.title,
     required this.type,
     required this.wid,
+    this.follow,
   });
 
   factory Module.fromJson(Map<String, dynamic> json) => _$ModuleFromJson(json);
@@ -142,20 +145,37 @@ class Attr {
 }
 
 @JsonSerializable()
+class ModuleFollow {
+  @JsonKey(name: "count")
+  int count;
+  @JsonKey(name: "update")
+  int update;
+
+  ModuleFollow({
+    required this.count,
+    required this.update,
+  });
+
+  factory ModuleFollow.fromJson(Map<String, dynamic> json) => _$ModuleFollowFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ModuleFollowToJson(this);
+}
+
+@JsonSerializable()
 class Region {
-  @JsonKey(name: "icon")
-  String icon;
   @JsonKey(name: "title")
   String title;
   @JsonKey(name: "url")
   String url;
+  @JsonKey(name: "icon")
+  String? icon;
   @JsonKey(name: "report")
   RegionReport? report;
 
   Region({
-    required this.icon,
     required this.title,
     required this.url,
+    this.icon,
     this.report,
   });
 
@@ -209,6 +229,8 @@ class Item {
   String desc;
   @JsonKey(name: "episode_id")
   int? episodeId;
+  @JsonKey(name: "gif")
+  String? gif;
   @JsonKey(name: "has_next")
   int? hasNext;
   @JsonKey(name: "img_badge")
@@ -222,7 +244,7 @@ class Item {
   @JsonKey(name: "link")
   String link;
   @JsonKey(name: "link_type")
-  int linkType;
+  int? linkType;
   @JsonKey(name: "link_value")
   int? linkValue;
   @JsonKey(name: "new_ep")
@@ -247,16 +269,24 @@ class Item {
   String? type;
   @JsonKey(name: "wid")
   int? wid;
-  @JsonKey(name: "bottom_left_badge")
-  BottomLeftBadge? bottomLeftBadge;
-  @JsonKey(name: "cursor")
-  String? cursor;
-  @JsonKey(name: "is_auto")
-  int? isAuto;
-  @JsonKey(name: "sources")
-  String? sources;
+  @JsonKey(name: "desc_type")
+  int? descType;
+  @JsonKey(name: "follow")
+  ItemFollow? follow;
   @JsonKey(name: "from_spmid")
   String? fromSpmid;
+  @JsonKey(name: "sources")
+  String? sources;
+  @JsonKey(name: "bottom_left_badge")
+  BottomLeftBadge? bottomLeftBadge;
+  @JsonKey(name: "can_watch")
+  int? canWatch;
+  @JsonKey(name: "cursor")
+  String? cursor;
+  @JsonKey(name: "status")
+  Status? status;
+  @JsonKey(name: "is_auto")
+  int? isAuto;
   @JsonKey(name: "item_show_type")
   int? itemShowType;
   @JsonKey(name: "spmid")
@@ -275,13 +305,14 @@ class Item {
     required this.cover,
     required this.desc,
     this.episodeId,
+    this.gif,
     this.hasNext,
     this.imgBadge,
     required this.isPreview,
     this.itemId,
     required this.itemShowStatus,
     required this.link,
-    required this.linkType,
+    this.linkType,
     this.linkValue,
     this.newEp,
     this.oid,
@@ -294,11 +325,15 @@ class Item {
     required this.title,
     this.type,
     this.wid,
-    this.bottomLeftBadge,
-    this.cursor,
-    this.isAuto,
-    this.sources,
+    this.descType,
+    this.follow,
     this.fromSpmid,
+    this.sources,
+    this.bottomLeftBadge,
+    this.canWatch,
+    this.cursor,
+    this.status,
+    this.isAuto,
     this.itemShowType,
     this.spmid,
     this.uniqueId,
@@ -350,6 +385,49 @@ class BottomLeftBadge {
 }
 
 @JsonSerializable()
+class ItemFollow {
+  @JsonKey(name: "is_finish")
+  int isFinish;
+  @JsonKey(name: "is_started")
+  int isStarted;
+  @JsonKey(name: "new_ep")
+  NewEp newEp;
+  @JsonKey(name: "total_count")
+  int totalCount;
+  @JsonKey(name: "desc")
+  Desc? desc;
+
+  ItemFollow({
+    required this.isFinish,
+    required this.isStarted,
+    required this.newEp,
+    required this.totalCount,
+    this.desc,
+  });
+
+  factory ItemFollow.fromJson(Map<String, dynamic> json) => _$ItemFollowFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ItemFollowToJson(this);
+}
+
+@JsonSerializable()
+class Desc {
+  @JsonKey(name: "text")
+  String text;
+  @JsonKey(name: "type")
+  int type;
+
+  Desc({
+    required this.text,
+    required this.type,
+  });
+
+  factory Desc.fromJson(Map<String, dynamic> json) => _$DescFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DescToJson(this);
+}
+
+@JsonSerializable()
 class NewEp {
   @JsonKey(name: "cover")
   String cover;
@@ -372,11 +450,11 @@ class NewEp {
 @JsonSerializable()
 class ItemReport {
   @JsonKey(name: "action_id")
-  String actionId;
+  String? actionId;
   @JsonKey(name: "avid")
-  String avid;
+  String? avid;
   @JsonKey(name: "card_type")
-  String cardType;
+  String? cardType;
   @JsonKey(name: "content_type")
   String? contentType;
   @JsonKey(name: "epid")
@@ -384,19 +462,19 @@ class ItemReport {
   @JsonKey(name: "index")
   String? index;
   @JsonKey(name: "item_id")
-  String itemId;
+  String? itemId;
   @JsonKey(name: "module_id")
   String moduleId;
   @JsonKey(name: "module_type")
   String moduleType;
   @JsonKey(name: "ogv_session_id")
-  String ogvSessionId;
+  String? ogvSessionId;
   @JsonKey(name: "oid")
-  String oid;
+  String? oid;
   @JsonKey(name: "playlist_id")
   String? playlistId;
   @JsonKey(name: "position_id")
-  String positionId;
+  String? positionId;
   @JsonKey(name: "season_id")
   String seasonId;
   @JsonKey(name: "season_type")
@@ -409,19 +487,19 @@ class ItemReport {
   String? inlineEpid;
 
   ItemReport({
-    required this.actionId,
-    required this.avid,
-    required this.cardType,
+    this.actionId,
+    this.avid,
+    this.cardType,
     this.contentType,
     required this.epid,
     this.index,
-    required this.itemId,
+    this.itemId,
     required this.moduleId,
     required this.moduleType,
-    required this.ogvSessionId,
-    required this.oid,
+    this.ogvSessionId,
+    this.oid,
     this.playlistId,
-    required this.positionId,
+    this.positionId,
     required this.seasonId,
     required this.seasonType,
     this.sources,
@@ -441,14 +519,14 @@ class Stat {
   @JsonKey(name: "follow")
   int follow;
   @JsonKey(name: "follow_view")
-  String followView;
+  String? followView;
   @JsonKey(name: "view")
   int view;
 
   Stat({
     required this.danmaku,
     required this.follow,
-    required this.followView,
+    this.followView,
     required this.view,
   });
 
@@ -458,21 +536,41 @@ class Stat {
 }
 
 @JsonSerializable()
+class Status {
+  @JsonKey(name: "follow")
+  int follow;
+  @JsonKey(name: "follow_status")
+  int followStatus;
+  @JsonKey(name: "like")
+  int like;
+
+  Status({
+    required this.follow,
+    required this.followStatus,
+    required this.like,
+  });
+
+  factory Status.fromJson(Map<String, dynamic> json) => _$StatusFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StatusToJson(this);
+}
+
+@JsonSerializable()
 class ModuleReport {
   @JsonKey(name: "action_id")
-  String actionId;
+  String? actionId;
   @JsonKey(name: "module_id")
   String moduleId;
   @JsonKey(name: "module_type")
   String moduleType;
   @JsonKey(name: "ogv_session_id")
-  String ogvSessionId;
+  String? ogvSessionId;
 
   ModuleReport({
-    required this.actionId,
+    this.actionId,
     required this.moduleId,
     required this.moduleType,
-    required this.ogvSessionId,
+    this.ogvSessionId,
   });
 
   factory ModuleReport.fromJson(Map<String, dynamic> json) => _$ModuleReportFromJson(json);

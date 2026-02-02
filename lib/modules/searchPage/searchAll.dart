@@ -370,7 +370,7 @@ class Extra {
   @JsonKey(name: "sales_type")
   int salesType;
   @JsonKey(name: "show_1s_urls")
-  List<String> show1SUrls;
+  List<String>? show1SUrls;
   @JsonKey(name: "show_urls")
   List<String> showUrls;
   @JsonKey(name: "special_industry")
@@ -430,7 +430,7 @@ class Extra {
     required this.productId,
     required this.reportTime,
     required this.salesType,
-    required this.show1SUrls,
+    this.show1SUrls,
     required this.showUrls,
     required this.specialIndustry,
     required this.specialIndustryStyle,
@@ -1181,7 +1181,7 @@ class Movie2 {
   @JsonKey(name: "goto")
   String goto;
   @JsonKey(name: "ptime")
-  int ptime;
+  int? ptime;
   @JsonKey(name: "season_id")
   int seasonId;
   @JsonKey(name: "season_type")
@@ -1203,13 +1203,13 @@ class Movie2 {
   @JsonKey(name: "rating")
   double? rating;
   @JsonKey(name: "vote")
-  int vote;
+  int? vote;
   @JsonKey(name: "area")
   String area;
   @JsonKey(name: "author_prefix")
   String authorPrefix;
   @JsonKey(name: "is_selection")
-  int isSelection;
+  int? isSelection;
   @JsonKey(name: "pub_time")
   String pubTime;
   @JsonKey(name: "badge")
@@ -1217,9 +1217,9 @@ class Movie2 {
   @JsonKey(name: "prompt")
   String prompt;
   @JsonKey(name: "episodes")
-  List<Episode> episodes;
+  List<Episode>? episodes;
   @JsonKey(name: "label")
-  String label;
+  String? label;
   @JsonKey(name: "watch_button")
   WatchButton watchButton;
   @JsonKey(name: "follow_button")
@@ -1227,7 +1227,7 @@ class Movie2 {
   @JsonKey(name: "selection_style")
   String selectionStyle;
   @JsonKey(name: "episodes_new")
-  List<EpisodesNew> episodesNew;
+  List<EpisodesNew>? episodesNew;
   @JsonKey(name: "is_sug_style_exp")
   int isSugStyleExp;
   @JsonKey(name: "badges")
@@ -1287,30 +1287,30 @@ class Movie2 {
     required this.uri,
     required this.param,
     required this.goto,
-    required this.ptime,
+    this.ptime,
     required this.seasonId,
     required this.seasonType,
     required this.seasonTypeName,
     required this.mediaType,
-     this.style,
+    this.style,
     required this.styles,
     required this.stylesV2,
     this.styleLabel,
     this.cv,
-     this.rating,
-    required this.vote,
+    this.rating,
+    this.vote,
     required this.area,
     required this.authorPrefix,
-    required this.isSelection,
+    this.isSelection,
     required this.pubTime,
     required this.badge,
     required this.prompt,
-    required this.episodes,
-    required this.label,
+    this.episodes = const [],
+    this.label,
     required this.watchButton,
     required this.followButton,
     required this.selectionStyle,
-    required this.episodesNew,
+    this.episodesNew = const [],
     required this.isSugStyleExp,
     this.badges,
     required this.badgesV2,

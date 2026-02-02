@@ -7,8 +7,8 @@ import 'package:blili/modules/user/user.dart';
 import 'package:blili/command/utils/encrypt/basic.dart';
 
 class Userserver extends GetxService {
-  Rxn<Token> _token = Rxn<Token>();
-  Rxn<User> _user = Rxn<User>();
+  Token? _token;
+  User? _user;
   RxBool _isLogin = false.obs;
   RxString _jwt = ''.obs;
 
@@ -21,7 +21,7 @@ class Userserver extends GetxService {
 
   RxBool get loginStatus => _isLogin;
   RxString get jwt => _jwt;
-  void setUser(User v) => _user.value = v;
+  void setUser(User v) => _user = v;
 
   void _initData() {
     _jwt.value = Shareperference.getString('jwt') ?? '';
@@ -34,7 +34,7 @@ class Userserver extends GetxService {
       final DateTime expiresAt =
           issuedAt.add(Duration(seconds: token.expiresIn));
       if (!DateTime.now().isAfter(expiresAt)) {
-        _token.value = token;
+        _token = token;
         _isLogin.value = true;
       }
     }
@@ -42,34 +42,34 @@ class Userserver extends GetxService {
 
   void quit() {
     _isLogin.value = false;
-    _token.value = null;
+    _token = null;
     Shareperference.remove('token');
   }
 
   void login(Token token) {
-    _token.value = token;
+    _token = token;
     _isLogin.value = true;
-    Shareperference.setString('token', jsonEncode(_token.toJson()));
+    Shareperference.setString('token', jsonEncode(_token!.toJson()));
     Shareperference.setInt('issuedAt', DateTime.now().millisecondsSinceEpoch);
   }
 
   String mid() {
-    if (_token.value != null) {
-      return _token.value!.mid.toString();
+    if (_token != null) {
+      return _token!.mid.toString();
     }
     return '';
   }
 
   String accessKey() {
-    if (_token.value != null) {
-      return _token.value!.accessToken;
+    if (_token != null) {
+      return _token!.accessToken;
     }
     return '';
   }
 
   String auroraeId() {
-    if (_token.value != null) {
-      return BasicCrypt.auroraeId(_token.value!.mid.toString());
+    if (_token != null) {
+      return BasicCrypt.auroraeId(_token!.mid.toString());
     }
     return '';
   }

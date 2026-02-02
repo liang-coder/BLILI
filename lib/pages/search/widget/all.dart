@@ -68,13 +68,13 @@ class _AllState extends State<All> with AutomaticKeepAliveClientMixin {
     final double slotWidth = (ScreenUtil().screenWidth - 60.w) / 4;
     return Wrap(
       runSpacing: 5.h,
-      children: videodata.map((item) {
+      children: videodata
+          .where((item) => item.title != null) // 过滤掉 null
+          .map((item) {
         return SizedBox(
           width: slotWidth,
           height: slotWidth * 0.82,
-          child: Videocard(
-            archive: item,
-          ),
+          child: Videocard(archive: item), // item! 安全，因为已过滤 null
         );
       }).toList(),
     );

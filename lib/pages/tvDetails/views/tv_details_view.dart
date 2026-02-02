@@ -1,3 +1,4 @@
+import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart';
 import 'package:blili/widget/HttpLoading.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class TvDetailsView extends GetView<TvDetailsController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 5.h,
       children: [
-        Text('番剧推荐',
+        Text(controller.spmid == 'pgc.cinema-tab.card.0' ? '影视推荐' : '番剧推荐',
             style: TextStyle(
                 fontSize: 30.sp,
                 fontWeight: FontWeight.w600,
@@ -59,10 +60,12 @@ class TvDetailsView extends GetView<TvDetailsController> {
           child: Row(
             children: List.generate(
                 controller.viewReply.value!.tab.tabModule[0].introduction
-                    .modules[12].relates.cards.length, (index) {
+                    .modules.last.relates.cards.length, (index) {
               return Recommand(
-                  relateCard: controller.viewReply.value!.tab.tabModule[0]
-                      .introduction.modules[12].relates.cards[index]);
+                relateCard: controller.viewReply.value!.tab.tabModule[0]
+                    .introduction.modules.last.relates.cards[index],
+                tvDetailsController: controller,
+              );
             }),
           ),
         )
@@ -88,9 +91,12 @@ class TvDetailsView extends GetView<TvDetailsController> {
             children: List.generate(
                 controller.viewReply.value!.tab.tabModule[0].introduction
                     .modules[7].sectionData.episodes.length, (index) {
-              return Pvcard(
+              return _cardType(
+                  title: controller.viewReply.value!.tab.tabModule[0]
+                      .introduction.modules[7].sectionData.title,
                   viewEpisode: controller.viewReply.value!.tab.tabModule[0]
-                      .introduction.modules[7].sectionData.episodes[index]);
+                      .introduction.modules[7].sectionData.episodes[index],
+                  modelIndex: 7);
             }),
           ),
         )
@@ -116,9 +122,12 @@ class TvDetailsView extends GetView<TvDetailsController> {
             children: List.generate(
                 controller.viewReply.value!.tab.tabModule[0].introduction
                     .modules[6].sectionData.episodes.length, (index) {
-              return Pvcard(
+              return _cardType(
+                  title: controller.viewReply.value!.tab.tabModule[0]
+                      .introduction.modules[6].sectionData.title,
                   viewEpisode: controller.viewReply.value!.tab.tabModule[0]
-                      .introduction.modules[6].sectionData.episodes[index]);
+                      .introduction.modules[6].sectionData.episodes[index],
+                  modelIndex: 6);
             }),
           ),
         )
@@ -144,14 +153,36 @@ class TvDetailsView extends GetView<TvDetailsController> {
             children: List.generate(
                 controller.viewReply.value!.tab.tabModule[0].introduction
                     .modules[5].sectionData.episodes.length, (index) {
-              return Selectioncard(
+              return _cardType(
+                  title: controller.viewReply.value!.tab.tabModule[0]
+                      .introduction.modules[5].sectionData.title,
                   viewEpisode: controller.viewReply.value!.tab.tabModule[0]
-                      .introduction.modules[5].sectionData.episodes[index]);
+                      .introduction.modules[5].sectionData.episodes[index],
+                  modelIndex: 5);
             }),
           ),
         )
       ],
     );
+  }
+
+  Widget _cardType(
+      {required String title,
+      required ViewEpisode viewEpisode,
+      required int modelIndex}) {
+    if (title == '选集') {
+      return Selectioncard(
+        viewEpisode: viewEpisode,
+        tvDetailsController: controller,
+        modelIndex: modelIndex,
+      );
+    } else {
+      return Pvcard(
+        viewEpisode: viewEpisode,
+        tvDetailsController: controller,
+        modelIndex: modelIndex,
+      );
+    }
   }
 
   Widget _details(BuildContext context) {
@@ -164,7 +195,7 @@ class TvDetailsView extends GetView<TvDetailsController> {
           ClipRRect(
             child: NetImage(
               imageUrl: controller.cover,
-              // height: 500.w,
+              height: 500.w,
             ),
             borderRadius: BorderRadius.circular(15.r),
           ),
@@ -181,7 +212,7 @@ class TvDetailsView extends GetView<TvDetailsController> {
                     color: Theme.of(context).textTheme.bodyMedium!.color),
               ),
               Text(
-                '${controller.viewReply.value!.tab.tabModule[0].introduction.modules[5].sectionData.more}',
+                controller.getmore(),
                 style: TextStyle(
                     fontSize: 30.sp,
                     color: Theme.of(context)
@@ -217,7 +248,7 @@ class TvDetailsView extends GetView<TvDetailsController> {
                 spacing: 20.w,
                 children: [
                   _button(context, '立即观看', () => print('立即观看')),
-                  _button(context, '追番', () => print('追番'))
+                  // _button(context, '追番', () => print('追番'))
                 ],
               )
             ],

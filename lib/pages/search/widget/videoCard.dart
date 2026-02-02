@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:blili/command/images/images.dart';
+import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:blili/modules/player/BiliVideoUrlModel.dart';
 import 'package:blili/routes/app_pages.dart';
 import 'package:blili/widget/NetImage.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:blili/modules/searchPage/searchAll.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../spmid.dart';
 
 class Videocard extends StatelessWidget {
   final Archive archive;
@@ -15,11 +17,14 @@ class Videocard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(archive.toJson().toString());
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => Get.toNamed(Routes.PLAYER, arguments: {
-        'biliVideoUrlModel':
-        BiliVideoUrlModel.fromUri(archive.uri!)
+        'aid': int.parse(archive.param),
+        'cid': int.parse(DataConverter.UrltoCid(archive.uri!)),
+        'spmid': Spmid.spmid,
+        'trackid': '',
       }),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
@@ -30,9 +35,9 @@ class Videocard extends StatelessWidget {
             LayoutBuilder(builder: (context, constraints) {
               return _StackImage(
                 width: constraints.maxWidth,
-                imageUrl: archive.cover!,
-                PlaySum: archive.viewContent!,
-                PlayTime: archive.duration!,
+                imageUrl: archive.cover ?? '',
+                PlaySum: archive.viewContent ?? '',
+                PlayTime: archive.duration ?? '',
                 DmSum:
                     archive.danmaku == null ? '0' : archive.danmaku.toString(),
               );
@@ -41,7 +46,9 @@ class Videocard extends StatelessWidget {
                 child: Padding(
               padding: EdgeInsets.only(top: 2.w),
               child: Text(
-                archive.title!.replaceAll('<em class="keyword">', '')
+                archive.title == null?'':
+                archive.title!
+                    .replaceAll('<em class="keyword">', '')
                     .replaceAll('</em>', ''),
                 maxLines: 2,
                 textAlign: TextAlign.justify,
@@ -61,7 +68,7 @@ class Videocard extends StatelessWidget {
                 ),
                 Expanded(
                     child: Text(
-                  archive.author!,
+                  archive.author ?? '',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: 24.sp,

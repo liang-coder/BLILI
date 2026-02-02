@@ -8,6 +8,7 @@ import 'package:blili/modules/searchPage/searchAll.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../modules/searchPage/searchType.dart';
+import '../spmid.dart';
 
 class Tv extends StatelessWidget {
   Movie2? season2;
@@ -18,15 +19,14 @@ class Tv extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(season2!.episodes[0].toJson().toString());
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => Get.toNamed(Routes.TV_DETAILS, arguments: {
-        'from': '5',
-        'epid':
-            isSeason2! ? season2!.episodes[0].param : item!.episodes[0].param,
+        'epid': isSeason2!
+            ? season2!.seasonId.toString()
+            : item!.seasonId.toString(),
         'cover': isSeason2! ? season2!.cover : item!.cover,
-        'parame': isSeason2! ? season2!.param : item!.param,
+        'spmid': Spmid.spmid
       }),
       child: Padding(
         padding: EdgeInsets.only(top: 12.w, bottom: 12.w),
@@ -39,7 +39,7 @@ class Tv extends StatelessWidget {
               imageUrl: isSeason2! ? season2!.cover : item!.cover,
               index_show: '',
               badge: isSeason2!
-                  ? season2!.styleLabel!.text
+                  ? season2!.styleLabel ==null?'':season2!.styleLabel!.text
                   : item!.styleLabel.text,
             ),
             Text(

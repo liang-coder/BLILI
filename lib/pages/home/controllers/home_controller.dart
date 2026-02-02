@@ -179,13 +179,16 @@ class HomeController extends GetxController
         queryParameters: Params.add(Newparams: queryParameters),
         option: Options(headers: {'pgcinfo': pgcinfo}));
 
-    try {
-      final Bangumi bangumi = Bangumi.fromJson(httpresult.data);
-      _bangumi.add(bangumi);
-    } catch (e) {
-      _httploadingController3.error();
-      throw '数据出错 $e';
-    }
+    final Bangumi bangumi = Bangumi.fromJson(httpresult.data);
+    _bangumi.add(bangumi);
+
+    // try {
+    //   final Bangumi bangumi = Bangumi.fromJson(httpresult.data);
+    //   _bangumi.add(bangumi);
+    // } catch (e) {
+    //   _httploadingController3.error();
+    //   throw '数据出错 $e';
+    // }
     _httploadingController3.unenable();
   }
 

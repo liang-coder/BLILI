@@ -13,6 +13,7 @@ import '../controllers/player_controller.dart';
 import '../widget/recommand.dart';
 import '../widget/select.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import '../widget/tvSelect.dart';
 
 class PlayerView extends GetView<PlayerController> {
   const PlayerView({super.key});
@@ -156,13 +157,7 @@ class PlayerView extends GetView<PlayerController> {
                           fontWeight: FontWeight.w600,
                           color: Colors.white),
                     )),
-                Transform.translate(
-                  offset: Offset(0, -6.h),
-                  child: Obx(() => Text(
-                        '${controller.upName.value} • ${controller.playTotal.value}',
-                        style: TextStyle(fontSize: 30.sp, color: Colors.white),
-                      )),
-                ),
+                _subtitle(),
                 Obx(() => ProgressBar(
                       progressBarColor: Color(0xFF45B1FA),
                       bufferedBarColor: Colors.blue.withAlpha(80),
@@ -240,8 +235,28 @@ class PlayerView extends GetView<PlayerController> {
     );
   }
 
+  Widget _subtitle() {
+    if (controller.epid == null) {
+      return Transform.translate(
+        offset: Offset(0, -6.h),
+        child: Obx(() => Text(
+              '${controller.upName.value} • ${controller.playTotal.value}',
+              style: TextStyle(fontSize: 30.sp, color: Colors.white),
+            )),
+      );
+    } else {
+      return Transform.translate(
+        offset: Offset(0, -6.h),
+        child: Obx(() => Text(
+              '${controller.playTotal.value}',
+              style: TextStyle(fontSize: 30.sp, color: Colors.white),
+            )),
+      );
+    }
+  }
+
   void _openDrawer(BuildContext context) {
-    if (controller.videoSelct.isEmpty) {
+    if (controller.videoSelct.isEmpty && controller.epid == null) {
       BliliToast.show('暂无合集视频');
       return;
     }
@@ -250,7 +265,7 @@ class PlayerView extends GetView<PlayerController> {
     Scaffold.of(context).openEndDrawer();
     controller.darwerAutoScrollController.scrollToIndex(
         controller.SelectPlayIndex.value,
-        preferPosition: AutoScrollPosition.middle);
+        preferPosition: AutoScrollPosition.begin);
   }
 
   Widget _button(IconData icon, VoidCallback func, {bool? autofocus = false}) {
@@ -303,13 +318,20 @@ class PlayerView extends GetView<PlayerController> {
                   key: ValueKey(index),
                   controller: controller.darwerAutoScrollController,
                   index: index,
-                  child: Select(
-                    ugcEpisode: controller.videoSelct[index],
-                    playerController: controller,
-                    index: index,
-                  ),
+                  child: controller.epid != null
+                      ? Tvselect(
+                          index: index,
+                          playerController: controller,
+                          viewEpisode: controller.TvSelect[index])
+                      : Select(
+                          ugcEpisode: controller.videoSelct[index],
+                          playerController: controller,
+                          index: index,
+                        ),
                 ),
-            itemCount: controller.videoSelct.length)));
+            itemCount: controller.epid != null
+                ? controller.TvSelect.length
+                : controller.videoSelct.length)));
   }
 
   Widget _recommandList() {

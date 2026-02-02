@@ -67,6 +67,9 @@ Module _$ModuleFromJson(Map<String, dynamic> json) => Module(
       wid: (json['wid'] as List<dynamic>)
           .map((e) => (e as num).toInt())
           .toList(),
+      follow: json['follow'] == null
+          ? null
+          : ModuleFollow.fromJson(json['follow'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ModuleToJson(Module instance) => <String, dynamic>{
@@ -86,6 +89,7 @@ Map<String, dynamic> _$ModuleToJson(Module instance) => <String, dynamic>{
       'title': instance.title,
       'type': instance.type,
       'wid': instance.wid,
+      'follow': instance.follow,
     };
 
 Attr _$AttrFromJson(Map<String, dynamic> json) => Attr(
@@ -104,19 +108,30 @@ Map<String, dynamic> _$AttrToJson(Attr instance) => <String, dynamic>{
       'show_timeline': instance.showTimeline,
     };
 
+ModuleFollow _$ModuleFollowFromJson(Map<String, dynamic> json) => ModuleFollow(
+      count: (json['count'] as num).toInt(),
+      update: (json['update'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$ModuleFollowToJson(ModuleFollow instance) =>
+    <String, dynamic>{
+      'count': instance.count,
+      'update': instance.update,
+    };
+
 Region _$RegionFromJson(Map<String, dynamic> json) => Region(
-      icon: json['icon'] as String,
       title: json['title'] as String,
       url: json['url'] as String,
+      icon: json['icon'] as String?,
       report: json['report'] == null
           ? null
           : RegionReport.fromJson(json['report'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RegionToJson(Region instance) => <String, dynamic>{
-      'icon': instance.icon,
       'title': instance.title,
       'url': instance.url,
+      'icon': instance.icon,
       'report': instance.report,
     };
 
@@ -148,13 +163,14 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       cover: json['cover'] as String,
       desc: json['desc'] as String,
       episodeId: (json['episode_id'] as num?)?.toInt(),
+      gif: json['gif'] as String?,
       hasNext: (json['has_next'] as num?)?.toInt(),
       imgBadge: json['img_badge'] as String?,
       isPreview: (json['is_preview'] as num).toInt(),
       itemId: (json['item_id'] as num?)?.toInt(),
       itemShowStatus: (json['item_show_status'] as num).toInt(),
       link: json['link'] as String,
-      linkType: (json['link_type'] as num).toInt(),
+      linkType: (json['link_type'] as num?)?.toInt(),
       linkValue: (json['link_value'] as num?)?.toInt(),
       newEp: json['new_ep'] == null
           ? null
@@ -171,14 +187,22 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       title: json['title'] as String,
       type: json['type'] as String?,
       wid: (json['wid'] as num?)?.toInt(),
+      descType: (json['desc_type'] as num?)?.toInt(),
+      follow: json['follow'] == null
+          ? null
+          : ItemFollow.fromJson(json['follow'] as Map<String, dynamic>),
+      fromSpmid: json['from_spmid'] as String?,
+      sources: json['sources'] as String?,
       bottomLeftBadge: json['bottom_left_badge'] == null
           ? null
           : BottomLeftBadge.fromJson(
               json['bottom_left_badge'] as Map<String, dynamic>),
+      canWatch: (json['can_watch'] as num?)?.toInt(),
       cursor: json['cursor'] as String?,
+      status: json['status'] == null
+          ? null
+          : Status.fromJson(json['status'] as Map<String, dynamic>),
       isAuto: (json['is_auto'] as num?)?.toInt(),
-      sources: json['sources'] as String?,
-      fromSpmid: json['from_spmid'] as String?,
       itemShowType: (json['item_show_type'] as num?)?.toInt(),
       spmid: json['spmid'] as String?,
       uniqueId: json['unique_id'] as String?,
@@ -195,6 +219,7 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'cover': instance.cover,
       'desc': instance.desc,
       'episode_id': instance.episodeId,
+      'gif': instance.gif,
       'has_next': instance.hasNext,
       'img_badge': instance.imgBadge,
       'is_preview': instance.isPreview,
@@ -214,11 +239,15 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'title': instance.title,
       'type': instance.type,
       'wid': instance.wid,
-      'bottom_left_badge': instance.bottomLeftBadge,
-      'cursor': instance.cursor,
-      'is_auto': instance.isAuto,
-      'sources': instance.sources,
+      'desc_type': instance.descType,
+      'follow': instance.follow,
       'from_spmid': instance.fromSpmid,
+      'sources': instance.sources,
+      'bottom_left_badge': instance.bottomLeftBadge,
+      'can_watch': instance.canWatch,
+      'cursor': instance.cursor,
+      'status': instance.status,
+      'is_auto': instance.isAuto,
       'item_show_type': instance.itemShowType,
       'spmid': instance.spmid,
       'unique_id': instance.uniqueId,
@@ -250,6 +279,35 @@ Map<String, dynamic> _$BottomLeftBadgeToJson(BottomLeftBadge instance) =>
       'text_size': instance.textSize,
     };
 
+ItemFollow _$ItemFollowFromJson(Map<String, dynamic> json) => ItemFollow(
+      isFinish: (json['is_finish'] as num).toInt(),
+      isStarted: (json['is_started'] as num).toInt(),
+      newEp: NewEp.fromJson(json['new_ep'] as Map<String, dynamic>),
+      totalCount: (json['total_count'] as num).toInt(),
+      desc: json['desc'] == null
+          ? null
+          : Desc.fromJson(json['desc'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ItemFollowToJson(ItemFollow instance) =>
+    <String, dynamic>{
+      'is_finish': instance.isFinish,
+      'is_started': instance.isStarted,
+      'new_ep': instance.newEp,
+      'total_count': instance.totalCount,
+      'desc': instance.desc,
+    };
+
+Desc _$DescFromJson(Map<String, dynamic> json) => Desc(
+      text: json['text'] as String,
+      type: (json['type'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$DescToJson(Desc instance) => <String, dynamic>{
+      'text': instance.text,
+      'type': instance.type,
+    };
+
 NewEp _$NewEpFromJson(Map<String, dynamic> json) => NewEp(
       cover: json['cover'] as String,
       id: (json['id'] as num).toInt(),
@@ -263,19 +321,19 @@ Map<String, dynamic> _$NewEpToJson(NewEp instance) => <String, dynamic>{
     };
 
 ItemReport _$ItemReportFromJson(Map<String, dynamic> json) => ItemReport(
-      actionId: json['action_id'] as String,
-      avid: json['avid'] as String,
-      cardType: json['card_type'] as String,
+      actionId: json['action_id'] as String?,
+      avid: json['avid'] as String?,
+      cardType: json['card_type'] as String?,
       contentType: json['content_type'] as String?,
       epid: json['epid'] as String,
       index: json['index'] as String?,
-      itemId: json['item_id'] as String,
+      itemId: json['item_id'] as String?,
       moduleId: json['module_id'] as String,
       moduleType: json['module_type'] as String,
-      ogvSessionId: json['ogv_session_id'] as String,
-      oid: json['oid'] as String,
+      ogvSessionId: json['ogv_session_id'] as String?,
+      oid: json['oid'] as String?,
       playlistId: json['playlist_id'] as String?,
-      positionId: json['position_id'] as String,
+      positionId: json['position_id'] as String?,
       seasonId: json['season_id'] as String,
       seasonType: json['season_type'] as String,
       sources: json['sources'] as String?,
@@ -308,7 +366,7 @@ Map<String, dynamic> _$ItemReportToJson(ItemReport instance) =>
 Stat _$StatFromJson(Map<String, dynamic> json) => Stat(
       danmaku: (json['danmaku'] as num).toInt(),
       follow: (json['follow'] as num).toInt(),
-      followView: json['follow_view'] as String,
+      followView: json['follow_view'] as String?,
       view: (json['view'] as num).toInt(),
     );
 
@@ -319,11 +377,23 @@ Map<String, dynamic> _$StatToJson(Stat instance) => <String, dynamic>{
       'view': instance.view,
     };
 
+Status _$StatusFromJson(Map<String, dynamic> json) => Status(
+      follow: (json['follow'] as num).toInt(),
+      followStatus: (json['follow_status'] as num).toInt(),
+      like: (json['like'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$StatusToJson(Status instance) => <String, dynamic>{
+      'follow': instance.follow,
+      'follow_status': instance.followStatus,
+      'like': instance.like,
+    };
+
 ModuleReport _$ModuleReportFromJson(Map<String, dynamic> json) => ModuleReport(
-      actionId: json['action_id'] as String,
+      actionId: json['action_id'] as String?,
       moduleId: json['module_id'] as String,
       moduleType: json['module_type'] as String,
-      ogvSessionId: json['ogv_session_id'] as String,
+      ogvSessionId: json['ogv_session_id'] as String?,
     );
 
 Map<String, dynamic> _$ModuleReportToJson(ModuleReport instance) =>

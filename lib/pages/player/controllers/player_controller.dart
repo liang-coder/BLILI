@@ -10,6 +10,7 @@ import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/toast/BliliToast.dart';
 import 'package:blili/data/playconfig/config.dart';
 import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart';
+import 'package:blili/protos/dart/tvDetails/viewPgcAny/viewPgcAny.pb.dart';
 import 'package:blili/routes/app_pages.dart';
 import 'package:blili/service/UserServer.dart';
 import 'package:dio/dio.dart';
@@ -37,7 +38,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   RxString _videoTitle = ''.obs;
   RxString _upName = ''.obs;
   RxString _playTotal = ''.obs;
-  RxString _rtrt = ((Get.arguments['playTotal'] ?? '') as String).obs;
+  // RxString _releaseTime = ''.obs;
   //
   final count = 0.obs;
   final int _hidetime = 5;
@@ -48,6 +49,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   //
   late PlayViewUniteReply _playViewUniteReply;
   late ViewReply _ViewReply;
+
   //
   final MixPlayerController _mixPlayerController = MixPlayerController();
   final AutoScrollController _darwerAutoScrollController =
@@ -61,6 +63,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   Rxn<Widget> _drawerCOntext = Rxn(SizedBox());
   RxList<RelateCard> _recommand = <RelateCard>[].obs;
   RxList<UgcEpisode> _videoSelct = <UgcEpisode>[].obs;
+  RxList<ViewEpisode> _TvSelect = <ViewEpisode>[].obs;
   RxDouble _volume = PlayConfig.Volume.obs;
   RxBool _buffering = true.obs;
   RxBool _playing = false.obs;
@@ -102,6 +105,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
           Timer.periodic(const Duration(seconds: 60), (_) => _updateTime());
     });
     HardwareKeyboard.instance.addHandler(_KeyEvenhandel);
+    _setbangumi();
     await _View();
     await _PlayViewUnite();
     _setSource();
@@ -140,7 +144,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> _View() async {
-    if (_aid == null) return;
+    if (_epid != null) return;
     final httpresult = await ApiRe.View(
         option: Options(responseType: ResponseType.bytes),
         data: DataConverter.gzipCompress(viewReq().result(
@@ -152,9 +156,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _ViewReply = ViewReply.fromBuffer(
         DataConverter.byteGzipconvertbyte(httpresult.data)!);
 
-    _videoTitle.value = _ViewReply.arc.title;
-    upName.value = _ViewReply.owner.title;
-    _playTotal.value = _ViewReply.arc.stat.vt.pureText;
+    _setvideoInfo();
 
     _recommand.clear();
     _videoSelct.clear();
@@ -179,8 +181,37 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
           .episodes);
   }
 
+  void _setvideoInfo() {
+    _videoTitle.value = _ViewReply.arc.title;
+    upName.value = _ViewReply.owner.title;
+    _playTotal.value = _ViewReply.arc.stat.vt.pureText;
+  }
+
+  void _setNextSelectPlayInfo() {
+    final int nextIndex = _SelectPlayIndex.value;
+    if (_epid == null) {
+      _videoTitle.value = _videoSelct[nextIndex].title;
+      _playTotal.value = _videoSelct[nextIndex].vt.text + '播放';
+    } else {
+      _videoTitle.value = _TvSelect[nextIndex].longTitle;
+      _playTotal.value = _TvSelect[nextIndex].subtitle;
+    }
+  }
+
+  void _setbangumi() {
+    _setBangumiVideoSelect();
+    if (_TvSelect.isEmpty) return;
+    _setSelectPlayIndex();
+    _videoTitle.value = _TvSelect[_SelectPlayIndex.value].longTitle;
+    _playTotal.value = _TvSelect[_SelectPlayIndex.value].subtitle;
+  }
+
+  void _setBangumiVideoSelect() {
+    List<ViewEpisode> videos = Get.arguments['TvSelect'] ?? [];
+    _TvSelect.addAll(videos);
+  }
+
   void _historyReport() async {
-    if (_ViewReply.tab.tabModule.isEmpty) return;
     final Map<String, dynamic> data = {
       'access_key': Get.context!.userserver.accessKey(),
       'aid': _aid.toString(),
@@ -210,6 +241,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   RxString get videoTitle => _videoTitle;
   RxString get upName => _upName;
   RxString get playTotal => _playTotal;
+  String? get epid => _epid;
   Rxn<Duration> get duration => _duration;
   Rxn<Duration> get position => _position;
   Rxn<Duration> get buffer => _buffer;
@@ -224,6 +256,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   Rxn<Widget> get drawerCOntext => _drawerCOntext;
   RxList<RelateCard> get recommand => _recommand;
   RxList<UgcEpisode> get videoSelct => _videoSelct;
+  RxList<ViewEpisode> get TvSelect => _TvSelect;
   MixPlayerController get mixPlayerController => _mixPlayerController;
   AutoScrollController get darwerAutoScrollController =>
       _darwerAutoScrollController;
@@ -289,7 +322,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
 
   void _historyPlay() {
     _ContinuePlaying = true;
-    if (_playViewUniteReply.history.currentVideo.progress != 0) {
+    if (_playViewUniteReply.history.currentVideo.progress.toInt() != 0) {
       final Duration postion = Duration(
           seconds: _playViewUniteReply.history.currentVideo.progress.toInt());
       if (_duration.value!.inSeconds == postion.inSeconds) {
@@ -307,29 +340,49 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
       seek(Duration(minutes: 0, seconds: 0));
       play();
     } else {
-      if (_videoSelct.isNotEmpty &&
-          _SelectPlayIndex.value < _videoSelct.length - 1) {
-        selectPlay(
-            spmid: 'united.player-video-detail.relatedvideo.0',
-            aid: _videoSelct[_SelectPlayIndex.value + 1].aid.toInt(),
-            cid: _videoSelct[_SelectPlayIndex.value + 1].cid.toInt(),
-            trackid: '',
-            postHistory: false);
+      if ((_videoSelct.isNotEmpty &&
+              _SelectPlayIndex.value < _videoSelct.length - 1) ||
+          (_TvSelect.isNotEmpty &&
+              _SelectPlayIndex.value < _TvSelect.length - 1)) {
+        final int nextIndex = _SelectPlayIndex.value + 1;
+        if (_epid == null) {
+          selectPlay(
+              spmid: 'united.player-video-detail.relatedvideo.0',
+              aid: _videoSelct[nextIndex].aid.toInt(),
+              cid: _videoSelct[nextIndex].cid.toInt(),
+              trackid: '',
+              postHistory: false);
+        } else {
+          selectPlay(
+              spmid: 'united.player-video-detail.relatedvideo.0',
+              aid: _TvSelect[nextIndex].aid.toInt(),
+              cid: _TvSelect[nextIndex].cid.toInt(),
+              trackid: '',
+              epid: _TvSelect[nextIndex].epId.toString(),
+              postHistory: false);
+        }
       } else {
-        changeVideo(
-            spmid: 'united.player-video-detail.relatedvideo.0',
-            aid: _recommand.first.basicInfo.id.toInt(),
-            cid: _recommand.first.av.cid.toInt(),
-            trackid: _recommand.first.basicInfo.trackId,
-            postHistory: false);
+        if (_recommand.isNotEmpty) {
+          changeVideo(
+              spmid: 'united.player-video-detail.relatedvideo.0',
+              aid: _recommand.first.basicInfo.id.toInt(),
+              cid: _recommand.first.av.cid.toInt(),
+              trackid: _recommand.first.basicInfo.trackId,
+              postHistory: false);
+        }
       }
     }
   }
 
   void _setSelectPlayIndex() {
-    if (_videoSelct.isEmpty) return;
-    _SelectPlayIndex.value =
-        _videoSelct.indexWhere((UgcEpisode e) => e.aid.toInt() == _aid);
+    if (_epid == null) {
+      if (_videoSelct.isEmpty) return;
+      _SelectPlayIndex.value =
+          _videoSelct.indexWhere((UgcEpisode e) => e.aid.toInt() == _aid);
+    } else {
+      _SelectPlayIndex.value =
+          _TvSelect.indexWhere((ViewEpisode e) => e.aid.toInt() == _aid);
+    }
   }
 
   void _initStream() {
@@ -443,8 +496,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _trackid = trackid;
     await _PlayViewUnite();
     _setSource();
-    _videoTitle.value = _videoSelct[_SelectPlayIndex.value].title;
-    _playTotal.value = _videoSelct[_SelectPlayIndex.value].vt.text + '播放';
+    _setNextSelectPlayInfo();
   }
 
   void setPlayMode() {
@@ -510,9 +562,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _durationStream =
         _mixPlayerController.player.stream.duration.listen((Duration duration) {
       _duration.value = duration;
-      if (duration.inSeconds != 0 &&
-          !_ContinuePlaying &&
-          _position.value!.inSeconds == duration.inSeconds) {
+      if (duration.inSeconds != 0 && !_ContinuePlaying) {
         _historyPlay();
       }
     });

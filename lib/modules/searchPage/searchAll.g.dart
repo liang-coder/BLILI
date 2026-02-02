@@ -257,8 +257,8 @@ Extra _$ExtraFromJson(Map<String, dynamic> json) => Extra(
       productId: (json['product_id'] as num).toInt(),
       reportTime: (json['report_time'] as num).toInt(),
       salesType: (json['sales_type'] as num).toInt(),
-      show1SUrls: (json['show_1s_urls'] as List<dynamic>)
-          .map((e) => e as String)
+      show1SUrls: (json['show_1s_urls'] as List<dynamic>?)
+          ?.map((e) => e as String)
           .toList(),
       showUrls:
           (json['show_urls'] as List<dynamic>).map((e) => e as String).toList(),
@@ -810,7 +810,7 @@ Movie2 _$Movie2FromJson(Map<String, dynamic> json) => Movie2(
       uri: json['uri'] as String,
       param: json['param'] as String,
       goto: json['goto'] as String,
-      ptime: (json['ptime'] as num).toInt(),
+      ptime: (json['ptime'] as num?)?.toInt(),
       seasonId: (json['season_id'] as num).toInt(),
       seasonType: (json['season_type'] as num).toInt(),
       seasonTypeName: json['season_type_name'] as String,
@@ -823,25 +823,27 @@ Movie2 _$Movie2FromJson(Map<String, dynamic> json) => Movie2(
           : BadgesV2.fromJson(json['style_label'] as Map<String, dynamic>),
       cv: json['cv'] as String?,
       rating: (json['rating'] as num?)?.toDouble(),
-      vote: (json['vote'] as num).toInt(),
+      vote: (json['vote'] as num?)?.toInt(),
       area: json['area'] as String,
       authorPrefix: json['author_prefix'] as String,
-      isSelection: (json['is_selection'] as num).toInt(),
+      isSelection: (json['is_selection'] as num?)?.toInt(),
       pubTime: json['pub_time'] as String,
       badge: json['badge'] as String,
       prompt: json['prompt'] as String,
-      episodes: (json['episodes'] as List<dynamic>)
-          .map((e) => Episode.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      label: json['label'] as String,
+      episodes: (json['episodes'] as List<dynamic>?)
+              ?.map((e) => Episode.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      label: json['label'] as String?,
       watchButton:
           WatchButton.fromJson(json['watch_button'] as Map<String, dynamic>),
       followButton:
           FollowButton.fromJson(json['follow_button'] as Map<String, dynamic>),
       selectionStyle: json['selection_style'] as String,
-      episodesNew: (json['episodes_new'] as List<dynamic>)
-          .map((e) => EpisodesNew.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      episodesNew: (json['episodes_new'] as List<dynamic>?)
+              ?.map((e) => EpisodesNew.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       isSugStyleExp: (json['is_sug_style_exp'] as num).toInt(),
       badges: (json['badges'] as List<dynamic>?)
           ?.map((e) => BadgesV2.fromJson(e as Map<String, dynamic>))
