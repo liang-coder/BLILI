@@ -250,7 +250,7 @@ class Item {
 @JsonSerializable()
 class AdInfo {
   @JsonKey(name: "creative_id")
-  int creativeId;
+  int? creativeId;
   @JsonKey(name: "creative_type")
   int creativeType;
   @JsonKey(name: "card_type")
@@ -283,7 +283,7 @@ class AdInfo {
   int creativeStyle;
 
   AdInfo({
-    required this.creativeId,
+     this.creativeId,
     required this.creativeType,
     required this.cardType,
     required this.creativeContent,

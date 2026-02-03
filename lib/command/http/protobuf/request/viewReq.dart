@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:blili/command/utils/device/id.dart';
-import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/command/playconfig/config.dart';
 import 'package:blili/protos/dart/tvDetails/ViewReq.pb.dart';
 import 'package:fixnum/src/int64.dart';
 

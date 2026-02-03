@@ -28,7 +28,8 @@ class Bangumi {
     required this.style,
   });
 
-  factory Bangumi.fromJson(Map<String, dynamic> json) => _$BangumiFromJson(json);
+  factory Bangumi.fromJson(Map<String, dynamic> json) =>
+      _$BangumiFromJson(json);
 
   Map<String, dynamic> toJson() => _$BangumiToJson(this);
 }
@@ -156,7 +157,8 @@ class ModuleFollow {
     required this.update,
   });
 
-  factory ModuleFollow.fromJson(Map<String, dynamic> json) => _$ModuleFollowFromJson(json);
+  factory ModuleFollow.fromJson(Map<String, dynamic> json) =>
+      _$ModuleFollowFromJson(json);
 
   Map<String, dynamic> toJson() => _$ModuleFollowToJson(this);
 }
@@ -202,7 +204,8 @@ class RegionReport {
     required this.moduleType,
   });
 
-  factory RegionReport.fromJson(Map<String, dynamic> json) => _$RegionReportFromJson(json);
+  factory RegionReport.fromJson(Map<String, dynamic> json) =>
+      _$RegionReportFromJson(json);
 
   Map<String, dynamic> toJson() => _$RegionReportToJson(this);
 }
@@ -248,13 +251,13 @@ class Item {
   @JsonKey(name: "new_ep")
   NewEp? newEp;
   @JsonKey(name: "oid")
-  int oid;
+  int? oid;
   @JsonKey(name: "report")
   ItemReport? report;
   @JsonKey(name: "score")
   int score;
   @JsonKey(name: "season_id")
-  int seasonId;
+  int? seasonId;
   @JsonKey(name: "season_styles")
   String? seasonStyles;
   @JsonKey(name: "season_type")
@@ -264,7 +267,7 @@ class Item {
   @JsonKey(name: "title")
   String title;
   @JsonKey(name: "type")
-  String type;
+  String? type;
   @JsonKey(name: "wid")
   int? wid;
   @JsonKey(name: "desc_type")
@@ -302,15 +305,15 @@ class Item {
     this.linkType,
     this.linkValue,
     this.newEp,
-    required this.oid,
+    this.oid,
     this.report,
     required this.score,
-    required this.seasonId,
+    this.seasonId,
     this.seasonStyles,
     this.seasonType,
     this.stat,
     required this.title,
-    required this.type,
+    this.type,
     this.wid,
     this.descType,
     this.follow,
@@ -344,7 +347,8 @@ class BadgeInfo {
     required this.textSize,
   });
 
-  factory BadgeInfo.fromJson(Map<String, dynamic> json) => _$BadgeInfoFromJson(json);
+  factory BadgeInfo.fromJson(Map<String, dynamic> json) =>
+      _$BadgeInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$BadgeInfoToJson(this);
 }
@@ -370,7 +374,8 @@ class ItemFollow {
     required this.totalCount,
   });
 
-  factory ItemFollow.fromJson(Map<String, dynamic> json) => _$ItemFollowFromJson(json);
+  factory ItemFollow.fromJson(Map<String, dynamic> json) =>
+      _$ItemFollowFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemFollowToJson(this);
 }
@@ -433,7 +438,8 @@ class Progress {
     required this.lastTime,
   });
 
-  factory Progress.fromJson(Map<String, dynamic> json) => _$ProgressFromJson(json);
+  factory Progress.fromJson(Map<String, dynamic> json) =>
+      _$ProgressFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProgressToJson(this);
 }
@@ -489,7 +495,8 @@ class ItemReport {
     required this.seasonType,
   });
 
-  factory ItemReport.fromJson(Map<String, dynamic> json) => _$ItemReportFromJson(json);
+  factory ItemReport.fromJson(Map<String, dynamic> json) =>
+      _$ItemReportFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemReportToJson(this);
 }
@@ -555,7 +562,8 @@ class ModuleReport {
     this.ogvSessionId,
   });
 
-  factory ModuleReport.fromJson(Map<String, dynamic> json) => _$ModuleReportFromJson(json);
+  factory ModuleReport.fromJson(Map<String, dynamic> json) =>
+      _$ModuleReportFromJson(json);
 
   Map<String, dynamic> toJson() => _$ModuleReportToJson(this);
 }
@@ -569,7 +577,8 @@ class BangumiReport {
     required this.pageId,
   });
 
-  factory BangumiReport.fromJson(Map<String, dynamic> json) => _$BangumiReportFromJson(json);
+  factory BangumiReport.fromJson(Map<String, dynamic> json) =>
+      _$BangumiReportFromJson(json);
 
   Map<String, dynamic> toJson() => _$BangumiReportToJson(this);
 }

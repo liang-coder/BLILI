@@ -6,7 +6,7 @@ import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 import 'package:blili/command/utils/device/id.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
-import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/command/playconfig/config.dart';
 import 'package:blili/routes/app_pages.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -205,34 +205,34 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
     final httpresult =
         await ApiRe.SearchType(queryParameters: Params.add(Newparams: parame));
 
-    if (type == '7') {
-      final SearchType bangumi = SearchType.fromJson(httpresult.data);
-      if (bangumi.items != null) {
-        _searchBangumi.add(bangumi);
-      }
-    } else {
-      final SearchType video = SearchType.fromJson(httpresult.data);
-      if (video.items != null) {
-        _searchVideo.add(video);
-      }
-    }
-
-    // try {
-    //   if (type == '7') {
-    //     final SearchType bangumi = SearchType.fromJson(httpresult.data);
-    //     if (bangumi.items != null) {
-    //       _searchBangumi.add(bangumi);
-    //     }
-    //   } else {
-    //     final SearchType video = SearchType.fromJson(httpresult.data);
-    //     if (video.items != null) {
-    //       _searchBangumi.add(video);
-    //     }
+    // if (type == '7') {
+    //   final SearchType bangumi = SearchType.fromJson(httpresult.data);
+    //   if (bangumi.items != null) {
+    //     _searchBangumi.add(bangumi);
     //   }
-    // } catch (e) {
-    //   _httploadingController3.error();
-    //   throw '数据出错$e';
+    // } else {
+    //   final SearchType video = SearchType.fromJson(httpresult.data);
+    //   if (video.items != null) {
+    //     _searchVideo.add(video);
+    //   }
     // }
+
+    try {
+      if (type == '7') {
+        final SearchType bangumi = SearchType.fromJson(httpresult.data);
+        if (bangumi.items != null) {
+          _searchBangumi.add(bangumi);
+        }
+      } else {
+        final SearchType video = SearchType.fromJson(httpresult.data);
+        if (video.items != null) {
+          _searchVideo.add(video);
+        }
+      }
+    } catch (e) {
+      _httploadingController3.error();
+      throw '数据出错$e';
+    }
 
     if (type == '7') {
       _bangumiPage += 1;

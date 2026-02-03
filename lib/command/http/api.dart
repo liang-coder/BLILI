@@ -23,6 +23,10 @@ class Api {
   static final String webKey = '/x/passport-login/web/key';
   static final String myinfo = '/x/v2/account/myinfo';
   static final String historyReport = '/x/v2/history/report';
+  static final String getInfoByRoom = '/xlive/app-room/v1/index/getInfoByRoom';
+  static final String HistoryCursor = '/bilibili.app.interface.v1.History/Cursor';
+  static final String DynAll = '/bilibili.app.dynamic.v2.Dynamic/DynAll';
+  static final String DynAllPersonal = '/bilibili.app.dynamic.v2.Dynamic/DynAllPersonal';
 }
 
 class domainMap {
@@ -50,6 +54,10 @@ class domainMap {
     Api.qrcodePoll: 'https://passport.bilibili.com',
     Api.webKey: 'https://passport.bilibili.com',
     Api.myinfo: 'https://app.bilibili.com',
+    Api.getInfoByRoom: 'https://api.live.bilibili.com',
+    Api.HistoryCursor: 'https://app.bilibili.com',
+    Api.DynAll: 'https://app.bilibili.com',
+    Api.DynAllPersonal: 'https://app.bilibili.com',
   };
 
   static String getDomain(String key) {

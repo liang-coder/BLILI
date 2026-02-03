@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+message DynAllPersonalReq {
+    // 被访问者的 UID
+    int64 host_uid = 1;
+    // 偏移量 第一页可传空
+    string offset = 2;
+    // 标明下拉几次
+    int32 page = 3;
+    // 是否是预加载 默认是1；客户端预加载。1：是预加载，不更新已读进度，不会影响小红点；0：非预加载，更新已读进度
+    int32 is_preload = 4;
+    // 秒开参数 新版本废弃，统一使用player_args
+    PlayurlParam playurl_param = 5;
+    // 客户端时区 兼容UTC-14和Etc/GMT+12,时区区间[-12,14] 东八区为8
+    int32 local_time = 6;
+    // 服务端生成的透传上报字段
+    string footprint = 7;
+    // 来源
+    string from = 8;
+    // 秒开用
+    PlayerArgs player_args = 9;
+    //
+    string personal_extra = 10;
+}
+
+message PlayerArgs {
+    // 清晰度
+    int64 qn = 1;
+    // 流版本
+    int64 fnver = 2;
+    // 流类型
+    int64 fnval = 3;
+    // 返回url是否强制使用域名
+    // 0:不强制使用域名 1:http域名 2:https域名
+    int64 force_host = 4;
+    // 音量均衡
+    int64 voice_balance = 5;
+}
+
+message PlayurlParam {
+    // 清晰度
+    int32 qn = 1;
+    // 流版本
+    int32 fnver = 2;
+    // 流类型
+    int32 fnval = 3;
+    // 是否强制使用域名
+    int32 force_host = 4;
+    // 是否4k
+    int32 fourk = 5;
+}

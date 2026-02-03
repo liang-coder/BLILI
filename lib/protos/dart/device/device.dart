@@ -46,7 +46,7 @@ class DeviceProtobuf {
 
   Uint8List buildNetworkBin() {
     writeObject(1, PbFieldType.O3, 1);
-    writeObject(3, PbFieldType.OS, '46000');
+    writeObject(3, PbFieldType.OS, NetId(getisp()));
     return buffer.toBuffer();
   }
 
@@ -68,5 +68,22 @@ class DeviceProtobuf {
     codedBufferWriter.writeField(1, PbFieldType.OS, 'zh');
     codedBufferWriter.writeField(3, PbFieldType.OS, 'CN');
     return codedBufferWriter.toBuffer();
+  }
+
+  String getisp() {
+    return DeviceInfo.ip() != null ? DeviceInfo.ip()!.isp : '';
+  }
+
+  String NetId(String isp) {
+    if (isp.contains('移动')) {
+      return '46000';
+    }
+    if (isp.contains('联通')) {
+      return '46001';
+    }
+    if (isp.contains('移动')) {
+      return '46003';
+    }
+    return '';
   }
 }

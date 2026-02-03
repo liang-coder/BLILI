@@ -193,7 +193,7 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
     };
 
 AdInfo _$AdInfoFromJson(Map<String, dynamic> json) => AdInfo(
-      creativeId: (json['creative_id'] as num).toInt(),
+      creativeId: (json['creative_id'] as num?)?.toInt(),
       creativeType: (json['creative_type'] as num).toInt(),
       cardType: (json['card_type'] as num).toInt(),
       creativeContent: CreativeContent.fromJson(

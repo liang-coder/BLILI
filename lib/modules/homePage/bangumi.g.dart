@@ -176,19 +176,19 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       newEp: json['new_ep'] == null
           ? null
           : NewEp.fromJson(json['new_ep'] as Map<String, dynamic>),
-      oid: (json['oid'] as num).toInt(),
+      oid: (json['oid'] as num?)?.toInt(),
       report: json['report'] == null
           ? null
           : ItemReport.fromJson(json['report'] as Map<String, dynamic>),
       score: (json['score'] as num).toInt(),
-      seasonId: (json['season_id'] as num).toInt(),
+      seasonId: (json['season_id'] as num?)?.toInt(),
       seasonStyles: json['season_styles'] as String?,
       seasonType: (json['season_type'] as num?)?.toInt(),
       stat: json['stat'] == null
           ? null
           : Stat.fromJson(json['stat'] as Map<String, dynamic>),
       title: json['title'] as String,
-      type: json['type'] as String,
+      type: json['type'] as String?,
       wid: (json['wid'] as num?)?.toInt(),
       descType: (json['desc_type'] as num?)?.toInt(),
       follow: json['follow'] == null

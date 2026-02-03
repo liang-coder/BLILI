@@ -16,7 +16,7 @@ class DeviceInfo {
   static late AndroidDeviceInfo _build;
   static const _androidIdPlugin = AndroidId();
   static const int _megaByte = 1024 * 1024;
-  static late Ip _ip;
+  static Ip? _ip;
   // var diskInfo = await SystemInfo.diskInfo;
 
   Future<void> init() async {
@@ -98,7 +98,7 @@ class DeviceInfo {
     return SysInfo.userId;
   }
 
-  static Ip ip() {
+  static Ip? ip() {
     return _ip;
   }
 

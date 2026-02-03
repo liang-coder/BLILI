@@ -2,6 +2,7 @@ import 'package:blili/command/http/api.dart';
 import 'package:blili/command/http/apiRe.dart';
 import 'package:blili/command/http/params.dart';
 import 'package:blili/command/utils/device/deviceinfo.dart';
+import 'package:blili/service/UserServer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -84,7 +85,7 @@ class LiveController extends GetxController
       'fnval': '272',
       'https_url_req': '0',
       'is_refresh': '0',
-      'login_event': _page == 1 ? '1' : '0',
+      'login_event': Get.context!.userserver.loginStatus.value ? '0' : '1',
       'module_select': '0',
       'network': 'wifi',
       'out_ad_name': '',
@@ -99,13 +100,16 @@ class LiveController extends GetxController
       queryParameters: Params.add(Newparams: queryParameters),
     );
 
-    try {
-      final Live live = Live.fromJson(httpresult.data);
-      _live.add(live);
-    } catch (e) {
-      _httploadingController.error();
-      throw '数据出错 $e';
-    }
+    final Live live = Live.fromJson(httpresult.data);
+    _live.add(live);
+
+    // try {
+    //   final Live live = Live.fromJson(httpresult.data);
+    //   _live.add(live);
+    // } catch (e) {
+    //   _httploadingController.error();
+    //   throw '数据出错 $e';
+    // }
     _page += 1;
 
     if (_arealive == null) {

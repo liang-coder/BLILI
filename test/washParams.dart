@@ -3,31 +3,25 @@ import 'package:blili/command/utils/dataconverter/dataconverter.dart';
 
 void main() {
   final Map<String, dynamic> p1 = {
-    "access_key": "cddb73c0f3da0962158536ce71d16f11",
-    "aid": "710444604",
+    "access_key": "5a6f2b6e4df66b5c9e3af67dc3062f22CjAyRRhdSialzsKPeSSQm1KOqNws1NTm-_DJIVCpvzufKXPc9oS-fhSSa5paGql00fASVlVzLXZXcm9zVHRCUGNXME5nVmpxTkk4aDU4aUhrWUUteDJTX1RvYXBEelpzY051cnF4QTFocWJhYVVYb05QWUhpaGhuS1NBU3V6TjBBaUNvRU8xMWh3IIEC",
+    "actionKey": "appkey",
     "appkey": "dfca71928277209b",
     "build": "2001100",
     "c_locale": "zh_CN",
     "channel": "bili",
-    "cid": "26835486927",
-    "device_ts": "1769861288",
+    "device": "android",
     "disable_rcmd": "0",
-    "duration": "1493",
-    "epid": "321808",
+    "gaia_vtoken": "",
+    "hardware_info": "4,4,28",
+    "jump_from": "24018",
     "mobi_app": "android_hd",
     "platform": "android",
-    "progress": "171",
-    "realtime": "4",
+    "room_id": "21622811",
     "s_locale": "zh_CN",
-    "scene": "front",
-    "sid": "33378",
-    "source": "player-old",
-    "start_ts": "1769861284",
     "statistics": "{\"appId\":5,\"platform\":3,\"version\":\"2.0.1\",\"abtest\":\"\"}",
-    "sub_type": "1",
-    "ts": "1769861288",
-    "type": "4",
-    "sign": "c4c975d013f574373da02ad36e3b5620"
+    "ts": "1770091103",
+    "version": "2.0.1",
+    "sign": "ed8c74ff7b4ea5e357cca57b6f794d86"
   };
 
   print(washParame(p1).toString());

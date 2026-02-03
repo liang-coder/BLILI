@@ -1,7 +1,9 @@
 import 'package:blili/command/images/images.dart';
 import 'package:blili/modules/livePage/live.dart';
+import 'package:blili/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import '../../../widget/NetImage.dart';
 
 class Livecard extends StatelessWidget {
@@ -12,7 +14,8 @@ class Livecard extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => Get.toNamed(Routes.PLAYER,
+          arguments: {'cardList': cardList, 'spmid': ''}),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: SizedBox(

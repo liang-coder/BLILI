@@ -83,27 +83,32 @@ class LoginView extends GetView<LoginController> {
                     SizedBox(
                       height: 15.w,
                     ),
-                    MaterialButton(
-                      autofocus: false,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r)),
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .color!
-                          .withAlpha(40),
-                      // splashColor: Colors.red,
-                      child: Text(
-                        '重新获取二维码',
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.bodyMedium!.color!),
-                      ),
-                      // color: Colors.purple,
-                      onPressed: () => print('object'),
-                    )
+                    Obx(() => Visibility(
+                        visible: controller.codeStatus.value == 'e',
+                        child: MaterialButton(
+                          autofocus: false,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r)),
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .color!
+                              .withAlpha(40),
+                          // splashColor: Colors.red,
+                          child: Text(
+                            '重新获取二维码',
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .color!),
+                          ),
+                          // color: Colors.purple,
+                          onPressed: () => print('object'),
+                        )))
                   ],
                 ),
               ),
@@ -131,7 +136,10 @@ class LoginView extends GetView<LoginController> {
           data: controller.qrcodrUrl.value,
         );
       }
-      return SizedBox();
+      return CircularProgressIndicator(
+        backgroundColor: Colors.blue,
+        strokeWidth: 3,
+      );
     });
   }
 }

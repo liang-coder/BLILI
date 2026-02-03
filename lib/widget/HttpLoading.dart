@@ -18,8 +18,7 @@ class HttploadingMap {
     if (_map.containsKey(key)) {
       return _map[key]!;
     }
-
-    appLogger.LoggerI('返回无状态HttploadingController，api: $key');
+    appLogger.LoggerI('api: $key ,该api无对应的HttploadingController');
     return HttploadingController();
   }
 }

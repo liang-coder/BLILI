@@ -15,7 +15,7 @@ import 'package:blili/command/http/protobuf/request/bilifingerprint.dart';
 import 'package:blili/command/http/apiRe.dart';
 import 'package:blili/command/http/params.dart';
 import 'package:blili/data/deviceinfo/init.dart';
-import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/command/playconfig/config.dart';
 import 'package:blili/command/http/protobuf/request/blilifingerprint2.dart';
 
 class SplashController extends GetxController {

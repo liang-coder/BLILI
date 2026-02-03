@@ -1,4 +1,5 @@
 import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart';
+import 'package:blili/routes/app_pages.dart';
 import 'package:blili/widget/HttpLoading.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart';
@@ -247,7 +248,17 @@ class TvDetailsView extends GetView<TvDetailsController> {
               Row(
                 spacing: 20.w,
                 children: [
-                  _button(context, '立即观看', () => print('立即观看')),
+                  _button(context, '立即观看', () {
+                    final List<ViewEpisode> ViewEpisodes =
+                        controller.getDramaviewEpisode();
+                    Get.toNamed(Routes.PLAYER, arguments: {
+                      'aid': ViewEpisodes[0].aid.toInt(),
+                      'cid': ViewEpisodes[0].cid.toInt(),
+                      'spmid': controller.spmid,
+                      'epid': ViewEpisodes[0].epId.toString(),
+                      'TvSelect': ViewEpisodes,
+                    });
+                  }),
                   // _button(context, '追番', () => print('追番'))
                 ],
               )

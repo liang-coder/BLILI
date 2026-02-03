@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'RightContainer.dart';
 import '../controllers/setting_controller.dart';
 import 'Option.dart';
-import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/command/playconfig/config.dart';
 import 'package:blili/command/utils/dialog/Dialog.dart';
 
 class Playsetting extends StatelessWidget {
@@ -186,8 +186,8 @@ class Playsetting extends StatelessWidget {
             child: ListView(
           padding: EdgeInsets.only(left: 20.w, right: 20.w),
           children: [2.0, 4.0, 6.0, 8.0, 10.0]
-              .map((e) =>
-                  _doubleSelectWidget(v: e, t: settingController.setSeekTime))
+              .map((e) => _doubleSelectWidget(
+                  v: e, t: settingController.setSeekTime, seekTime: true))
               .toList(),
         )),
       ],
@@ -211,7 +211,9 @@ class Playsetting extends StatelessWidget {
   }
 
   Widget _doubleSelectWidget(
-      {required double v, required void Function(double t) t}) {
+      {required double v,
+      required void Function(double t) t,
+      bool? seekTime = false}) {
     return MaterialButton(
       padding: EdgeInsets.zero,
       onPressed: () {
@@ -219,7 +221,7 @@ class Playsetting extends StatelessWidget {
         Get.back();
       },
       child: Obx(() => BText(
-            v.toString(),
+            seekTime! ? v.toInt().toString() : v.toString(),
             style: TextStyle(
                 color: Get.context!.themeService.theme.value.themeData.textTheme
                     .bodyMedium!.color),

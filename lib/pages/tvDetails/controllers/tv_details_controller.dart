@@ -86,14 +86,24 @@ class TvDetailsController extends GetxController {
     return more;
   }
 
-
-  void newTv({required String cover, required String epid}){
+  void newTv({required String cover, required String epid}) {
     _cover = cover;
     _epid = epid;
     _synthesizeFeed();
   }
 
-
+  List<tvViewReply.ViewEpisode> getDramaviewEpisode() {
+    final int num =
+        _viewReply.value!.tab.tabModule[0].introduction.modules.length;
+    for (int i = 0; i < num; i++) {
+      final tvViewReply.Module module =
+          _viewReply.value!.tab.tabModule[0].introduction.modules[i];
+      if (module.sectionData.title == '选集') {
+        return module.sectionData.episodes;
+      }
+    }
+    return [];
+  }
 
   Future<void> _PlayView({required String from, required String epid}) async {
     final httpresult = await ApiRe.View(

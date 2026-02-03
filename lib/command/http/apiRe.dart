@@ -239,6 +239,33 @@ class ApiRe {
     return result;
   }
 
+  static Future<Response> historyCursor(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.post(Api.HistoryCursor,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> DynAll(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.post(Api.DynAll,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> DynAllPersonal(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.post(Api.DynAllPersonal,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
   static Future<Response> webKey(
       {Map<String, dynamic>? queryParameters,
       Options? option,
@@ -253,6 +280,15 @@ class ApiRe {
       Options? option,
       Object? data}) async {
     final result = await DioClient.dio.get(Api.myinfo,
+        queryParameters: queryParameters, options: option, data: data);
+    return result;
+  }
+
+  static Future<Response> liveRoomInfo(
+      {Map<String, dynamic>? queryParameters,
+      Options? option,
+      Object? data}) async {
+    final result = await DioClient.dio.get(Api.getInfoByRoom,
         queryParameters: queryParameters, options: option, data: data);
     return result;
   }

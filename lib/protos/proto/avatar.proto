@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package avatar;
+
 import "lib/protos/proto/avatarCommon.proto";
 import "lib/protos/proto/plugin.proto";
 

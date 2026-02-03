@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:typed_data';
 import 'package:blili/protos/dart/blilifingerprint/blilifingerprint.pb.dart';
 import 'package:blili/protos/dart/blilifingerprint2/blilifingerprint2.pb.dart';

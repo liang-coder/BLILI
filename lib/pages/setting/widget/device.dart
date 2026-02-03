@@ -37,7 +37,7 @@ class Device extends StatelessWidget {
         ),
         Option(
           title: '网络',
-          label: '${DeviceInfo.ip().addr} ${DeviceInfo.ip().city}',
+          label: '${DeviceInfo.ip()!.addr} ${DeviceInfo.ip()!.city}',
           onPressed: () => print('null'),
         )
       ],

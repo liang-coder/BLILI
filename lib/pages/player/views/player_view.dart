@@ -1,7 +1,7 @@
 import 'package:blili/command/icons/icons.dart';
 import 'package:blili/command/utils/date/Date.dart';
 import 'package:blili/command/utils/toast/BliliToast.dart';
-import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/command/playconfig/config.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -167,8 +167,8 @@ class PlayerView extends GetView<PlayerController> {
                       buffered: controller.buffer.value!,
                       total: controller.duration.value!,
                       timeLabelLocation: TimeLabelLocation.none,
-                      onSeek: (position) {
-                        controller.seek(position);
+                      onSeek: (position) async {
+                        await controller.seek(position);
                       },
                     )),
                 SizedBox(
@@ -186,7 +186,7 @@ class PlayerView extends GetView<PlayerController> {
                                   ? AppIcons.play
                                   : AppIcons.pause,
                               controller.playOrPause,
-                              autofocus: true)),
+                              focusNode: controller.focusNode)),
                           // _button(AppIcons.readjust, () => print('object')),
                           Builder(builder: (context) {
                             return _button(AppIcons.more, () {
@@ -268,12 +268,12 @@ class PlayerView extends GetView<PlayerController> {
         preferPosition: AutoScrollPosition.begin);
   }
 
-  Widget _button(IconData icon, VoidCallback func, {bool? autofocus = false}) {
+  Widget _button(IconData icon, VoidCallback func, {FocusNode? focusNode}) {
     return SizedBox(
       width: 70.w,
       height: 70.w,
       child: MaterialButton(
-          autofocus: autofocus!,
+          focusNode: focusNode,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           elevation: 0,
           padding: EdgeInsets.zero,

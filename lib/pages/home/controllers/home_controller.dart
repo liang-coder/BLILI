@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:blili/command/utils/dataconverter/dataconverter.dart';
-import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/command/playconfig/config.dart';
 import 'package:blili/protos/dart/hotIndexReply/hotIndexReply.pb.dart';
 import 'package:blili/command/http/api.dart';
 import 'package:blili/command/http/params.dart';

@@ -8,9 +8,8 @@ import 'package:blili/command/utils/date/Date.dart';
 import 'package:blili/command/utils/encrypt/basic.dart';
 import 'package:blili/command/utils/logger/logger.dart';
 import 'package:blili/command/utils/toast/BliliToast.dart';
-import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/command/playconfig/config.dart';
 import 'package:blili/protos/dart/tvDetails/tvViewReply/common.pb.dart';
-import 'package:blili/protos/dart/tvDetails/viewPgcAny/viewPgcAny.pb.dart';
 import 'package:blili/routes/app_pages.dart';
 import 'package:blili/service/UserServer.dart';
 import 'package:dio/dio.dart';
@@ -19,11 +18,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mix_player/mix_player.dart';
-// import 'package:blili/modules/player/BiliVideoUrlModel.dart';
+import 'package:blili/modules/livePage/live.dart';
 import 'package:blili/protos/dart/PlayViewUnite/playViewUniteReply.pb.dart';
 import 'package:blili/protos/dart/tvDetails/tvViewReply/tvViewReply.pb.dart'
     hide ViewReq;
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:blili/modules/livePage/BiliLiveUrlModel.dart';
+import 'package:blili/modules/Secondlive/secondLive.dart';
 
 class PlayerController extends GetxController with GetTickerProviderStateMixin {
   //TODO: Implement PlayerController
@@ -35,10 +36,10 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   String? _epid = Get.arguments['epid'];
   String _spmid = Get.arguments['spmid'];
   String? _trackid = Get.arguments['trackid'];
+  dynamic _cardList = Get.arguments['cardList'];
   RxString _videoTitle = ''.obs;
   RxString _upName = ''.obs;
   RxString _playTotal = ''.obs;
-  // RxString _releaseTime = ''.obs;
   //
   final count = 0.obs;
   final int _hidetime = 5;
@@ -49,7 +50,10 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   //
   late PlayViewUniteReply _playViewUniteReply;
   late ViewReply _ViewReply;
+  late BiliLiveUrlModel _biliLiveUrlModel;
 
+  //
+  final FocusNode _focusNode = FocusNode();
   //
   final MixPlayerController _mixPlayerController = MixPlayerController();
   final AutoScrollController _darwerAutoScrollController =
@@ -93,6 +97,33 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   late Timer _timer;
   late Timer _timer2;
 
+  //
+  RxInt get SelectPlayIndex => _SelectPlayIndex;
+  RxString get currentTime => _currentTime;
+  RxString get videoTitle => _videoTitle;
+  RxString get upName => _upName;
+  RxString get playTotal => _playTotal;
+  String? get epid => _epid;
+  Rxn<Duration> get duration => _duration;
+  Rxn<Duration> get position => _position;
+  Rxn<Duration> get buffer => _buffer;
+  RxBool get buffering => _buffering;
+  RxBool get playing => _playing;
+  RxBool get completed => _completed;
+  RxBool get showController => _showController;
+  RxBool get showRecomandList => _showRecomandList;
+  Animation get RecomandListanimation => _RecomandListanimation;
+  Animation get playControlleranimation => _playControlleranimation;
+  Rxn<PlayMode> get playMode => _playMode;
+  Rxn<Widget> get drawerCOntext => _drawerCOntext;
+  RxList<RelateCard> get recommand => _recommand;
+  RxList<UgcEpisode> get videoSelct => _videoSelct;
+  RxList<ViewEpisode> get TvSelect => _TvSelect;
+  MixPlayerController get mixPlayerController => _mixPlayerController;
+  AutoScrollController get darwerAutoScrollController =>
+      _darwerAutoScrollController;
+  FocusNode get focusNode => _focusNode;
+
   @override
   void onInit() async {
     super.onInit();
@@ -106,6 +137,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     });
     HardwareKeyboard.instance.addHandler(_KeyEvenhandel);
     _setbangumi();
+    _setlive();
     await _View();
     await _PlayViewUnite();
     _setSource();
@@ -114,6 +146,9 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   @override
   void onReady() {
     super.onReady();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+    });
   }
 
   @override
@@ -134,6 +169,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> _PlayViewUnite() async {
+    if (_cardList != null) return;
     final httpresult = await ApiRe.PlayViewUnite(
         option: Options(responseType: ResponseType.bytes),
         data: DataConverter.gzipCompress(playViewUniteReq()
@@ -143,8 +179,28 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
         DataConverter.byteGzipconvertbyte(httpresult.data)!);
   }
 
+  void _setlive() {
+    if (_cardList != null) {
+      if (_cardList is CardList) {
+        final CardList cardList = _cardList as CardList;
+        _biliLiveUrlModel =
+            BiliLiveUrlModel.fromUri(cardList.cardData.smallCardV1!.link);
+        _videoTitle.value = cardList.cardData.smallCardV1!.title;
+        _upName.value = cardList.cardData.smallCardV1!.uname;
+        _playTotal.value =
+            cardList.cardData.smallCardV1!.watchedShow.textSmall + '次观看';
+      } else {
+        final ListElement listElement = _cardList as ListElement;
+        _biliLiveUrlModel = BiliLiveUrlModel.fromUri(listElement.link);
+        _videoTitle.value = listElement.title;
+        _upName.value = listElement.uname;
+        _playTotal.value = listElement.watchedShow.textSmall + '次观看';
+      }
+    }
+  }
+
   Future<void> _View() async {
-    if (_epid != null) return;
+    if (_epid != null || _cardList != null) return;
     final httpresult = await ApiRe.View(
         option: Options(responseType: ResponseType.bytes),
         data: DataConverter.gzipCompress(viewReq().result(
@@ -212,6 +268,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void _historyReport() async {
+    if (_cardList != null) return;
     final Map<String, dynamic> data = {
       'access_key': Get.context!.userserver.accessKey(),
       'aid': _aid.toString(),
@@ -235,31 +292,6 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
 
   void increment() => count.value++;
   //
-  //
-  RxInt get SelectPlayIndex => _SelectPlayIndex;
-  RxString get currentTime => _currentTime;
-  RxString get videoTitle => _videoTitle;
-  RxString get upName => _upName;
-  RxString get playTotal => _playTotal;
-  String? get epid => _epid;
-  Rxn<Duration> get duration => _duration;
-  Rxn<Duration> get position => _position;
-  Rxn<Duration> get buffer => _buffer;
-  RxBool get buffering => _buffering;
-  RxBool get playing => _playing;
-  RxBool get completed => _completed;
-  RxBool get showController => _showController;
-  RxBool get showRecomandList => _showRecomandList;
-  Animation get RecomandListanimation => _RecomandListanimation;
-  Animation get playControlleranimation => _playControlleranimation;
-  Rxn<PlayMode> get playMode => _playMode;
-  Rxn<Widget> get drawerCOntext => _drawerCOntext;
-  RxList<RelateCard> get recommand => _recommand;
-  RxList<UgcEpisode> get videoSelct => _videoSelct;
-  RxList<ViewEpisode> get TvSelect => _TvSelect;
-  MixPlayerController get mixPlayerController => _mixPlayerController;
-  AutoScrollController get darwerAutoScrollController =>
-      _darwerAutoScrollController;
 
   Duration _nextMinute() {
     final now = DateTime.now();
@@ -276,6 +308,38 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void _setSource() {
+    if (_cardList == null) {
+      _setvideoSorce();
+    } else {
+      _setliveSource();
+    }
+  }
+
+  void _setliveSource() {
+    String? playUrl;
+    final String h264Url = _biliLiveUrlModel.playurlH264 ?? '';
+    final String h265Url = _biliLiveUrlModel.playurlH265 ?? '';
+    if (PlayConfig.videoCodeString == 'HEVC') {
+      if (h265Url != '') {
+        playUrl = h265Url;
+      } else {
+        playUrl = h264Url;
+      }
+    } else {
+      if (h265Url != '') {
+        playUrl = h264Url;
+      } else {
+        playUrl = h265Url;
+      }
+    }
+    if (playUrl != '') {
+      _mixPlayerController.open(videoSource: playUrl);
+    } else {
+      BliliToast.show('资源加载失败');
+    }
+  }
+
+  void _setvideoSorce() {
     String? videoUrl;
     String? audioUrl;
 
@@ -311,33 +375,37 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
       }
     }
 
-    _mixPlayerController.setVolume(PlayConfig.Volume);
-    _mixPlayerController.setRate(PlayConfig.playSpeed);
-    _setSelectPlayIndex();
-    _mixPlayerController.open(videoSource: videoUrl!, audioSource: audioUrl!);
-    //
+    if (videoUrl != null && audioUrl != null) {
+      _mixPlayerController.setVolume(PlayConfig.Volume);
+      _mixPlayerController.setRate(PlayConfig.playSpeed);
+      _setSelectPlayIndex();
+      _mixPlayerController.open(videoSource: videoUrl, audioSource: audioUrl);
+      //
 
-    appLogger.LoggerI('播放的视频质量: $_playVideoQn ,音频质量: $_playAudioQn');
+      appLogger.LoggerI('播放的视频质量: $_playVideoQn ,音频质量: $_playAudioQn');
+    } else {
+      BliliToast.show('资源加载失败');
+    }
   }
 
-  void _historyPlay() {
+  void _historyPlay() async {
     _ContinuePlaying = true;
     if (_playViewUniteReply.history.currentVideo.progress.toInt() != 0) {
       final Duration postion = Duration(
           seconds: _playViewUniteReply.history.currentVideo.progress.toInt());
-      if (_duration.value!.inSeconds == postion.inSeconds) {
-        seek(Duration(minutes: 0, seconds: 0));
-        play();
-      } else {
-        seek(postion);
+      // print(
+      //     'duration: ${_duration.value!.inSeconds} ,, position:${postion.inSeconds}');
+
+      if (postion.inSeconds != -1) {
+        await seek(postion);
         BliliToast.show('续播当前视频');
       }
     }
   }
 
-  void _modePlay() {
+  void _modePlay() async {
     if (_playMode.value == PlayMode.repeatOnce) {
-      seek(Duration(minutes: 0, seconds: 0));
+      await seek(Duration(minutes: 0, seconds: 0));
       play();
     } else {
       if ((_videoSelct.isNotEmpty &&
@@ -432,30 +500,30 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _setVolume(_volume.value - 5);
   }
 
-  void seek(Duration seek) {
-    _mixPlayerController.seek(seek);
+  Future<void> seek(Duration seek) async {
+    await _mixPlayerController.seek(seek);
   }
 
-  void _forwardPosition() {
+  void _forwardPosition() async {
     final Duration result =
         _position.value! + Duration(seconds: PlayConfig.SeekTime.toInt());
 
     if (result > _duration.value!) {
-      seek(_duration.value!);
+      await seek(_duration.value!);
     } else {
-      seek(result);
+      await seek(result);
       BliliToast.show('前进${PlayConfig.SeekTime.toInt()}s');
     }
   }
 
-  void _backPosition() {
+  void _backPosition() async {
     final Duration result =
         _position.value! - Duration(seconds: PlayConfig.SeekTime.toInt());
 
     if (result < Duration(seconds: 0)) {
-      seek(Duration(seconds: 0));
+      await seek(Duration(seconds: 0));
     } else {
-      seek(result);
+      await seek(result);
       BliliToast.show('后退${PlayConfig.SeekTime.toInt()}s');
     }
   }
@@ -562,7 +630,7 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
     _durationStream =
         _mixPlayerController.player.stream.duration.listen((Duration duration) {
       _duration.value = duration;
-      if (duration.inSeconds != 0 && !_ContinuePlaying) {
+      if (duration.inSeconds != 0 && !_ContinuePlaying && _cardList == null) {
         _historyPlay();
       }
     });

@@ -17,7 +17,6 @@ class Videocard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(archive.toJson().toString());
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       onPressed: () => Get.toNamed(Routes.PLAYER, arguments: {

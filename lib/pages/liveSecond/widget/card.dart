@@ -1,8 +1,10 @@
 import 'package:blili/command/images/images.dart';
+import 'package:blili/routes/app_pages.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:blili/modules/Secondlive/secondLive.dart';
+import 'package:get/get.dart';
 
 class Card extends StatelessWidget {
   final ListElement listElement;
@@ -12,7 +14,8 @@ class Card extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-      onPressed: () => print('object'),
+      onPressed: () => Get.toNamed(Routes.PLAYER,
+          arguments: {'cardList': listElement, 'spmid': ''}),
       child: Padding(
         padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
         child: Column(

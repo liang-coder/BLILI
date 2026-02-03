@@ -8,7 +8,7 @@ import '../widget/playSetting.dart';
 import '../widget/device.dart';
 import '../widget/appInfo.dart';
 import 'package:blili/command/theme/themeData.dart';
-import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/command/playconfig/config.dart';
 
 class SettingController extends GetxController {
   //TODO: Implement SettingController

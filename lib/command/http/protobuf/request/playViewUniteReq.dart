@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:blili/data/playconfig/config.dart';
+import 'package:blili/command/playconfig/config.dart';
 import 'package:blili/protos/dart/PlayViewUnite/playViewUniteReq.pb.dart';
 import 'package:fixnum/src/int64.dart';
 

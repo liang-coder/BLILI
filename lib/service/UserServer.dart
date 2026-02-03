@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class Userserver extends GetxService {
 
   RxBool get loginStatus => _isLogin;
   RxString get jwt => _jwt;
+  User get user => _user!;
   void setUser(User v) => _user = v;
 
   void _initData() {
