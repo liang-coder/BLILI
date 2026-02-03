@@ -40,6 +40,7 @@ const _$CardTypeEnumMap = {
   CardType.ACTIVITY_CARD_V1: 'activity_card_v1',
   CardType.AREA_ENTRANCE_V3: 'area_entrance_v3',
   CardType.SMALL_CARD_V1: 'small_card_v1',
+  CardType.MY_IODL_V1: 'my_idol_v1',
 };
 
 CardData _$CardDataFromJson(Map<String, dynamic> json) => CardData(

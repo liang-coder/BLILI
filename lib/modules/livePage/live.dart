@@ -657,5 +657,7 @@ enum CardType {
   @JsonValue("area_entrance_v3")
   AREA_ENTRANCE_V3,
   @JsonValue("small_card_v1")
-  SMALL_CARD_V1
+  SMALL_CARD_V1 ,
+  @JsonValue("my_idol_v1")
+  MY_IODL_V1
 }
