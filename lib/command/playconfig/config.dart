@@ -1,4 +1,6 @@
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
+import 'package:blili/service/UserServer.dart';
+import 'package:get/get.dart';
 
 enum PlayMode { repeatOnce, order }
 
@@ -17,7 +19,7 @@ class PlayConfig {
     '1080P': 80,
     '1080P+': 112,
     '1080P60': 116,
-    '4K': 120,
+    // '4K': 120,
   };
 
   static Map _allAudioQuality = {
@@ -99,15 +101,24 @@ class PlayConfig {
   }
 
   static int videoQn() {
-    return _allVideoQuality[_videoQuality];
+    if (Get.context!.userserver.loginStatus.value) {
+      return _allVideoQuality[_videoQuality];
+    }
+    return 32;
   }
 
   static int audioQn() {
-    return _allAudioQuality[_audioQuality];
+    if (Get.context!.userserver.loginStatus.value) {
+      return _allAudioQuality[_audioQuality];
+    }
+    return 30280;
   }
 
   static int videoCode() {
-    return _allCode[videoCodeString];
+    if(Get.context!.userserver.loginStatus.value){
+      return _allCode[videoCodeString];
+    }
+    return 7;
   }
 
   static bool vipvideoQuality(String v) {

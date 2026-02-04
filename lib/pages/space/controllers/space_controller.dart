@@ -63,6 +63,12 @@ class SpaceController extends GetxController {
     _DynamicItem.addAll(dynAllPersonal.list);
   }
 
+  void changePersonal({required int uid}){
+    _host_uid = uid;
+    _DynamicItem.clear();
+    _DynAllPersonal();
+  }
+
   Future<void> _DynAll() async {
     final httpresult = await ApiRe.DynAll(
         option: Options(responseType: ResponseType.bytes),

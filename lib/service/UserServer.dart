@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:blili/command/utils/sharepreference/sharepreference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -11,6 +10,7 @@ class Userserver extends GetxService {
   Token? _token;
   User? _user;
   RxBool _isLogin = false.obs;
+  RxBool _existUser = false.obs;
   RxString _jwt = ''.obs;
 
   @override
@@ -21,9 +21,13 @@ class Userserver extends GetxService {
   }
 
   RxBool get loginStatus => _isLogin;
+  RxBool get existUser => _existUser;
   RxString get jwt => _jwt;
   User get user => _user!;
-  void setUser(User v) => _user = v;
+  void setUser(User v) {
+    _user = v;
+    _existUser.value = true;
+  }
 
   void _initData() {
     _jwt.value = Shareperference.getString('jwt') ?? '';
@@ -44,7 +48,9 @@ class Userserver extends GetxService {
 
   void quit() {
     _isLogin.value = false;
+    _existUser.value = false;
     _token = null;
+    _user = null;
     Shareperference.remove('token');
   }
 

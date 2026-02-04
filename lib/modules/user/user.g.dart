@@ -10,20 +10,22 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       mid: (json['mid'] as num).toInt(),
       name: json['name'] as String,
       sign: json['sign'] as String,
-      coins: (json['coins'] as num).toInt(),
+      coins: (json['coins'] as num).toDouble(),
       birthday: DateTime.parse(json['birthday'] as String),
       face: json['face'] as String,
       faceNftNew: (json['face_nft_new'] as num).toInt(),
       sex: (json['sex'] as num).toInt(),
       level: (json['level'] as num).toInt(),
       rank: (json['rank'] as num).toInt(),
-      answerStatus: (json['answer_status'] as num).toInt(),
       silence: (json['silence'] as num).toInt(),
       vip: Vip.fromJson(json['vip'] as Map<String, dynamic>),
       emailStatus: (json['email_status'] as num).toInt(),
       telStatus: (json['tel_status'] as num).toInt(),
       official: Official.fromJson(json['official'] as Map<String, dynamic>),
       identification: (json['identification'] as num).toInt(),
+      pendant: json['pendant'] == null
+          ? null
+          : Pendant.fromJson(json['pendant'] as Map<String, dynamic>),
       invite: Invite.fromJson(json['invite'] as Map<String, dynamic>),
       isTourist: (json['is_tourist'] as num).toInt(),
       pinPrompting: (json['pin_prompting'] as num).toInt(),
@@ -43,13 +45,13 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'sex': instance.sex,
       'level': instance.level,
       'rank': instance.rank,
-      'answer_status': instance.answerStatus,
       'silence': instance.silence,
       'vip': instance.vip,
       'email_status': instance.emailStatus,
       'tel_status': instance.telStatus,
       'official': instance.official,
       'identification': instance.identification,
+      'pendant': instance.pendant,
       'invite': instance.invite,
       'is_tourist': instance.isTourist,
       'pin_prompting': instance.pinPrompting,
@@ -80,6 +82,16 @@ Map<String, dynamic> _$OfficialToJson(Official instance) => <String, dynamic>{
       'title': instance.title,
       'desc': instance.desc,
       'type': instance.type,
+    };
+
+Pendant _$PendantFromJson(Map<String, dynamic> json) => Pendant(
+      image: json['image'] as String?,
+      imageEnhance: json['image_enhance'] as String?,
+    );
+
+Map<String, dynamic> _$PendantToJson(Pendant instance) => <String, dynamic>{
+      'image': instance.image,
+      'image_enhance': instance.imageEnhance,
     };
 
 Vip _$VipFromJson(Map<String, dynamic> json) => Vip(

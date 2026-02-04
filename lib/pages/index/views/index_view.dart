@@ -1,5 +1,6 @@
 import 'package:blili/command/icons/icons.dart';
 import 'package:blili/command/theme/themeController.dart';
+import 'package:blili/service/UserServer.dart';
 import 'package:blili/widget/NetImage.dart';
 import 'package:easy_animated_indexed_stack/easy_animated_indexed_stack.dart';
 import 'package:flutter/material.dart';
@@ -82,12 +83,23 @@ class IndexView extends GetView<IndexController> {
             IconButton(
                 onPressed: () => Get.toNamed(Routes.USER),
                 icon: ClipOval(
-                  child: NetImage(
-                    imageUrl:
-                        'https://c-ssl.dtstatic.com/uploads/blog/202204/24/20220424154359_8f023.thumb.400_0.jpeg',
-                    width: controller.LeftNavigetionSize,
-                    height: controller.LeftNavigetionSize,
-                  ),
+                  child: Obx(() => Get.context!.userserver.existUser.value
+                      ? NetImage(
+                          imageUrl: Get.context!.userserver.user.face,
+                          width: controller.LeftNavigetionSize,
+                          height: controller.LeftNavigetionSize,
+                        )
+                      : Container(
+                          alignment: Alignment.center,
+                          color: Colors.white,
+                          width: controller.LeftNavigetionSize,
+                          height: controller.LeftNavigetionSize,
+                          child: Text(
+                            '登录',
+                            style:
+                                TextStyle(color: Colors.blue, fontSize: 20.sp),
+                          ),
+                        )),
                 )),
             Obx(() => IconButton(
                 iconSize: controller.LeftNavigetionSize,

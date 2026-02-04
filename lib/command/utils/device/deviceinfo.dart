@@ -23,7 +23,7 @@ class DeviceInfo {
     _build = await DeviceInfoPlugin().androidInfo;
   }
 
-  static void setip(Ip v)=>_ip=v;
+  static void setip(Ip v) => _ip = v;
 
   static int sdkversion() {
     return _build.version.sdkInt;
@@ -157,8 +157,13 @@ class DeviceInfo {
   }
 
   static String realCpu() {
-    final core = SysInfo.cores[0];
-    return core.name;
+    for (int i = 0; i < SysInfo.cores.length; i++) {
+      final core = SysInfo.cores[i];
+      if (core.name != '') {
+        return core.name;
+      }
+    }
+    return '未知';
   }
 
   static String cpuhardware() {

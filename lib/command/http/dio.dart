@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'HttpWrapper.dart';
 
 class DioClient {
@@ -7,12 +8,12 @@ class DioClient {
       connectTimeout: Duration(milliseconds: 5000)))
     ..interceptors.add(BInterceptorsWrapper().interceptorsWrapper)
     ..interceptors.add(LogInterceptor(
-      request: true,
-      requestHeader: true,
-      requestBody: true,
-      responseHeader: true,
-      responseBody: true,
-      error: true,
+      request: !kReleaseMode,
+      requestHeader: !kReleaseMode,
+      requestBody: !kReleaseMode,
+      responseHeader: !kReleaseMode,
+      responseBody: !kReleaseMode,
+      error: !kReleaseMode,
     ));
   static Dio get dio => _dio;
 }

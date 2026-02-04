@@ -9,4 +9,7 @@ class Images{
 //
   static final String httpStateLoding = "assets/images/httpState/loading.json";
 
+  //
+  static final String Logo = "assets/logo.png";
+
 }

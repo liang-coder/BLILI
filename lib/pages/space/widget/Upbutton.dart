@@ -14,7 +14,7 @@ class Upbutton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(upListItem.toString());
+    // log(upListItem.toString());
     return MaterialButton(
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         elevation: 0,
@@ -28,14 +28,15 @@ class Upbutton extends StatelessWidget {
                 height: 40.w,
               ),
             ),
-            Text(upListItem.name,
+            Expanded(child: Text(upListItem.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     fontSize: 26.sp,
-                    color: Theme.of(context).textTheme.displayMedium!.color))
+                    color: Theme.of(context).textTheme.displayMedium!.color)))
           ],
         ),
-        onPressed: () => print('asdasd'));
+        onPressed: () =>
+            controller.changePersonal(uid: upListItem.uid.toInt()));
   }
 }

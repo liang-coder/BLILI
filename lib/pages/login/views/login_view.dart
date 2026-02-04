@@ -136,10 +136,10 @@ class LoginView extends GetView<LoginController> {
           data: controller.qrcodrUrl.value,
         );
       }
-      return CircularProgressIndicator(
+      return SizedBox(width: 80.w,height: 80.w,child: CircularProgressIndicator(
         backgroundColor: Colors.blue,
         strokeWidth: 3,
-      );
+      ),);
     });
   }
 }

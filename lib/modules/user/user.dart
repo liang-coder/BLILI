@@ -10,7 +10,7 @@ class User {
   @JsonKey(name: "sign")
   String sign;
   @JsonKey(name: "coins")
-  int coins;
+  double coins;
   @JsonKey(name: "birthday")
   DateTime birthday;
   @JsonKey(name: "face")
@@ -23,8 +23,6 @@ class User {
   int level;
   @JsonKey(name: "rank")
   int rank;
-  @JsonKey(name: "answer_status")
-  int answerStatus;
   @JsonKey(name: "silence")
   int silence;
   @JsonKey(name: "vip")
@@ -37,6 +35,8 @@ class User {
   Official official;
   @JsonKey(name: "identification")
   int identification;
+  @JsonKey(name: "pendant")
+  Pendant? pendant;
   @JsonKey(name: "invite")
   Invite invite;
   @JsonKey(name: "is_tourist")
@@ -61,13 +61,13 @@ class User {
     required this.sex,
     required this.level,
     required this.rank,
-    required this.answerStatus,
     required this.silence,
     required this.vip,
     required this.emailStatus,
     required this.telStatus,
     required this.official,
     required this.identification,
+    this.pendant,
     required this.invite,
     required this.isTourist,
     required this.pinPrompting,
@@ -116,9 +116,28 @@ class Official {
     required this.type,
   });
 
-  factory Official.fromJson(Map<String, dynamic> json) => _$OfficialFromJson(json);
+  factory Official.fromJson(Map<String, dynamic> json) =>
+      _$OfficialFromJson(json);
 
   Map<String, dynamic> toJson() => _$OfficialToJson(this);
+}
+
+@JsonSerializable()
+class Pendant {
+  @JsonKey(name: "image")
+  String? image;
+  @JsonKey(name: "image_enhance")
+  String? imageEnhance;
+
+  Pendant({
+    this.image,
+    this.imageEnhance,
+  });
+
+  factory Pendant.fromJson(Map<String, dynamic> json) =>
+      _$PendantFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PendantToJson(this);
 }
 
 @JsonSerializable()
@@ -189,7 +208,8 @@ class AvatarIcon {
     required this.iconResource,
   });
 
-  factory AvatarIcon.fromJson(Map<String, dynamic> json) => _$AvatarIconFromJson(json);
+  factory AvatarIcon.fromJson(Map<String, dynamic> json) =>
+      _$AvatarIconFromJson(json);
 
   Map<String, dynamic> toJson() => _$AvatarIconToJson(this);
 }
@@ -198,7 +218,8 @@ class AvatarIcon {
 class IconResource {
   IconResource();
 
-  factory IconResource.fromJson(Map<String, dynamic> json) => _$IconResourceFromJson(json);
+  factory IconResource.fromJson(Map<String, dynamic> json) =>
+      _$IconResourceFromJson(json);
 
   Map<String, dynamic> toJson() => _$IconResourceToJson(this);
 }
@@ -277,7 +298,8 @@ class OttInfo {
     required this.overdueTime,
   });
 
-  factory OttInfo.fromJson(Map<String, dynamic> json) => _$OttInfoFromJson(json);
+  factory OttInfo.fromJson(Map<String, dynamic> json) =>
+      _$OttInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$OttInfoToJson(this);
 }
@@ -291,7 +313,8 @@ class SuperVip {
     required this.isSuperVip,
   });
 
-  factory SuperVip.fromJson(Map<String, dynamic> json) => _$SuperVipFromJson(json);
+  factory SuperVip.fromJson(Map<String, dynamic> json) =>
+      _$SuperVipFromJson(json);
 
   Map<String, dynamic> toJson() => _$SuperVipToJson(this);
 }

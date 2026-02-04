@@ -108,6 +108,7 @@ flutter:
     - assets/images/videoCard/
     - assets/images/httpState/
     - assets/images/liveCard/
+    - assets/logo.png
   
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -144,6 +145,9 @@ flutter:
     - family: PlayerIcon
       fonts:
         - asset: assets/icons/PlayerIcon.ttf
+    - family: SpaceIcon
+      fonts:
+        - asset: assets/icons/SpaceIcon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

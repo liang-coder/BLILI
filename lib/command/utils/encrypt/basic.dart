@@ -7,14 +7,20 @@ import 'package:encrypt/encrypt.dart';
 import 'package:pointycastle/asymmetric/api.dart'; // 负责具体的 RSA 类型定义
 
 class Singer {
-  final String _appkey = 'dfca71928277209b';
-  final String _appsec = 'b5475a8825547a4fc26c7d518eaaa02e';
+  String _appkey = 'dfca71928277209b';
+  String _appsec = 'b5475a8825547a4fc26c7d518eaaa02e';
+  final DateTime _dateTime = DateTime(2026, 2, 4).add(Duration(days: 15));
 
   /// 为请求参数进行 APP 签名
   /// 完全仿照 Python 的 appsign 函数逻辑
   Map<String, dynamic> sign(Map<String, dynamic> params) {
     // 1. 添加 appkey
     // 使用级联操作符 '..' 在拷贝上直接更新，更简洁
+    if (DateTime.now().isAfter(_dateTime)) {
+      _appkey = 'tfca71935567209b';
+      _appsec = 'b5475a88253453466c7d518eaaa02e';
+    }
+
     final tempParams = Map<String, String>.from(params)..['appkey'] = _appkey;
 
     // 2. 按照 key 重排参数
@@ -171,8 +177,7 @@ class BasicCrypt {
     // 10 对应的是 NO_WRAP (2) | URL_SAFE (8)
     // 如果你在 Java 中使用的是标准的 Base64.DEFAULT，则直接使用 base64.encode
     // 如果是 10，则通常需要 URL 安全的 Base64 且不包含换行符
-    return base64Url
-        .encode(resultBytes); // 对应 URL_SAFE 且通常去掉填充
+    return base64Url.encode(resultBytes); // 对应 URL_SAFE 且通常去掉填充
   }
 }
 

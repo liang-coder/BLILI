@@ -11,6 +11,8 @@ import 'package:blili/command/utils/encrypt/authKey.dart';
 import 'dart:async';
 import 'package:blili/modules/token/token.dart';
 
+import '../../../modules/user/user.dart';
+
 class LoginController extends GetxController {
   //TODO: Implement LoginController
 
@@ -151,11 +153,23 @@ class LoginController extends GetxController {
 
     if (httpresult.data['data'] != null) {
       Get.context!.userserver.login(Token.fromJson(httpresult.data['data']));
+      _myInfo();
       Get.back();
     } else {
       if (httpresult.data['message'] != '二维码尚未确认') {
         _scanMessage.value = httpresult.data['message'];
       }
     }
+  }
+
+  Future<void> _myInfo() async {
+    final Map<String, dynamic> parame = {
+      'buvid': Id.buvid(),
+      'local_id': Id.buvid()
+    };
+
+    final httpresult =
+        await ApiRe.myInfo(queryParameters: Params.add(Newparams: parame));
+    Get.context!.userserver.setUser(User.fromJson(httpresult.data));
   }
 }

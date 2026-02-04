@@ -7,6 +7,7 @@ class AppIcons {
   static const String _SearchFamily = 'SearchIcon';
   static const String _SettingFamily = 'SettingIcon';
   static const String _PlayerFamily = 'PlayerIcon';
+  static const String _SpaceFamily = 'SpaceIcon';
 //
   static const IconData Home = IconData(0xe6cf, fontFamily: _IndexFamily);
   static const IconData Setting = IconData(0xe637, fontFamily: _IndexFamily);
@@ -31,6 +32,8 @@ class AppIcons {
   static const IconData user = IconData(0xe660, fontFamily: _PlayerFamily);
   static const IconData more = IconData(0xe582, fontFamily: _PlayerFamily);
   static const IconData readjust = IconData(0xe728, fontFamily: _PlayerFamily);
+  //
+  static const IconData NotLogin = IconData(0xe6b2, fontFamily: _SpaceFamily);
 
 
 }

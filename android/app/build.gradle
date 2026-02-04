@@ -28,15 +28,40 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        ndk {
+            // 指定支持的架构
+            // armeabi-v7a: 兼容旧款 32 位设备
+            // arm64-v8a: 现代 64 位设备 (主流)
+            // x86_64: 主要是模拟器
+            abiFilters 'arm64-v8a'
+        }
+    }
+
+    signingConfigs {
+        create("release"){
+            keyAlias = "blili" // 别名
+            keyPassword = "xlxu159956740" // 密码
+            storeFile = file("${rootDir.absolutePath}/app/blili.keystore") // 存储keystore或者是jks文件的路径
+            storePassword = "xlxu159956740" // 存储密码
+        }
     }
 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            signingConfig = signingConfigs.getByName("release")
+            minifyEnabled  true
+            shrinkResources true
+        debug {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            minifyEnabled  false
+            shrinkResources false
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
+}
 }
 
 flutter {

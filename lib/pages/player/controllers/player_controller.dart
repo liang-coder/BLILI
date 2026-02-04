@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:blili/command/http/apiRe.dart';
 import 'package:blili/command/http/params.dart';
 import 'package:blili/command/http/protobuf/request/playViewUniteReq.dart';
@@ -147,7 +148,8 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   void onReady() {
     super.onReady();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _focusNode.requestFocus();
+      Future.delayed(
+          Duration(milliseconds: 300), () => _focusNode.requestFocus());
     });
   }
 
@@ -263,8 +265,8 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void _setBangumiVideoSelect() {
-    List<ViewEpisode> videos = Get.arguments['TvSelect'] ?? [];
-    _TvSelect.addAll(videos);
+    List<ViewEpisode>? videos = Get.arguments['TvSelect'];
+    _TvSelect.addAll(videos ?? <ViewEpisode>[]);
   }
 
   void _historyReport() async {
@@ -349,12 +351,15 @@ class PlayerController extends GetxController with GetTickerProviderStateMixin {
             ? 0
             : 1;
 
+    log(_playViewUniteReply.vodInfo.toString());
+
     videoUrl = _playViewUniteReply.vodInfo.streamList[index].dashVideo.baseUrl;
     _playVideoQn =
         _playViewUniteReply.vodInfo.streamList[index].streamInfo.quality;
 
     for (int i = 0; i < _playViewUniteReply.vodInfo.streamList.length; i++) {
       final Stream video = _playViewUniteReply.vodInfo.streamList[i];
+      if (video.dashVideo == {}) continue;
       if (video.streamInfo.quality == PlayConfig.videoQn() &&
           video.dashVideo.codecid == PlayConfig.videoCode()) {
         videoUrl = video.dashVideo.baseUrl;

@@ -89,6 +89,7 @@ class SplashController extends GetxController {
   }
 
   Future<void> _myInfo() async {
+    if(!Get.context!.userserver.loginStatus.value)return;
     final Map<String, dynamic> parame = {
       'buvid': Id.buvid(),
       'local_id': Id.buvid()

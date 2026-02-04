@@ -11,7 +11,7 @@ class AppthemeData {
 
   static final dark = Apptheme(
       dialogBackgroundColor: Color(0xff4c4c4c),
-      buttonfocusColor: Colors.red,
+      buttonfocusColor: Colors.lightBlue.shade500,
       selectedIConColor: Colors.white,
       unselectedIConColor: Color(0xff9fa1a1),
       themeData: ThemeData.dark().copyWith(
@@ -40,7 +40,7 @@ class AppthemeData {
               iconTheme: IconThemeData(color: Colors.white)),
           iconButtonTheme: IconButtonThemeData(
               style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all(Colors.red),
+            overlayColor: MaterialStateProperty.all(Colors.lightBlue.shade500),
             iconColor: MaterialStateProperty.all(Color(0xff9fa1a1)),
             minimumSize: MaterialStateProperty.all(Size(1, 1)),
             padding: MaterialStateProperty.all(EdgeInsets.all(2.0)),

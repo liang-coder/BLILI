@@ -32,7 +32,7 @@ class Device extends StatelessWidget {
         Option(
           title: '分辨率',
           label:
-              '${ScreenUtil().screenHeight.toInt()}x${ScreenUtil().screenWidth.toInt()}',
+              '${(ScreenUtil().screenWidth * ScreenUtil().pixelRatio!).toInt()}x${(ScreenUtil().screenHeight * ScreenUtil().pixelRatio!).toInt()}',
           onPressed: () => print('null'),
         ),
         Option(
