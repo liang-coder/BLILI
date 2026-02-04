@@ -1,4 +1,4 @@
-#### BLILI
+## BLILI
  
 <p align="center">
   <img src="https://github.com/liang-coder/BLILI/blob/master/assets/logo.png?raw=true" width="150">
@@ -7,23 +7,24 @@
 #### 该项目是一个第三方哔哩哔哩TV客户端，该项目仅仅作为个人的学习目的。该项目未对哔哩哔哩官方进行任何逆向与破解，api均来自github，本人仅进行封装集成，所有数据均为b站官方所有。
 
 🔗[下载链接](https://install.appcenter.ms/users/xiaxiaoao/apps/bbll/distribution_groups/publicgroup)
-🔗[隔壁A站客户端ACAC](https://github.com/xiaye13579/ACAC)
+
 
 ## Q&A
-#### 软件收费吗？
-BBLL是个学习交流应用，不存在收费内容。部分功能需要B站的会员才可以使用，仅需要开网页/手机端会员即可使用全部功能。大家还是多支持支持叔叔的会员，可以看1080P以上的视频。
+#### 关于代码缺失问题
+BLILI是一个交流学习软件。涉及到b站官方的核心代码均不上传，例如加密和id生成的代码，均是保护b站官方权益。
 
-#### 快进快退的操作
-双击屏幕左右侧、拖动进度条、播放控件隐藏时按遥控器D-Pad按钮的左右键、多媒体遥控器上的快进快退按钮等方式
+#### 关于接口和proto定义来源
+在该学习项目创立之前，github上的开源项目bilibili-API-collect还存在，本项目的所有api和proto文件定义等均来源于此。<br>
+#### bilibili-API-collect :🔗[链接](https://github.com/SocialSisterYi/bilibili-API-collect)
 
-#### 如何刷新当前页面
-左侧点击高亮的Tab即可刷新当前页面
+#### 该项目的后续更新
+因bilibili-API-collect项目受到b站官方的律师函，所以以后不会再有任何涉及到api的功能更新，例如点赞、收藏等，仅仅会是修复bug和优化性能。<br>
 
-#### 无法播放的问题
-应用播放功能基于硬件解码，暂时未加入其他软件解码器。不敢保证所有设备都可以正常播放视频，播放失败可以尝试切换视频清晰度和视频编码来试试。后续可能有计划加入外置软件解码，但可能会导致应用体积变大。
+#### 是否收费
+该项目是一个学习项目，不存在任何收费，也不收集任何信息，第一次启动app，在高安卓版本上可能会弹出获取应用列表，这是需要上报给b站官方，详见api接口定义代码。
 
-#### 两个apk文件的区别
-release版本只能用于android 5.0以上（包含5.0）的系统。api19是做了android4.4的兼容处理的版本。
+#### 法律相关问题
+该软件禁止进行售卖获利，诺有该行为，责任则个人承担，开发者不负一切责任。
 
 ## 应用截图 Screenshot
 
