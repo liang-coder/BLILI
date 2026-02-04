@@ -1,5 +1,5 @@
 <p align="center">
-  <b>#BLILI</b>
+ #BLILI
 </p>
 
 <p align="center">
