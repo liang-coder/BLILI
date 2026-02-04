@@ -177,14 +177,14 @@ class SearchController extends GetxController with GetTickerProviderStateMixin {
     final httpresult =
         await ApiRe.search(queryParameters: Params.add(Newparams: parame));
 
-    _searchAll.add(SearchAll.fromJson(httpresult.data));
+    // _searchAll.add(SearchAll.fromJson(httpresult.data));
 
-    // try {
-    //   _searchAll.add(SearchAll.fromJson(httpresult.data));
-    // } catch (e) {
-    //   _httploadingController2.error();
-    //   throw '数据出错$e';
-    // }
+    try {
+      _searchAll.add(SearchAll.fromJson(httpresult.data));
+    } catch (e) {
+      _httploadingController2.error();
+      throw '数据出错$e';
+    }
 
     _allPage += 1;
     _httploadingController2.unenable();

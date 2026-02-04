@@ -58,9 +58,14 @@ class SpaceController extends GetxController {
         data: DataConverter.gzipCompress(dynAllPersonalReq()
             .result(uid: _host_uid!, footprint: _footprint!)));
 
-    final DynAllPersonalReply dynAllPersonal = DynAllPersonalReply.fromBuffer(
-        DataConverter.byteGzipconvertbyte(httpresult.data)!);
-    _DynamicItem.addAll(dynAllPersonal.list);
+   try{
+     final DynAllPersonalReply dynAllPersonal = DynAllPersonalReply.fromBuffer(
+         DataConverter.byteGzipconvertbyte(httpresult.data)!);
+     _DynamicItem.addAll(dynAllPersonal.list);
+   }catch(e){
+     _httploadingController2.error();
+     throw '$e数据出错';
+   }
   }
 
   void changePersonal({required int uid}){
@@ -74,11 +79,17 @@ class SpaceController extends GetxController {
         option: Options(responseType: ResponseType.bytes),
         data: DataConverter.gzipCompress(dynAllReq().result()));
 
-    final DynAllReply dynAllReply = DynAllReply.fromBuffer(
-        DataConverter.byteGzipconvertbyte(httpresult.data)!);
-    _UpListItem.addAll(dynAllReply.upList.list);
+    try{
+      final DynAllReply dynAllReply = DynAllReply.fromBuffer(
+          DataConverter.byteGzipconvertbyte(httpresult.data)!);
+      _UpListItem.addAll(dynAllReply.upList.list);
+      _httploadingController.unenable();
+      _host_uid = _UpListItem[0].uid.toInt();
+      _footprint = dynAllReply.upList.footprint;
+    }catch(e){
+      _httploadingController.error();
+      throw '$e数据出错';
+    }
     _httploadingController.unenable();
-    _host_uid = _UpListItem[0].uid.toInt();
-    _footprint = dynAllReply.upList.footprint;
   }
 }

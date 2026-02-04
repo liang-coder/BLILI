@@ -59,11 +59,15 @@ class UserController extends GetxController {
         option: Options(responseType: ResponseType.bytes),
         data: DataConverter.gzipCompress(HistoryCursor().result(cursor)));
 
-    final CursorReply cursorReply = CursorReply.fromBuffer(
-        DataConverter.byteGzipconvertbyte(httpresult.data)!);
-    log(cursorReply.toString());
-    _CursorItems.addAll(cursorReply.items);
-    cursor = cursorReply.cursor.max.toInt();
-    _httploadingController.unenable();
+    try{
+      final CursorReply cursorReply = CursorReply.fromBuffer(
+          DataConverter.byteGzipconvertbyte(httpresult.data)!);
+      _CursorItems.addAll(cursorReply.items);
+      cursor = cursorReply.cursor.max.toInt();
+      _httploadingController.unenable();
+    }catch(e){
+      _httploadingController.error();
+      throw '$e数据出错';
+    }
   }
 }

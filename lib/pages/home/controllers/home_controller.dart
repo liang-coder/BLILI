@@ -122,14 +122,14 @@ class HomeController extends GetxController
     final Response httpresult = await ApiRe.feedIndex(
         queryParameters: Params.add(Newparams: queryParameters));
 
-    final Map<String, dynamic> data = httpresult.data;
-    _recommand.add(FeedIndex.fromJson(data));
-    // try {
-    //   _recommand.add(FeedIndex.fromJson(data));
-    // } catch (e) {
-    //   httploadingController.error();
-    //   throw '数据出错 $e';
-    // }
+    // final Map<String, dynamic> data = httpresult.data;
+    // _recommand.add(FeedIndex.fromJson(data));
+    try {
+      _recommand.add(FeedIndex.fromJson(httpresult.data));
+    } catch (e) {
+      httploadingController.error();
+      throw '数据出错 $e';
+    }
     if (_pull) {
       _pull = false;
       _httploadingController.unenable();
@@ -179,16 +179,16 @@ class HomeController extends GetxController
         queryParameters: Params.add(Newparams: queryParameters),
         option: Options(headers: {'pgcinfo': pgcinfo}));
 
-    final Bangumi bangumi = Bangumi.fromJson(httpresult.data);
-    _bangumi.add(bangumi);
+    // final Bangumi bangumi = Bangumi.fromJson(httpresult.data);
+    // _bangumi.add(bangumi);
 
-    // try {
-    //   final Bangumi bangumi = Bangumi.fromJson(httpresult.data);
-    //   _bangumi.add(bangumi);
-    // } catch (e) {
-    //   _httploadingController3.error();
-    //   throw '数据出错 $e';
-    // }
+    try {
+      final Bangumi bangumi = Bangumi.fromJson(httpresult.data);
+      _bangumi.add(bangumi);
+    } catch (e) {
+      _httploadingController3.error();
+      throw '数据出错 $e';
+    }
     _httploadingController3.unenable();
   }
 
@@ -213,16 +213,16 @@ class HomeController extends GetxController
         queryParameters: Params.add(Newparams: queryParameters),
         option: Options(headers: {'pgcinfo': pgcinfo}));
 
-    final Cinema cinema = Cinema.fromJson(httpresult.data);
-    _cinema.add(cinema);
+    // final Cinema cinema = Cinema.fromJson(httpresult.data);
+    // _cinema.add(cinema);
 
-    // try {
-    //   final Cinema cinema = Cinema.fromJson(httpresult.data);
-    //   _cinema.add(cinema);
-    // } catch (e) {
-    //   _httploadingController4.error();
-    //   throw '数据出错 $e';
-    // }
+    try {
+      final Cinema cinema = Cinema.fromJson(httpresult.data);
+      _cinema.add(cinema);
+    } catch (e) {
+      _httploadingController4.error();
+      throw '数据出错 $e';
+    }
     _httploadingController4.unenable();
   }
 

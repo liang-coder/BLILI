@@ -100,16 +100,16 @@ class LiveController extends GetxController
       queryParameters: Params.add(Newparams: queryParameters),
     );
 
-    final Live live = Live.fromJson(httpresult.data);
-    _live.add(live);
+    // final Live live = Live.fromJson(httpresult.data);
+    // _live.add(live);
 
-    // try {
-    //   final Live live = Live.fromJson(httpresult.data);
-    //   _live.add(live);
-    // } catch (e) {
-    //   _httploadingController.error();
-    //   throw '数据出错 $e';
-    // }
+    try {
+      final Live live = Live.fromJson(httpresult.data);
+      _live.add(live);
+    } catch (e) {
+      _httploadingController.error();
+      throw '数据出错 $e';
+    }
     _page += 1;
 
     if (_arealive == null) {

@@ -34,7 +34,12 @@ class General extends StatelessWidget {
               title: '主题',
               label: settingController.ThemeValue.value,
               onPressed: () => Dialog.show(child: _themeSelect()),
-            ))
+            )),
+        Option(
+          title: '软件版本',
+          label: AppInfo.version(),
+          onPressed: () => print('object'),
+        )
       ],
     ));
   }

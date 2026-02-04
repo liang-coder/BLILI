@@ -73,7 +73,12 @@ class TvDetailsController extends GetxController {
     final httpresult = await ApiRe.synthesizeFeed(
         queryParameters: Params.add(Newparams: parame));
 
-    _synthesizeFeedData = SynthesizeFeed.fromJson(httpresult.data);
+    try{
+      _synthesizeFeedData = SynthesizeFeed.fromJson(httpresult.data);
+    }catch(e){
+      _httploadingController.error();
+      throw '$e数据出错';
+    }
   }
 
   String getmore() {
@@ -113,10 +118,14 @@ class TvDetailsController extends GetxController {
           season_id: epid,
         )));
 
-    _viewReply.value = ViewReply.fromBuffer(
-        DataConverter.byteGzipconvertbyte(httpresult.data)!);
-
-    final List<int> supplement = _viewReply.value!.supplement.value;
-    _viewPgcAny = ViewPgcAny.fromBuffer(supplement);
+    try{
+      _viewReply.value = ViewReply.fromBuffer(
+          DataConverter.byteGzipconvertbyte(httpresult.data)!);
+      final List<int> supplement = _viewReply.value!.supplement.value;
+      _viewPgcAny = ViewPgcAny.fromBuffer(supplement);
+    }catch(e){
+      _httploadingController.error();
+      throw '$e数据出错';
+    }
   }
 }

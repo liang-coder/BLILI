@@ -11,7 +11,7 @@ class NetImage extends CachedNetworkImage {
     height,
     fit
   }) : super(
-            imageUrl: imageUrl,
+            imageUrl: imageUrl+'@720w_404h_85q_!pegasus-android-v2.webp',
             httpHeaders: httpHeaders,
             width: width,
             height: height,

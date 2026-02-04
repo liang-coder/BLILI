@@ -33,7 +33,7 @@ android {
             // armeabi-v7a: 兼容旧款 32 位设备
             // arm64-v8a: 现代 64 位设备 (主流)
             // x86_64: 主要是模拟器
-            abiFilters 'arm64-v8a'
+            abiFilters 'armeabi-v7a'
         }
     }
 
