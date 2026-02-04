@@ -1,6 +1,6 @@
 # BLILI
 
-![ic_launcher_tv](https://user-images.githubusercontent.com/4136777/207619332-6f4f2959-32d6-4596-9d8f-a9eff20edd4f.png)
+![ic_launcher_tv](https://github.com/liang-coder/BLILI/blob/master/assets/logo.png)
 
 #### 该项目是一个第三方哔哩哔哩TV客户端，该项目仅仅作为个人的学习目的。该项目未对哔哩哔哩官方进行任何逆向与破解，api均来自github，本人仅进行封装集成，所有数据均为b站官方所有。
 
