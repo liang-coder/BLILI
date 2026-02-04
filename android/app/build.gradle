@@ -37,14 +37,6 @@ android {
         }
     }
 
-    signingConfigs {
-        create("release"){
-            keyAlias = "blili" // 别名
-            keyPassword = "xlxu159956740" // 密码
-            storeFile = file("${rootDir.absolutePath}/app/blili.keystore") // 存储keystore或者是jks文件的路径
-            storePassword = "xlxu159956740" // 存储密码
-        }
-    }
 
     buildTypes {
         release {
