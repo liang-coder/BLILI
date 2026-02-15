@@ -28,7 +28,7 @@ BLILI是一个交流学习软件。涉及到b站官方的核心代码均不上�
 
 ### 感谢大家给个star✨
 
-## 应用截图 Screenshot
+## 应用截图
 
 ![Screenshot_20230117_101427](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260204_215159.png)
 
