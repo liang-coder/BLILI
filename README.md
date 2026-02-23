@@ -39,3 +39,7 @@ BLILI是一个交流学习软件。涉及到b站官方的核心代码均不上�
 ![Screenshot_20230117_101505](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260204_215248.png)
 
 ![Screenshot_20230117_101520](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260204_215323.png)
+
+![Screenshot_20230117_101520](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260223_145022.png)
+
+![Screenshot_20230117_101520](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260223_145052.png)
