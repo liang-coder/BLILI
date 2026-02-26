@@ -1,0 +1,153 @@
+name: blili
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.2
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+  get: ^4.7.3
+  flutter_screenutil: ^5.9.3
+  easy_animated_indexed_stack: ^0.1.0
+  flutter_lazy_indexed_stack: ^0.0.6
+  flutter_animate: ^4.5.2
+  cached_network_image: ^3.4.1
+  dio: ^5.9.0
+  uuid: ^4.5.2
+  device_info_plus: ^11.3.0
+  intl: ^0.20.2
+  encrypt: ^5.0.3
+  system_info2: ^4.1.0
+  device_installed_apps: ^1.0.1
+  system_boot_time: ^0.0.1
+  shared_preferences: ^2.5.3
+  flutter_displaymode: ^0.7.0
+  android_id: ^0.5.1
+  protobuf: ^4.1.0
+  archive: ^3.6.0
+  fluttertoast: ^8.2.12
+  logger: ^2.6.2
+  package_info_plus: ^8.3.0
+  json_annotation: ^4.9.0
+  lottie: ^3.3.0
+  easy_debounce: ^2.0.3
+  qr_flutter: ^4.1.0
+  audio_video_progress_bar: ^2.0.3
+  scroll_to_index: ^3.0.1
+  flutter_snake_navigationbar:
+    path: lib/plugin/SnakeBottomNavigationBar-master
+  mix_player:
+    path: lib/plugin/mix_player
+
+
+
+
+
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: ^2.4.15 # json转model生成工具
+  json_serializable: ^6.9.5 # JSON 序列化代码生成
+  protoc_plugin: ^22.4.0  # 用于生成 Dart 代码（可选，也可用命令行）
+
+
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^5.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/rsa_public_key.pem
+    - assets/images/videoCard/
+    - assets/images/httpState/
+    - assets/images/liveCard/
+    - assets/logo.png
+  
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: IndexIcon
+      fonts:
+        - asset: assets/icons/IndexIcon.ttf
+
+    - family: HttpIcon
+      fonts:
+        - asset: assets/icons/HttpIcon.ttf
+    - family: HttpIcon2
+      fonts:
+        - asset: assets/icons/HttpIcon2.ttf
+    - family: SearchIcon
+      fonts:
+        - asset: assets/icons/SearchIcon.ttf
+    - family: SettingIcon
+      fonts:
+        - asset: assets/icons/SettingIcon.ttf
+    - family: PlayerIcon
+      fonts:
+        - asset: assets/icons/PlayerIcon.ttf
+    - family: SpaceIcon
+      fonts:
+        - asset: assets/icons/SpaceIcon.ttf
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package

@@ -1,0 +1,593 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'cinema.g.dart';
+
+@JsonSerializable()
+class Cinema {
+  @JsonKey(name: "has_next")
+  int hasNext;
+  @JsonKey(name: "hot")
+  Hot hot;
+  @JsonKey(name: "jump_module_id")
+  int jumpModuleId;
+  @JsonKey(name: "modules")
+  List<Module> modules;
+  @JsonKey(name: "next_cursor")
+  String nextCursor;
+  @JsonKey(name: "regions")
+  List<Region> regions;
+  @JsonKey(name: "report")
+  CinemaReport report;
+
+  Cinema({
+    required this.hasNext,
+    required this.hot,
+    required this.jumpModuleId,
+    required this.modules,
+    required this.nextCursor,
+    required this.regions,
+    required this.report,
+  });
+
+  factory Cinema.fromJson(Map<String, dynamic> json) => _$CinemaFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CinemaToJson(this);
+}
+
+@JsonSerializable()
+class Hot {
+  @JsonKey(name: "desc")
+  String desc;
+  @JsonKey(name: "items")
+  List<dynamic> items;
+  @JsonKey(name: "title")
+  String title;
+  @JsonKey(name: "wid")
+  int wid;
+
+  Hot({
+    required this.desc,
+    required this.items,
+    required this.title,
+    required this.wid,
+  });
+
+  factory Hot.fromJson(Map<String, dynamic> json) => _$HotFromJson(json);
+
+  Map<String, dynamic> toJson() => _$HotToJson(this);
+}
+
+@JsonSerializable()
+class Module {
+  @JsonKey(name: "attr")
+  Attr attr;
+  @JsonKey(name: "bg_color")
+  String bgColor;
+  @JsonKey(name: "bg_img")
+  String bgImg;
+  @JsonKey(name: "headers")
+  List<Region> headers;
+  @JsonKey(name: "headers_type")
+  int headersType;
+  @JsonKey(name: "items")
+  List<Item> items;
+  @JsonKey(name: "jump_module_id")
+  int jumpModuleId;
+  @JsonKey(name: "module_id")
+  int moduleId;
+  @JsonKey(name: "module_tag")
+  String moduleTag;
+  @JsonKey(name: "report")
+  ModuleReport report;
+  @JsonKey(name: "size")
+  int size;
+  @JsonKey(name: "style")
+  String style;
+  @JsonKey(name: "sub_title")
+  String subTitle;
+  @JsonKey(name: "title")
+  String title;
+  @JsonKey(name: "type")
+  int type;
+  @JsonKey(name: "wid")
+  List<int> wid;
+  @JsonKey(name: "follow")
+  ModuleFollow? follow;
+
+  Module({
+    required this.attr,
+    required this.bgColor,
+    required this.bgImg,
+    required this.headers,
+    required this.headersType,
+    required this.items,
+    required this.jumpModuleId,
+    required this.moduleId,
+    required this.moduleTag,
+    required this.report,
+    required this.size,
+    required this.style,
+    required this.subTitle,
+    required this.title,
+    required this.type,
+    required this.wid,
+    this.follow,
+  });
+
+  factory Module.fromJson(Map<String, dynamic> json) => _$ModuleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ModuleToJson(this);
+}
+
+@JsonSerializable()
+class Attr {
+  @JsonKey(name: "auto")
+  int auto;
+  @JsonKey(name: "follow")
+  int follow;
+  @JsonKey(name: "header")
+  int header;
+  @JsonKey(name: "random")
+  int random;
+  @JsonKey(name: "show_timeline")
+  int showTimeline;
+
+  Attr({
+    required this.auto,
+    required this.follow,
+    required this.header,
+    required this.random,
+    required this.showTimeline,
+  });
+
+  factory Attr.fromJson(Map<String, dynamic> json) => _$AttrFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AttrToJson(this);
+}
+
+@JsonSerializable()
+class ModuleFollow {
+  @JsonKey(name: "count")
+  int count;
+  @JsonKey(name: "update")
+  int update;
+
+  ModuleFollow({
+    required this.count,
+    required this.update,
+  });
+
+  factory ModuleFollow.fromJson(Map<String, dynamic> json) => _$ModuleFollowFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ModuleFollowToJson(this);
+}
+
+@JsonSerializable()
+class Region {
+  @JsonKey(name: "title")
+  String title;
+  @JsonKey(name: "url")
+  String url;
+  @JsonKey(name: "icon")
+  String? icon;
+  @JsonKey(name: "report")
+  RegionReport? report;
+
+  Region({
+    required this.title,
+    required this.url,
+    this.icon,
+    this.report,
+  });
+
+  factory Region.fromJson(Map<String, dynamic> json) => _$RegionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RegionToJson(this);
+}
+
+@JsonSerializable()
+class RegionReport {
+  @JsonKey(name: "card_type")
+  String cardType;
+  @JsonKey(name: "item_id")
+  String itemId;
+  @JsonKey(name: "module_id")
+  String moduleId;
+  @JsonKey(name: "module_type")
+  String moduleType;
+
+  RegionReport({
+    required this.cardType,
+    required this.itemId,
+    required this.moduleId,
+    required this.moduleType,
+  });
+
+  factory RegionReport.fromJson(Map<String, dynamic> json) => _$RegionReportFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RegionReportToJson(this);
+}
+
+@JsonSerializable()
+class Item {
+  @JsonKey(name: "aid")
+  int? aid;
+  @JsonKey(name: "badge")
+  String? badge;
+  @JsonKey(name: "badge_info")
+  BadgeInfo? badgeInfo;
+  @JsonKey(name: "badge_type")
+  int? badgeType;
+  @JsonKey(name: "blink")
+  String? blink;
+  @JsonKey(name: "cardMaterialId")
+  int cardMaterialId;
+  @JsonKey(name: "cid")
+  int? cid;
+  @JsonKey(name: "cover")
+  String cover;
+  @JsonKey(name: "desc")
+  String desc;
+  @JsonKey(name: "episode_id")
+  int? episodeId;
+  @JsonKey(name: "gif")
+  String? gif;
+  @JsonKey(name: "has_next")
+  int? hasNext;
+  @JsonKey(name: "img_badge")
+  String? imgBadge;
+  @JsonKey(name: "is_preview")
+  int isPreview;
+  @JsonKey(name: "item_id")
+  int? itemId;
+  @JsonKey(name: "item_show_status")
+  int itemShowStatus;
+  @JsonKey(name: "link")
+  String link;
+  @JsonKey(name: "link_type")
+  int? linkType;
+  @JsonKey(name: "link_value")
+  int? linkValue;
+  @JsonKey(name: "new_ep")
+  NewEp? newEp;
+  @JsonKey(name: "oid")
+  int? oid;
+  @JsonKey(name: "report")
+  ItemReport report;
+  @JsonKey(name: "score")
+  int score;
+  @JsonKey(name: "season_id")
+  int? seasonId;
+  @JsonKey(name: "season_styles")
+  String? seasonStyles;
+  @JsonKey(name: "season_type")
+  int? seasonType;
+  @JsonKey(name: "stat")
+  Stat? stat;
+  @JsonKey(name: "title")
+  String title;
+  @JsonKey(name: "type")
+  String? type;
+  @JsonKey(name: "wid")
+  int? wid;
+  @JsonKey(name: "desc_type")
+  int? descType;
+  @JsonKey(name: "follow")
+  ItemFollow? follow;
+  @JsonKey(name: "from_spmid")
+  String? fromSpmid;
+  @JsonKey(name: "sources")
+  String? sources;
+  @JsonKey(name: "bottom_left_badge")
+  BottomLeftBadge? bottomLeftBadge;
+  @JsonKey(name: "can_watch")
+  int? canWatch;
+  @JsonKey(name: "cursor")
+  String? cursor;
+  @JsonKey(name: "status")
+  Status? status;
+  @JsonKey(name: "is_auto")
+  int? isAuto;
+  @JsonKey(name: "item_show_type")
+  int? itemShowType;
+  @JsonKey(name: "spmid")
+  String? spmid;
+  @JsonKey(name: "unique_id")
+  String? uniqueId;
+
+  Item({
+    this.aid,
+    this.badge,
+    this.badgeInfo,
+    this.badgeType,
+    this.blink,
+    required this.cardMaterialId,
+    this.cid,
+    required this.cover,
+    required this.desc,
+    this.episodeId,
+    this.gif,
+    this.hasNext,
+    this.imgBadge,
+    required this.isPreview,
+    this.itemId,
+    required this.itemShowStatus,
+    required this.link,
+    this.linkType,
+    this.linkValue,
+    this.newEp,
+    this.oid,
+    required this.report,
+    required this.score,
+    this.seasonId,
+    this.seasonStyles,
+    this.seasonType,
+    this.stat,
+    required this.title,
+    this.type,
+    this.wid,
+    this.descType,
+    this.follow,
+    this.fromSpmid,
+    this.sources,
+    this.bottomLeftBadge,
+    this.canWatch,
+    this.cursor,
+    this.status,
+    this.isAuto,
+    this.itemShowType,
+    this.spmid,
+    this.uniqueId,
+  });
+
+  factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ItemToJson(this);
+}
+
+@JsonSerializable()
+class BadgeInfo {
+  @JsonKey(name: "bg_color")
+  String bgColor;
+  @JsonKey(name: "bg_color_night")
+  String bgColorNight;
+  @JsonKey(name: "text")
+  String text;
+  @JsonKey(name: "text_size")
+  int textSize;
+
+  BadgeInfo({
+    required this.bgColor,
+    required this.bgColorNight,
+    required this.text,
+    required this.textSize,
+  });
+
+  factory BadgeInfo.fromJson(Map<String, dynamic> json) => _$BadgeInfoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BadgeInfoToJson(this);
+}
+
+@JsonSerializable()
+class BottomLeftBadge {
+  @JsonKey(name: "img")
+  String img;
+  @JsonKey(name: "text_size")
+  int textSize;
+
+  BottomLeftBadge({
+    required this.img,
+    required this.textSize,
+  });
+
+  factory BottomLeftBadge.fromJson(Map<String, dynamic> json) => _$BottomLeftBadgeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BottomLeftBadgeToJson(this);
+}
+
+@JsonSerializable()
+class ItemFollow {
+  @JsonKey(name: "is_finish")
+  int isFinish;
+  @JsonKey(name: "is_started")
+  int isStarted;
+  @JsonKey(name: "new_ep")
+  NewEp newEp;
+  @JsonKey(name: "total_count")
+  int totalCount;
+  @JsonKey(name: "desc")
+  Desc? desc;
+
+  ItemFollow({
+    required this.isFinish,
+    required this.isStarted,
+    required this.newEp,
+    required this.totalCount,
+    this.desc,
+  });
+
+  factory ItemFollow.fromJson(Map<String, dynamic> json) => _$ItemFollowFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ItemFollowToJson(this);
+}
+
+@JsonSerializable()
+class Desc {
+  @JsonKey(name: "text")
+  String text;
+  @JsonKey(name: "type")
+  int type;
+
+  Desc({
+    required this.text,
+    required this.type,
+  });
+
+  factory Desc.fromJson(Map<String, dynamic> json) => _$DescFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DescToJson(this);
+}
+
+@JsonSerializable()
+class NewEp {
+  @JsonKey(name: "cover")
+  String cover;
+  @JsonKey(name: "id")
+  int id;
+  @JsonKey(name: "index_show")
+  String indexShow;
+
+  NewEp({
+    required this.cover,
+    required this.id,
+    required this.indexShow,
+  });
+
+  factory NewEp.fromJson(Map<String, dynamic> json) => _$NewEpFromJson(json);
+
+  Map<String, dynamic> toJson() => _$NewEpToJson(this);
+}
+
+@JsonSerializable()
+class ItemReport {
+  @JsonKey(name: "action_id")
+  String? actionId;
+  @JsonKey(name: "avid")
+  String? avid;
+  @JsonKey(name: "card_type")
+  String? cardType;
+  @JsonKey(name: "content_type")
+  String? contentType;
+  @JsonKey(name: "epid")
+  String epid;
+  @JsonKey(name: "index")
+  String? index;
+  @JsonKey(name: "item_id")
+  String? itemId;
+  @JsonKey(name: "module_id")
+  String moduleId;
+  @JsonKey(name: "module_type")
+  String moduleType;
+  @JsonKey(name: "ogv_session_id")
+  String? ogvSessionId;
+  @JsonKey(name: "oid")
+  String? oid;
+  @JsonKey(name: "playlist_id")
+  String? playlistId;
+  @JsonKey(name: "position_id")
+  String? positionId;
+  @JsonKey(name: "season_id")
+  String seasonId;
+  @JsonKey(name: "season_type")
+  String seasonType;
+  @JsonKey(name: "sources")
+  String? sources;
+  @JsonKey(name: "is_wtgt")
+  String? isWtgt;
+  @JsonKey(name: "inline_epid")
+  String? inlineEpid;
+
+  ItemReport({
+    this.actionId,
+    this.avid,
+    this.cardType,
+    this.contentType,
+    required this.epid,
+    this.index,
+    this.itemId,
+    required this.moduleId,
+    required this.moduleType,
+    this.ogvSessionId,
+    this.oid,
+    this.playlistId,
+    this.positionId,
+    required this.seasonId,
+    required this.seasonType,
+    this.sources,
+    this.isWtgt,
+    this.inlineEpid,
+  });
+
+  factory ItemReport.fromJson(Map<String, dynamic> json) => _$ItemReportFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ItemReportToJson(this);
+}
+
+@JsonSerializable()
+class Stat {
+  @JsonKey(name: "danmaku")
+  int danmaku;
+  @JsonKey(name: "follow")
+  int follow;
+  @JsonKey(name: "follow_view")
+  String? followView;
+  @JsonKey(name: "view")
+  int view;
+
+  Stat({
+    required this.danmaku,
+    required this.follow,
+    this.followView,
+    required this.view,
+  });
+
+  factory Stat.fromJson(Map<String, dynamic> json) => _$StatFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StatToJson(this);
+}
+
+@JsonSerializable()
+class Status {
+  @JsonKey(name: "follow")
+  int follow;
+  @JsonKey(name: "follow_status")
+  int followStatus;
+  @JsonKey(name: "like")
+  int like;
+
+  Status({
+    required this.follow,
+    required this.followStatus,
+    required this.like,
+  });
+
+  factory Status.fromJson(Map<String, dynamic> json) => _$StatusFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StatusToJson(this);
+}
+
+@JsonSerializable()
+class ModuleReport {
+  @JsonKey(name: "action_id")
+  String? actionId;
+  @JsonKey(name: "module_id")
+  String moduleId;
+  @JsonKey(name: "module_type")
+  String moduleType;
+  @JsonKey(name: "ogv_session_id")
+  String? ogvSessionId;
+
+  ModuleReport({
+    this.actionId,
+    required this.moduleId,
+    required this.moduleType,
+    this.ogvSessionId,
+  });
+
+  factory ModuleReport.fromJson(Map<String, dynamic> json) => _$ModuleReportFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ModuleReportToJson(this);
+}
+
+@JsonSerializable()
+class CinemaReport {
+  @JsonKey(name: "page_id")
+  String pageId;
+
+  CinemaReport({
+    required this.pageId,
+  });
+
+  factory CinemaReport.fromJson(Map<String, dynamic> json) => _$CinemaReportFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CinemaReportToJson(this);
+}

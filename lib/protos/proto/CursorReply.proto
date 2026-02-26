@@ -1,0 +1,188 @@
+syntax = "proto3";
+
+
+message CursorReply {
+    // 卡片内容
+    repeated CursorItem items = 1;
+    // 顶部tab
+    repeated CursorTab tab = 2;
+    // 游标信息
+    Cursor cursor = 3;
+    // 是否未拉取完
+    bool hasMore = 4;
+}
+
+message Cursor {
+    // 本页最大值游标值
+    int64 max = 1;
+    // 本页最大值游标类型
+    int32 maxTp = 2;
+}
+
+message CursorTab {
+    // 业务类型
+    string business = 1;
+    // 名称
+    string name = 2;
+    // 路由uri
+    string router = 3;
+    // tab定位
+    bool focus = 4;
+}
+
+message CursorItem {
+    // 主体数据
+    oneof card_item {
+        // ugc稿件
+        CardUGC card_ugc = 1;
+        // pgc稿件
+        CardOGV card_ogv = 2;
+        // 专栏
+        CardArticle card_article = 3;
+        // 直播
+        CardLive card_live = 4;
+        // 课程
+        CardCheese card_cheese = 5;
+    }
+    // 标题
+    string title = 6;
+    // 目标uri/url
+    string uri = 7;
+    // 观看时间
+    int64 viewAt = 8;
+    // 历史记录id
+    int64 kid = 9;
+    // 业务id
+    int64 oid = 10;
+    // 业务类型
+    // archive:视频 live:直播 article:专栏 goods:商品 show:展演
+    string business = 11;
+    // 业务类型代码
+    int32 tp = 12;
+    // 设备标识
+    DeviceType dt = 13;
+    // 是否有分享按钮
+    bool has_share = 14;
+}
+
+message DeviceType {
+    // 设备标识代码
+    DT type = 1;
+    // 图标url
+    string icon = 2;
+}
+
+message CardCheese {
+    // 封面url
+    string cover = 1;
+    // 观看进度
+    int64 progress = 2;
+    // 总计时长
+    int64 duration = 3;
+    // 单集标题
+    string subtitle = 4;
+    //
+    int64 state = 5;
+}
+enum DT {
+    Unknown = 0; // 未知
+    Phone   = 1; // 手机端
+    Pad     = 2; // ipad端
+    PC      = 3; // web端
+    TV      = 4; // TV端
+    Car     = 5; // 车机端
+    Iot     = 6; // 物联设备
+    AndPad  = 7; // apad端
+}
+
+message Relation {
+    // 关系状态
+    // 1:未关注 2:已关注 3:被关注 4:互关
+    int32 status = 1;
+    // 用户关注UP主
+    int32 is_follow = 2;
+    // UP主关注用户
+    int32 is_followed = 3;
+}
+
+message CardArticle {
+    // 封面url
+    repeated string covers = 1;
+    // UP主昵称
+    string name = 2;
+    // UP主mid
+    int64 mid = 3;
+    // 是否展示关注按钮
+    bool displayAttention = 4;
+    // 角标
+    string badge = 5;
+    // 关系信息
+    Relation relation = 6;
+}
+
+message CardLive {
+    // 封面url
+    string cover = 1;
+    // 主播昵称
+    string name = 2;
+    // 主播mid
+    int64 mid = 3;
+    // 直播分区名
+    string tag = 4;
+    // 直播状态
+    int32 ststus = 5;
+    // 是否展示关注按钮
+    bool display_attention = 6;
+    // 关系信息
+    Relation relation = 7;
+}
+
+message CardUGC {
+    // 封面url
+    string cover = 1;
+    // 观看进度
+    int64 progress = 2;
+    // 视频长度
+    int64 duration = 3;
+    // UP主昵称
+    string name = 4;
+    // UP主mid
+    int64 mid = 5;
+    // 是否展示关注按钮
+    bool display_attention = 6;
+    // 历史观看视频cid
+    int64 cid = 7;
+    // 历史观看视频分P
+    int32 page = 8;
+    // 历史观看视频分P的标题
+    string subtitle = 9;
+    // 关系信息
+    Relation relation = 10;
+    // 稿件bvid
+    string bvid = 11;
+    // 总分P数
+    int64 videos = 12;
+    // 短链接
+    string short_link = 13;
+    // 分享副标题
+    string share_subtitle = 14;
+    // 播放数
+    int64 view = 15;
+    //
+    int64 state = 16;
+}
+
+message CardOGV {
+    // 封面url
+    string cover = 1;
+    // 观看进度
+    int64 progress = 2;
+    // 总计时长
+    int64 duration = 3;
+    // 单集标题
+    string subtitle = 4;
+    //
+    string badge = 5;
+    //
+    int64 state = 6;
+}

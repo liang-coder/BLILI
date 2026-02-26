@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+
+message DynAllReq {
+    // 透传 update_baseline
+    string update_baseline = 1;
+    // 透传 history_offset
+    string offset = 2;
+    // 向下翻页数
+    int32 page = 3;
+    // 刷新方式 1向上刷新 2向下翻页
+    Refresh refresh_type = 4;
+    // 秒开参数 新版本废弃，统一使用player_args
+    PlayurlParam playurl_param = 5;
+    // 综合页当前更新的最大值
+    string assist_baseline = 6;
+    // 客户端时区 兼容UTC-14和Etc/GMT+12,时区区间[-12,14] 东八区为8
+    int32 local_time = 7;
+    // 推荐up主入参(new的时候传)
+    RcmdUPsParam rcmd_ups_param = 8;
+    // 广告参数
+    AdParam ad_param = 9;
+    // 是否冷启
+    int32 cold_start = 10;
+    // 来源
+    string from = 11;
+    // 秒开参数
+    PlayerArgs player_args = 12;
+    //
+    int64 tab_recall_uid = 13;
+    //
+    int32 tab_recall_type = 14;
+}
+
+enum Refresh {
+    refresh_new = 0;     // 刷新列表
+    refresh_history = 1; // 请求历史
+}
+
+message PlayurlParam {
+    // 清晰度
+    int32 qn = 1;
+    // 流版本
+    int32 fnver = 2;
+    // 流类型
+    int32 fnval = 3;
+    // 是否强制使用域名
+    int32 force_host = 4;
+    // 是否4k
+    int32 fourk = 5;
+}
+
+message RcmdUPsParam {
+    int64 dislike_ts = 1;
+}
+
+message PlayerArgs {
+    // 清晰度
+    int64 qn = 1;
+    // 流版本
+    int64 fnver = 2;
+    // 流类型
+    int64 fnval = 3;
+    // 返回url是否强制使用域名
+    // 0:不强制使用域名 1:http域名 2:https域名
+    int64 force_host = 4;
+    // 音量均衡
+    int64 voice_balance = 5;
+}
+
+message AdParam {
+    // 综合页请求广告所需字段，由客户端-网关透传
+    string ad_extra = 1;
+    // request_id
+    string request_id = 2;
+}

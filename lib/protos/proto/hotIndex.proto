@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+
+// ===== PlayerArgs =====
+message PlayerArgs {
+  int64 qn = 1;
+  int64 fnver = 2;
+  int64 fnval = 3;
+  int64 force_host = 4;
+  int64 voice_balance = 5;
+  QnPolicy qn_policy = 6;
+}
+
+enum QnPolicy {
+  QN_POLICY_UNSPECIFIED = 0;
+  QN_POLICY_AUTO_QN_ENABLE = 1;
+  QN_POLICY_AUTO_QN_DISABLE = 2;
+}
+
+// ===== PopularAd (占位) =====
+message PopularAd {
+  string extra = 1;
+}
+
+// ===== PopularResultReq =====
+message PopularResultReq {
+  int64 idx = 1;
+  int32 login_event = 2;
+  int32 qn = 3;
+  int32 fnver = 4;
+  int32 fnval = 5;
+  int32 force_host = 6;
+  int32 fourk = 7;
+  string spmid = 8;
+  string last_param = 9;
+  string ver = 10;
+  int64 entrance_id = 11;
+  string location_ids = 12;
+  int32 source_id = 13;
+  int32 flush = 14;
+  PlayerArgs player_args = 15;
+  PopularAd popular_ad = 16;
+}

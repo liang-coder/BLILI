@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message ticket {
+  string jwt = 1;         // Tag 1
+  int64 timestamp = 2;    // Tag 2
+  int32 tz_offset = 3;    // Tag 3
+  // Tag 4 可能是个嵌套消息或 Map，这里暂时定义为 bytes 或保留
+  bytes extra_data = 4;
+}

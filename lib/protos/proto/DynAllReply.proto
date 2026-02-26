@@ -1,0 +1,190 @@
+syntax = "proto3";
+import "google/protobuf/any.proto";
+
+message DynAllReply {
+    // 卡片列表
+    DynamicList dynamic_list = 1;
+    // 顶部up list
+    CardVideoUpList up_list = 2;
+    // 话题广场
+    TopicList topic_list = 3;
+    // 无关注推荐
+    Unfollow unfollow = 4;
+    // 分区UP推荐
+    google.protobuf.Any region_rcmd = 5;
+    //
+    google.protobuf.Any config = 6;
+}
+
+message Unfollow {
+    // 标题展示文案
+    string title = 1;
+    // 无关注列表
+    repeated UnfollowUserItem list = 2;
+    // trackID
+    string TrackId = 3;
+}
+
+message UnfollowUserItem {
+    // 是否有更新
+    bool has_update = 1;
+    // up主头像
+    string face = 2;
+    // up主昵称
+    string name = 3;
+    // up主uid
+    int64 uid = 4;
+    // 排序字段 从1开始
+    int32 pos = 5;
+    // 直播状态
+    LiveState live_state = 6;
+    // 认证信息
+    google.protobuf.Any official = 7;
+    // 大会员信息
+    google.protobuf.Any vip = 8;
+    // up介绍
+    string sign = 9;
+    // 标签信息
+    string label = 10;
+    // 按钮
+    google.protobuf.Any button = 11;
+    // 跳转地址
+    string uri = 12;
+}
+
+message TopicList {
+    // 模块标题
+    string title = 1;
+    // 话题列表
+    repeated google.protobuf.Any topic_list_item = 2;
+    // 发起活动
+    google.protobuf.Any act_button = 3;
+    // 查看更多
+    google.protobuf.Any more_button = 4;
+    // 透传服务端上报
+    string server_info = 5;
+}
+
+message CardVideoUpList {
+    // 标题展示文案
+    string title = 1;
+    // up主列表
+    repeated UpListItem list = 2;
+    // 服务端生成的透传上报字段
+    string footprint = 3;
+    // 直播数
+    int32 show_live_num = 4;
+    // 跳转label
+    UpListMoreLabel more_label = 5;
+    // 标题开关(综合页)
+    int32 title_switch = 6;
+    // 是否展示右上角查看更多label
+    bool show_more_label = 7;
+    // 是否在快速消费页查看更多按钮
+    bool show_in_personal = 8;
+    // 是否展示右侧查看更多按钮
+    bool show_more_button = 9;
+    //
+    repeated UpListItem list_second = 10;
+}
+
+
+message DynamicList {
+    // 动态列表
+    repeated DynamicItem list = 1;
+    // 更新的动态数
+    int64 update_num = 2;
+    // 历史偏移
+    string history_offset = 3;
+    // 更新基础信息
+    string update_baseline = 4;
+    // 是否还有更多数据
+    bool has_more = 5;
+}
+
+
+message DynamicItem {
+    // 动态卡片类型
+    google.protobuf.Any card_type = 1;
+    // 转发类型下，源卡片类型
+    google.protobuf.Any item_type = 2;
+    // 模块内容
+    repeated google.protobuf.Any modules = 3;
+    // 操作相关字段
+    google.protobuf.Any extend = 4;
+    // 该卡片下面是否含有折叠卡
+    int32 has_fold = 5;
+    // 透传到客户端的埋点字段。
+    string server_info = 6;
+}
+
+
+message UpListItem {
+    // 是否有更新
+    bool has_update = 1;
+    // up主头像
+    string face = 2;
+    // up主昵称
+    string name = 3;
+    // up主uid
+    int64 uid = 4;
+    // 排序字段 从1开始
+    int64 pos = 5;
+    // 用户类型
+    UserItemType user_item_type = 6;
+    // 直播头像样式-日
+    google.protobuf.Any display_style_day = 7;
+    // 直播头像样式-夜
+    google.protobuf.Any display_style_night = 8;
+    // 直播埋点
+    int64 style_id = 9;
+    // 直播状态
+    LiveState live_state = 10;
+    // 分割线
+    bool separator = 11;
+    // 跳转
+    string uri = 12;
+    // UP主预约上报使用
+    bool is_recall = 13;
+    //
+    IconBadge update_icon = 14;
+    //
+    string live_rcmd_reason = 15;
+    //
+    string live_cover = 16;
+    //
+    string personal_extra = 17;
+}
+
+enum UserItemType {
+    user_item_type_none = 0;        //
+    user_item_type_live = 1;        //
+    user_item_type_live_custom = 2; //
+    user_item_type_normal = 3;      //
+    user_item_type_extend = 4;      //
+    user_item_type_premiere_reserve = 5;
+    user_item_type_premiere = 6;
+    user_item_type_live_card = 7;
+    user_item_type_ogv_season = 8;
+    user_item_type_ugc_season = 9;
+}
+
+enum LiveState {
+    live_none = 0;     // 未直播
+    live_live = 1;     // 直播中
+    live_rotation = 2; // 轮播中
+}
+
+message IconBadge {
+    //
+    string icon_bg_url = 1;
+    //
+    string text = 2;
+}
+
+message UpListMoreLabel {
+    // 文案
+    string title = 1;
+    // 跳转地址
+    string uri = 2;
+}

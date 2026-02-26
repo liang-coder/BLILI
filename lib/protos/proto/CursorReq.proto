@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+
+message CursorReq {
+    // 游标信息
+    Cursor cursor = 1;
+    // 业务类型
+    // all:全部 archive:视频 live:直播 article:专栏
+    string business = 2;
+    // 秒开参数(旧版)
+    PlayerPreloadParams player_preload = 3;
+    // 秒开参数
+    PlayerArgs player_args = 4;
+}
+
+message Cursor {
+    // 本页最大值游标值
+    int64 max = 1;
+    // 本页最大值游标类型
+    int32 maxTp = 2;
+}
+
+
+message PlayerArgs {
+    // 清晰度
+    int64 qn = 1;
+    // 流版本
+    int64 fnver = 2;
+    // 流类型
+    int64 fnval = 3;
+    // 返回url是否强制使用域名
+    // 0:不强制使用域名 1:http域名 2:https域名
+    int64 force_host = 4;
+    // 音量均衡
+    int64 voice_balance = 5;
+}
+
+message PlayerPreloadParams {
+    //清晰度
+    int64 qn = 1;
+    // 流版本
+    int64 fnver = 2;
+    // 流类型
+    int64 fnval = 3;
+    // 是否强制域名
+    int64 forceHost = 4;
+    // 是否4K
+    int64 fourk = 5;
+}

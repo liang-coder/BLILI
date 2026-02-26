@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+// ========================
+// 1. 顶层响应
+// ========================
+message PopularReply {
+  repeated Card items = 1;
+  Config config = 2;
+  string ver = 3;
+}
+
+// ========================
+// 2. 核心卡片 Card (修正版)
+// ========================
+
+
+message CardContext{
+
+  // Tag 1: 卡片业务参数（跳转、视频信息等）
+  VideoInfo videoinfo = 1;
+
+  // Tag 4: 视频时长简写（如 "7:53"）
+  string duration = 4;
+
+  // Tag 5: UP主名称
+  string author_name = 5;
+
+  // Tag 6: 描述文案（如 "4.4万观看 · 11小时前"）
+  string desc = 6;
+
+  // Tag 7: 角标/标签
+  Badge r_badge = 7;
+
+  // Tag 10: 卡片样式类型
+  int32 card_type = 10;
+
+  // Tag 11: 布局样式
+  int32 style = 11;
+
+  // Tag 13: 详细时长文案（如 "7分钟53秒"）
+  string duration_text = 13;
+
+  // Tag 14: UP主展示文本（可能含粉丝牌等）
+  string up_text = 14;
+}
+
+message Card {
+  CardContext cardcontext = 1;
+}
+
+
+
+// ========================
+// 4. VideoInfo (从响应中提取)
+// ========================
+message VideoInfo {
+  // Tag 1: 卡片类型标识
+  string card_goto = 1; // "small_cover_v5"
+
+  // Tag 2: 跳转类型
+  string goto = 2;      // "av"
+
+  // Tag 3: 备用跳转类型（可选）
+  string goto2 = 3;     // "av" (部分卡片有)
+
+  // Tag 4: 视频唯一标识（AID/BVID）
+  string param = 4;     // "115882781053306"
+
+  // Tag 5: 封面图URL
+  string cover = 5;     // "http://i1.hdslb.com/..."
+
+  // Tag 6: 视频标题
+  string title = 6;     // "我通关了学校02"
+
+  // Tag 7: 完整播放URI（含预加载参数）
+  string uri = 7;       // "bilibili://video/..."
+
+  message Control {
+     int32 some_val = 3; // 实际值: {'3': 1}
+   }
+  Control control = 8;
+  int32 some_id = 11;
+
+  string type_tag = 14;
+
+  // Tag 15: 菜单操作（如“稍后再看”）
+  message Action {
+    string text = 1;  // "添加至稍后再看"
+    string label = 4; // "watch_later"
+  }
+  Action action = 15;
+
+  // Tag 20: 埋点追踪ID
+  string track_id = 20;
+
+
+}
+
+// ========================
+// 5. Badge (角标)
+// ========================
+message Badge {
+  string text = 1;        // "人气飙升"
+  string text_color = 2;  // "#FFFB9E60"
+  string bg_color = 4;    // "#FFFB9E60"
+  int32 badge_type = 10;  // 2
+}
+
+// ========================
+// 6. 页面配置（保持不变）
+// ========================
+message Config {
+  string item_title = 1;
+  string bottom_text = 2;
+  string bottom_text_cover = 3;
+  string bottom_text_url = 4;
+  repeated EntranceShow top_items = 5;
+  string head_image = 6;
+  repeated EntranceShow page_items = 7;
+  int64 hit = 8;
+  string toast = 9;
+}
+
+message EntranceShow {
+  string icon = 1;
+  string title = 2;
+  string module_id = 3;
+  string uri = 4;
+  Bubble bubble = 5;
+  int64 entrance_id = 6;
+  string top_photo = 7;
+  int32 entrance_type = 8;
+}
+
+message Bubble {
+  string bubble_content = 1;
+  int32 version = 2;
+  int64 stime = 3;
+}

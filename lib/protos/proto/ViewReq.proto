@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+
+message ViewReq {
+    //
+    uint64 aid = 1;
+    //
+    string bvid = 2;
+    //
+    string from = 3;
+    //
+    string spmid = 4;
+    //
+    string from_spmid = 5;
+    //
+    string session_id = 6;
+    //
+    PlayerArgs player_args = 7;
+    //
+    string track_id = 8;
+    //
+    repeated ExtraContentEntry extra_content = 9;
+    //
+    string play_mode = 10;
+    //
+    Relate relate = 11;
+    //
+    string biz_extra = 12;
+    //
+    string ad_extra = 13;
+    //
+    string from_scene = 14;
+}
+
+
+message PlayerArgs {
+  int64 qn            = 1;  // QN_FIELD_NUMBER = 1
+  int64 fnver         = 2;  // FNVER_FIELD_NUMBER = 2
+  int64 fnval         = 3;  // FNVAL_FIELD_NUMBER = 3
+  int64 force_host    = 4;  // FORCE_HOST_FIELD_NUMBER = 4
+  int64 voice_balance = 5;  // VOICE_BALANCE_FIELD_NUMBER = 5
+  int32 qn_policy     = 6;  // QN_POLICY_FIELD_NUMBER = 6
+}
+
+message Relate {
+  int64 device_type = 1;        // DEVICE_TYPE_FIELD_NUMBER = 1
+  Pagination pagination = 2;    // PAGINATION_FIELD_NUMBER = 2
+}
+
+message Pagination {
+  int32 page_size = 1;   // PAGE_SIZE_FIELD_NUMBER = 1
+  string next = 2;       // NEXT_FIELD_NUMBER = 2
+}
+
+message ExtraContentEntry {
+  string key = 1;
+  string value = 2;
+}
+
