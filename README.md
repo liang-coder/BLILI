@@ -1,7 +1,7 @@
 <h2 align="center"><b>BLILI</b></h2> 
 <br>
 <p align="center">
-  <img src="https://github.com/liang-coder/BLILI/blob/master/assets/logo.png?raw=true" width="100">
+  <img src="https://github.com/liang-coder/BLILI/blob/alpha/assets/logo.png?raw=true" width="100">
 </p>
 
 #### 该项目是一个第三方哔哩哔哩TV客户端，该项目仅仅作为个人的学习目的。该项目未对哔哩哔哩官方进行任何逆向与破解，api均来自github，本人仅进行封装集成，所有数据均为b站官方所有。
@@ -30,16 +30,16 @@ BLILI是一个交流学习软件。涉及到b站官方的核心代码均不上�
 
 ## 应用截图
 
-![Screenshot_20230117_101427](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260204_215159.png)
+![Screenshot_20230117_101427](https://github.com/liang-coder/BLILI/blob/alpha/Screenshot/Screenshot_20260204_215159.png)
 
-![Screenshot_20230117_101441](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260204_215221.png)
+![Screenshot_20230117_101441](https://github.com/liang-coder/BLILI/blob/alpha/Screenshot/Screenshot_20260204_215221.png)
 
-![Screenshot_20230117_101452](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260204_215232.png)
+![Screenshot_20230117_101452](https://github.com/liang-coder/BLILI/blob/alpha/Screenshot/Screenshot_20260204_215232.png)
 
-![Screenshot_20230117_101505](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260204_215248.png)
+![Screenshot_20230117_101505](https://github.com/liang-coder/BLILI/blob/alpha/Screenshot/Screenshot_20260204_215248.png)
 
-![Screenshot_20230117_101520](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260204_215323.png)
+![Screenshot_20230117_101520](https://github.com/liang-coder/BLILI/blob/alpha/Screenshot/Screenshot_20260204_215323.png)
 
-![Screenshot_20230117_101520](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260223_145022.png)
+![Screenshot_20230117_101520](https://github.com/liang-coder/BLILI/blob/alpha/Screenshot/Screenshot_20260223_145022.png)
 
-![Screenshot_20230117_101520](https://github.com/liang-coder/BLILI/blob/master/Screenshot/Screenshot_20260223_145052.png)
+![Screenshot_20230117_101520](https://github.com/liang-coder/BLILI/blob/alpha/Screenshot/Screenshot_20260223_145052.png)
